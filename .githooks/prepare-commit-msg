@@ -1,7 +1,9 @@
-#!/bin/sh
+#!/usr/bin/env bash
+LC_ALL=C
+
 COMMIT_MSG_FILE=$1
 
-if [ -z "$COMMIT_MSG_FILE" ]; then
+if [[ -z "$COMMIT_MSG_FILE" ]]; then
     exit 0
 fi
 

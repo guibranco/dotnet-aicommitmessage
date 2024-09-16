@@ -13,7 +13,7 @@
     <Description>This tool generates AI-powered commit messages via Git hooks, automating meaningful message suggestions from OpenAI and others to improve commit quality and efficiency</Description>
     <PackageProjectUrl>https://guibranco.github.io/dotnet-aicommitmessage</PackageProjectUrl>
     <PackageLicense>LICENCE</PackageLicense>
-    <PackageIcon>logo.png</PackageIcon>
+    <PackageIcon>aicommitmessage-80x80.png</PackageIcon>
     <RepositoryUrl>https://github.com/guibranco/dotnet-aicommitmessage</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>AI, OpenAI, LLM, commit message, commit, message, auto-generated, git hook</PackageTags>
