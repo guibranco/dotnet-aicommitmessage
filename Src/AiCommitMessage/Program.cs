@@ -1,72 +1,43 @@
 ﻿using System.Reflection;
+using OpenAI.Chat;
+using Spectre.Console;
 
-namespace AiCommitMessage
+namespace AiCommitMessage;
+
+internal class Program
 {
-    internal class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        if (args.Length == 0)
         {
-            if (args.Length == 0)
-            {
-                var versionString = Assembly
-                    .GetEntryAssembly()
-                    ?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-                    ?.InformationalVersion.ToString();
+            var versionString = Assembly
+                .GetEntryAssembly()
+                ?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                ?.InformationalVersion;
 
-                Spectre.Console.AnsiConsole.WriteLine($"AiCommitMessage v{versionString}");
-                Spectre.Console.AnsiConsole.WriteLine("-------------");
-                Spectre.Console.AnsiConsole.WriteLine("\nUsage:");
-                Spectre.Console.AnsiConsole.WriteLine("  AiCommitMessage <message>");
-                return;
-            }
-
-            ShowBot(string.Join(' ', args));
+            AnsiConsole.WriteLine($"AiCommitMessage v{versionString}");
+            AnsiConsole.WriteLine("-------------");
+            AnsiConsole.WriteLine("\nUsage:");
+            AnsiConsole.WriteLine("  AiCommitMessage <message>");
+            return;
         }
 
-        static void ShowBot(string message)
-        {
-            var bot = $"\n        {message}";
-            bot +=
-                @"
-    __________________
-                      \
-                       \
-                          ....
-                          ....'
-                           ....
-                        ..........
-                    .............'..'..
-                 ................'..'.....
-               .......'..........'..'..'....
-              ........'..........'..'..'.....
-             .'....'..'..........'..'.......'.
-             .'..................'...   ......
-             .  ......'.........         .....
-             .    _            __        ......
-            ..    #            ##        ......
-           ....       .                 .......
-           ......  .......          ............
-            ................  ......................
-            ........................'................
-           ......................'..'......    .......
-        .........................'..'.....       .......
-     ........    ..'.............'..'....      ..........
-   ..'..'...      ...............'.......      ..........
-  ...'......     ...... ..........  ......         .......
- ...........   .......              ........        ......
-.......        '...'.'.              '.'.'.'         ....
-.......       .....'..               ..'.....
-   ..       ..........               ..'........
-          ............               ..............
-         .............               '..............
-        ...........'..              .'.'............
-       ...............              .'.'.............
-      .............'..               ..'..'...........
-      ...............                 .'..............
-       .........                        ..............
-        .....
-";
-            Spectre.Console.AnsiConsole.WriteLine(bot);
-        }
+        var message = string.Join(' ', args);
+        OpenAI(message);
+    }
+
+    static void OpenAI(string message)
+    {
+        var client = new ChatClient(
+            "gpt-4o-mini",
+            Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+        );
+
+        var chatCompletion = client.CompleteChat(
+            new SystemChatMessage(Constants.SystemMessage),
+            new UserChatMessage(message)
+        );
+
+        AnsiConsole.WriteLine(chatCompletion.Value.Content[0].Text);
     }
 }
