@@ -4,6 +4,15 @@ namespace AiCommitMessage
 {
     internal class Program
     {
+        /// <summary>
+        /// The entry point of the application that processes command-line arguments.
+        /// </summary>
+        /// <param name="args">An array of command-line arguments passed to the application.</param>
+        /// <remarks>
+        /// This method checks if any command-line arguments were provided. If no arguments are given, it retrieves the version information of the application from the assembly attributes and displays it along with usage instructions.
+        /// If arguments are present, it concatenates them into a single message and calls the <see cref="ShowBot(string)"/> method to handle the message.
+        /// The output includes the application name and version, followed by usage instructions for the user.
+        /// </remarks>
         static void Main(string[] args)
         {
             if (args.Length == 0)
@@ -23,6 +32,16 @@ namespace AiCommitMessage
             ShowBot(string.Join(' ', args));
         }
 
+        /// <summary>
+        /// Displays a stylized bot representation with a given message.
+        /// </summary>
+        /// <param name="message">The message to be displayed above the bot representation.</param>
+        /// <remarks>
+        /// This method constructs a string that represents a bot along with a custom message provided as a parameter.
+        /// The bot is depicted using ASCII art, and the message is formatted to appear above the bot.
+        /// The method utilizes the Spectre.Console library to output the final string to the console.
+        /// This allows for a visually appealing representation of the bot along with the specified message.
+        /// </remarks>
         static void ShowBot(string message)
         {
             var bot = $"\n        {message}";
