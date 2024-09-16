@@ -11,9 +11,9 @@ internal class Program
     /// </summary>
     /// <param name="args">An array of command-line arguments passed to the application.</param>
     /// <remarks>
-    /// This method checks if any command-line arguments were provided. If no arguments are given, it retrieves the version information 
-    /// from the assembly and displays it along with usage instructions for the application. The usage message indicates how to 
-    /// run the application with a commit message. If arguments are present, it concatenates them into a single message string 
+    /// This method checks if any command-line arguments were provided. If no arguments are given, it retrieves the version information
+    /// from the assembly and displays it along with usage instructions for the application. The usage message indicates how to
+    /// run the application with a commit message. If arguments are present, it concatenates them into a single message string
     /// and calls the OpenAI method to process the message.
     /// </remarks>
     static void Main(string[] args)
