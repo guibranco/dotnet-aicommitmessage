@@ -43,10 +43,10 @@ internal class Program
     /// </summary>
     /// <param name="message">The message to be sent to the OpenAI chat model.</param>
     /// <remarks>
-    /// This method retrieves the OpenAI API key from the environment variables. If the API key is not set, it prompts the user to set the 
-    /// "OPENAI_API_KEY" environment variable and exits the application. Once the key is obtained, it initializes a ChatClient with 
-    /// the specified model ("gpt-4o-mini") and sends a chat completion request using the provided message. The response from the 
-    /// chat model is then displayed to the user. This method relies on the AnsiConsole for output and requires proper configuration 
+    /// This method retrieves the OpenAI API key from the environment variables. If the API key is not set, it prompts the user to set the
+    /// "OPENAI_API_KEY" environment variable and exits the application. Once the key is obtained, it initializes a ChatClient with
+    /// the specified model ("gpt-4o-mini") and sends a chat completion request using the provided message. The response from the
+    /// chat model is then displayed to the user. This method relies on the AnsiConsole for output and requires proper configuration
     /// of the environment variable for successful execution.
     /// </remarks>
     static void OpenAI(string message)
