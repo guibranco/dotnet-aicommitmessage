@@ -1,9 +1,11 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using OpenAI.Chat;
 using Spectre.Console;
 
 namespace AiCommitMessage;
 
+[ExcludeFromCodeCoverage]
 internal class Program
 {
     /// <summary>
@@ -48,10 +50,13 @@ internal class Program
     /// </remarks>
     static void OpenAI(string message)
     {
-        var client = new ChatClient(
-            "gpt-4o-mini",
-            Environment.GetEnvironmentVariable("OPENAI_API_KEY")
-        );
+        var key = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+        if (string.IsNullOrEmpty(key))
+        {
+            AnsiConsole.WriteLine("Please set the OPENAI_API_KEY environment variable.");
+            return;
+        }
+        var client = new ChatClient("gpt-4o-mini", key);
 
         var chatCompletion = client.CompleteChat(
             new SystemChatMessage(Constants.SystemMessage),
