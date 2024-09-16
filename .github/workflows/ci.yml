@@ -52,6 +52,8 @@ jobs:
   create_release:
     name: Create release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     needs: build
     env:
       fullSemVer: ${{ needs.build.outputs.fullSemVer }}
