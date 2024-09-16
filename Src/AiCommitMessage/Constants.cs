@@ -2,5 +2,5 @@
 
 public class Constants
 {
-    public const string SystemMessage = "";
+    public const string SystemMessage = "Hello World!";
 }
