@@ -55,8 +55,10 @@ internal class Program
         if (string.IsNullOrEmpty(key))
         {
             AnsiConsole.WriteLine("Please set the OPENAI_API_KEY environment variable.");
+            Environment.Exit(1);
             return;
         }
+
         var client = new ChatClient("gpt-4o-mini", key);
 
         var chatCompletion = client.CompleteChat(
