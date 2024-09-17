@@ -24,6 +24,8 @@ git add .
 git commit -m ""
 ```
 
+Use `git log -1` to review the last commit details and find the automatically generated commit message.
+
 ---
 
 ## Requirements
