@@ -3,7 +3,7 @@ LC_ALL=C
 
 COMMIT_MSG_FILE=$1
 
-if [[ -z "$COMMIT_MSG_FILE" ]]; then
+if [[ -n "$COMMIT_MSG_FILE" ]]; then
     exit 0
 fi
 
