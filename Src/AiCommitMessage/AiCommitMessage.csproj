@@ -12,7 +12,8 @@
     <Authors>Guilherme Branco Stracini</Authors>
     <Description>This tool generates AI-powered commit messages via Git hooks, automating meaningful message suggestions from OpenAI and others to improve commit quality and efficiency</Description>
     <PackageProjectUrl>https://guibranco.github.io/dotnet-aicommitmessage</PackageProjectUrl>
-    <PackageLicense>LICENCE</PackageLicense>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>aicommitmessage-80x80.png</PackageIcon>
     <RepositoryUrl>https://github.com/guibranco/dotnet-aicommitmessage</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
