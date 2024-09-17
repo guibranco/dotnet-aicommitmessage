@@ -30,9 +30,9 @@ Use `git log -1` to review the last commit details and find the automatically ge
 
 ## Requirements
 
-- OpenAI API key.
-- .NET 8.0 (or higher) runtime.
-- GIT client.
+- [OpenAI API key](https://platform.openai.com/api-keys).
+- [.NET 8.0 (or higher) runtime](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
+- [GIT client](https://git-scm.com/downloads).
 
 ---
 
