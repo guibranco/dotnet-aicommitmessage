@@ -4,7 +4,7 @@
 
 ---
 
-## What does I do
+## What this tool do
 
 Generates a commit message based on `git diff` result using the [OpenAI](https://platform.openai.com/docs/overview) API.
 
@@ -12,14 +12,32 @@ Generates a commit message based on `git diff` result using the [OpenAI](https:/
 
 ## Getting started
 
+1. Install the tool globally (or per project/repositoy).
+2. Move to the project folder.
+3. Install the Git hook on the default `hooks` directory.
+
 ```ps
 dotnet tool install -g AiCommitMessage
 cd my-project/
 dotnet-aicommitmessage install-hook
+git add .
+git commit -m ""
 ```
 
-1. Install the tool globally.
-2. Move to the project folder.
-3. Install the Git hook on the default `hooks` directory.
+---
+
+## Requirements
+
+- OpenAI API key.
+- .NET 8.0 (or higher) runtime.
+- GIT client.
 
 ---
+
+## Commit message pattern
+
+The training model for the AI used is designed using as reference these two guidelines:
+
+- [Conventional Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/).
+- [Padrões de Commits](https://github.com/tiagolofi/padroes-de-commits) (in Portuguese).
+  
