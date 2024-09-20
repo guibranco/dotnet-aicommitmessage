@@ -4,15 +4,23 @@
 
 ---
 
-## What this tool do
+## What this tool does
 
-Generates a commit message based on `git diff` result using the [OpenAI](https://platform.openai.com/docs/overview) API.
+Generates a commit message based on the `git diff` result using the [OpenAI](https://platform.openai.com/docs/overview) API.
+
+---
+
+## Requirements
+
+- [OpenAI API key](https://platform.openai.com/api-keys).
+- [.NET 8.0 (or higher) runtime](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
+- [GIT client](https://git-scm.com/downloads).
 
 ---
 
 ## Getting started
 
-1. Install the tool globally (or per project/repositoy).
+1. Install the tool globally (or per project/repository).
 2. Move to the project folder.
 3. Install the Git hook on the default `hooks` directory.
 
@@ -25,14 +33,6 @@ git commit -m ""
 ```
 
 Use `git log -1` to review the last commit details and find the automatically generated commit message.
-
----
-
-## Requirements
-
-- [OpenAI API key](https://platform.openai.com/api-keys).
-- [.NET 8.0 (or higher) runtime](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
-- [GIT client](https://git-scm.com/downloads).
 
 ---
 
