@@ -13,6 +13,9 @@
 
 ---
 
+> [!CAUTION]
+> This is still in development/beta. It will be **GA** when a major release 1 becomes available.
+
 ## What this tool does
 
 Generates a commit message based on the `git diff` result using the [OpenAI API](https://platform.openai.com/docs/overview).
