@@ -2,11 +2,15 @@
 
 🧠 🧰 This tool generates AI-powered commit messages via Git hooks, automating meaningful message suggestions from OpenAI and others to improve commit quality and efficiency.
 
+[![GitHub last commit](https://img.shields.io/github/last-commit/guibranco/dotnet-aicommitmessage)](https://wakatime.com/badge/github/guibranco/dotnet-aicommitmessage)
+[![GitHub license](https://img.shields.io/github/license/guibranco/dotnet-aicommitmessage)](https://wakatime.com/badge/github/guibranco/dotnet-aicommitmessage)
+[![time tracker](https://wakatime.com/badge/github/guibranco/dotnet-aicommitmessage.svg)](https://wakatime.com/badge/github/guibranco/dotnet-aicommitmessage)
+
 ---
 
 ## What this tool does
 
-Generates a commit message based on the `git diff` result using the [OpenAI](https://platform.openai.com/docs/overview) API.
+Generates a commit message based on the `git diff` result using the [OpenAI API](https://platform.openai.com/docs/overview).
 
 ---
 
@@ -19,6 +23,13 @@ Generates a commit message based on the `git diff` result using the [OpenAI](htt
 ---
 
 ## Getting started
+
+[![AICommitMessage NuGet Version](https://img.shields.io/nuget/v/AICommitMessage.svg?style=flat)](https://www.nuget.org/packages/AICommitMessage/)
+[![AICommitMessage NuGet Downloads](https://img.shields.io/nuget/dt/AICommitMessage.svg?style=flat)](https://www.nuget.org/packages/AICommitMessage/)
+
+This repository is available at [NuGet](https://www.nuget.org) under the name [AICommitMessage](https://www.nuget.org/packages/AICommitMessage/).
+
+### Installation
 
 1. Install the tool globally (or per project/repository).
 2. Move to the project folder.
