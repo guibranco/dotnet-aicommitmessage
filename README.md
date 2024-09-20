@@ -42,4 +42,18 @@ The training model for the AI used is designed using as reference these two guid
 
 - [Conventional Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/).
 - [Padrões de Commits](https://github.com/tiagolofi/padroes-de-commits) (in Portuguese).
-  
+
+---
+
+## Commands
+
+This tool accepts an argument as the command to execute. Here is a list of available commands:
+
+| Command                  | Description                                                                                                              |
+|--------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| `install-hook`            | Installs GIT hooks in the default `.git/hooks` directory or in the custom directory configured in GIT settings.         |
+| `generate-commit`         | Generates a commit message based on the current changes (`git diff` context).                                           |
+| `set-openai-url`          | Configures a custom OpenAI API URL to generate commit messages.                                                         |
+| `set-openai-key`          | Sets or updates the OpenAI API key required to access the OpenAI service.                                               |
+| `set-cryptography-for-key`| Specifies whether the OpenAI API key should be stored in an encrypted format or as plain text in environment variables. |
+
