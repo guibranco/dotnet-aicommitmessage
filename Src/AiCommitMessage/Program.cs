@@ -30,7 +30,7 @@ internal class Program
             AnsiConsole.WriteLine($"AiCommitMessage v{versionString}");
             AnsiConsole.WriteLine("-------------");
             AnsiConsole.WriteLine("\nUsage:");
-            AnsiConsole.WriteLine("  AiCommitMessage <message>");
+            AnsiConsole.WriteLine("dotnet-aicommitmessage generate-message $(git diff --staged)");
             return;
         }
 
