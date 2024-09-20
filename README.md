@@ -6,6 +6,11 @@
 [![GitHub license](https://img.shields.io/github/license/guibranco/dotnet-aicommitmessage)](https://wakatime.com/badge/github/guibranco/dotnet-aicommitmessage)
 [![time tracker](https://wakatime.com/badge/github/guibranco/dotnet-aicommitmessage.svg)](https://wakatime.com/badge/github/guibranco/dotnet-aicommitmessage)
 
+[![Build](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/build.yml/badge.svg)](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/build.yml)
+[![Continuous Integration](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/ci.yml/badge.svg)](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/ci.yml)
+[![Infisical secrets check](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/infisical-secrets-check.yml/badge.svg)](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/infisical-secrets-check.yml)
+[![Linter check](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/linter.yml/badge.svg)](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/linter.yml)
+
 ---
 
 ## What this tool does
