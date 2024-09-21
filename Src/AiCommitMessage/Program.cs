@@ -13,8 +13,8 @@ internal class Program
     /// </summary>
     /// <param name="args">An array of command-line arguments passed to the application.</param>
     /// <remarks>
-    /// This method checks if any command-line arguments are provided. If no arguments are given, it retrieves the version information of the application 
-    /// from the assembly attributes and displays it along with usage instructions for generating a commit message. 
+    /// This method checks if any command-line arguments are provided. If no arguments are given, it retrieves the version information of the application
+    /// from the assembly attributes and displays it along with usage instructions for generating a commit message.
     /// If arguments are present, it concatenates them into a single string and passes it to the OpenAI method for further processing.
     /// This allows users to generate meaningful commit messages based on their staged changes in Git.
     /// </remarks>
