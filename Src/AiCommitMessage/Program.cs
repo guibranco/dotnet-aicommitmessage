@@ -9,14 +9,14 @@ namespace AiCommitMessage;
 internal class Program
 {
     /// <summary>
-    /// The entry point of the AiCommitMessage application.
+    /// The entry point of the application that generates a commit message based on staged Git changes.
     /// </summary>
     /// <param name="args">An array of command-line arguments passed to the application.</param>
     /// <remarks>
-    /// This method checks if any command-line arguments were provided. If no arguments are given, it retrieves the version information
-    /// from the assembly and displays it along with usage instructions for the application. The usage message indicates how to
-    /// run the application with a commit message. If arguments are present, it concatenates them into a single message string
-    /// and calls the OpenAI method to process the message.
+    /// This method checks if any command-line arguments are provided. If no arguments are given, it retrieves the version information of the application
+    /// from the assembly attributes and displays it along with usage instructions for generating a commit message.
+    /// If arguments are present, it concatenates them into a single string and passes it to the OpenAI method for further processing.
+    /// This allows users to generate meaningful commit messages based on their staged changes in Git.
     /// </remarks>
     static void Main(string[] args)
     {
