@@ -16,6 +16,19 @@ public class Constants
         style - Commits of type style indicate that there have been changes related to code formatting, semicolons, trailing spaces, lint… (Does not include code changes).
         refactor - Commits of type refactor refer to changes due to refactoring that do not alter functionality, such as a change in the way a part of the screen is processed but maintaining the same functionality, or performance improvements due to a code review.
         chore - Commits of type chore indicate updates to build tasks, admin configurations, packages, etc... Such as adding a package to .gitignore file. (Does not include code changes).
+        /// <summary>
+        /// Defines the types of commit messages used in a continuous integration process.
+        /// </summary>
+        /// <remarks>
+        /// This documentation outlines the different types of commits that can be made during the continuous integration process. 
+        /// Each commit type serves a specific purpose:
+        /// - <b>raw</b>: Indicates changes related to configuration files, data, features, and parameters.
+        /// - <b>cleanup</b>: Used to remove commented code, unnecessary snippets, or any other form of source code cleanup, 
+        ///   aiming to improve readability and maintainability.
+        /// - <b>remove</b>: Indicates the deletion of obsolete or unused files, directories, or functionalities, 
+        ///   which helps reduce the project’s size and complexity while keeping it organized.
+        /// It is important to ensure that the commit type used is one of the specified types to maintain consistency in the commit history.
+        /// </remarks>
         ci - Commits of type ci indicate changes related to continuous integration.
         raw - Commits of type raw indicate changes related to configuration files, data, features, and parameters.
         cleanup - Commits of type cleanup are used to remove commented code, unnecessary snippets, or any other form of source code cleanup, aiming to improve its readability and maintainability.
