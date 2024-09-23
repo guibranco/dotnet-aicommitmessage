@@ -42,10 +42,10 @@ public class ConstantsTests
             cleanup - Commits of type cleanup are used to remove commented code, unnecessary snippets, or any other form of source code cleanup, aiming to improve its readability and maintainability.
             remove - Commits of type remove indicate the deletion of obsolete or unused files, directories, or functionalities, reducing the project’s size and complexity and keeping it more organized.
 
-            The recommended type must be one of the ones listed above.
+            The type must be one of the ones listed above.
 
             OUTPUT:
-            Recommended type - description of changes in up to 10 words in English.
+            Type - description of changes in up to 10 words in English.
             """;
         // Act
         var actual = Constants.SystemMessage;
