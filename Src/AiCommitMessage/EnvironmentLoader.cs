@@ -16,7 +16,9 @@ namespace AiCommitMessage
             var encryptedKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
             if (string.IsNullOrEmpty(encryptedKey))
             {
-                throw new InvalidOperationException("The OPENAI_API_KEY environment variable is not set.");
+                throw new InvalidOperationException(
+                    "The OPENAI_API_KEY environment variable is not set."
+                );
             }
             return Decrypt(encryptedKey);
         }
