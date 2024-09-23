@@ -51,7 +51,7 @@ internal class Program
     /// </remarks>
     static void OpenAI(string message)
     {
-        var key = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+        var key = Environment.GetEnvironmentVariable("OPENAI_API_KEY", EnvironmentVariableTarget.User);
         if (string.IsNullOrEmpty(key))
         {
             AnsiConsole.WriteLine("Please set the OPENAI_API_KEY environment variable.");
