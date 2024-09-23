@@ -18,6 +18,18 @@ public class ConstantsTests
 /// compares the actual output from the system with the predefined expected
 /// string to ensure accuracy and consistency in the messaging.
 /// </remarks>
+    /// <summary>
+    /// Tests the expected output of the system message for commit quality analysis.
+    /// </summary>
+    /// <remarks>
+    /// This test method, <c>Test1</c>, is designed to verify that the system message 
+    /// correctly outlines the recommendations for classifying GitHub commits based on 
+    /// the output of the git diff command. The expected output includes a detailed 
+    /// description of various commit types, such as 'feat', 'fix', 'docs', and others, 
+    /// along with their meanings in the context of semantic versioning. The test 
+    /// compares the actual system message against the expected string to ensure 
+    /// consistency and correctness in the output provided by the application.
+    /// </remarks>
 {
     [Fact]
     public void Test1()
