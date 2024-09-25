@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using AiCommitMessage.Options;
 using OpenAI;
 using OpenAI.Chat;
 
@@ -15,7 +16,7 @@ internal class GenerateCommitMessageService
     /// </summary>
     /// <param name="message">The message.</param>
     /// <returns>System.String.</returns>
-    public string GenerateCommitMessage(string message)
+    public string GenerateCommitMessage(GenerateCommitMessageOptions options)
     {
         var url = Environment.GetEnvironmentVariable(
             "OPEN_API_URL",
@@ -39,13 +40,26 @@ internal class GenerateCommitMessageService
             new OpenAIClientOptions { Endpoint = new Uri(url) }
         );
 
+        var message =
+            "Branch: "
+            + options.Branch
+            + "\n\n"
+            + "Original message: "
+            + options.Message
+            + "\n\n"
+            + "Git Diff: "
+            + options.Diff;
+
         var chatCompletion = client.CompleteChat(
             new SystemChatMessage(Constants.SystemMessage),
             new UserChatMessage(message)
         );
 
-        var json = JsonSerializer.Serialize(chatCompletion);
-        File.WriteAllText("debug.json", json);
+        if (options.Debug)
+        {
+            var json = JsonSerializer.Serialize(chatCompletion);
+            File.WriteAllText("debug.json", json);
+        }
 
         return chatCompletion.Value.Content[0].Text;
     }

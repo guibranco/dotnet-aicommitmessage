@@ -6,7 +6,7 @@ namespace AiCommitMessage.Options;
 /// Class GenerateMessageOptions.
 /// </summary>
 [Verb("generate-message", HelpText = "Generate a commit message based on staged changes.")]
-public class GenerateMessageOptions
+public class GenerateCommitMessageOptions
 {
     /// <summary>
     /// Gets or sets the message.
@@ -28,4 +28,11 @@ public class GenerateMessageOptions
     /// <value>The difference.</value>
     [Option('d', "diff", Required = true, HelpText = "The staged changes.")]
     public string Diff { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether debug is enabled or not.
+    /// </summary>
+    /// <value><c>true</c> if debug is enabled; otherwise, <c>false</c>.</value>
+    [Option('D', "debug", Required = false, HelpText = "Debug mode.")]
+    public bool Debug { get; set; }
 }

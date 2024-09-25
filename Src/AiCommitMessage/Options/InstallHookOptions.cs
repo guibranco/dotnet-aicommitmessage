@@ -14,4 +14,11 @@ public class InstallHookOptions
     /// <value>The path.</value>
     [Option('p', "path", Required = false, HelpText = "The GIT hooks directory to override.")]
     public string Path { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the hook file should be overriden.
+    /// </summary>
+    /// <value><c>true</c> to override; otherwise, <c>false</c>.</value>
+    [Option('o', "override", Required = false, HelpText = "Override the existing hook.")]
+    public bool Override { get; set; }
 }

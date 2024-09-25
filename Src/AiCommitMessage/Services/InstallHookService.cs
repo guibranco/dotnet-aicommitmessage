@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
+using AiCommitMessage.Options;
 
 namespace AiCommitMessage.Services;
 
@@ -11,18 +12,48 @@ internal class InstallHookService
     /// <summary>
     /// Installs the hook.
     /// </summary>
-    public void InstallHook()
+    /// <param name="options">The options.</param>
+    public void InstallHook(InstallHookOptions options)
     {
-        var directory = GetHooksDirectory();
+        var directory = options.Path;
+        if (string.IsNullOrWhiteSpace(options.Path))
+        {
+            directory = Path.Combine(GetGitRepositoryRootLevel(), GetHooksDirectory());
+        }
+
         var hookPath = Path.Combine(directory, "prepare-commit-msg");
-        if (File.Exists(hookPath))
+        if (File.Exists(hookPath) && options.Override == false)
         {
             Output.ErrorLine("The prepare-commit-msg hook already exists.");
             return;
         }
 
         ExtractEmbeddedResource(directory, "AiCommitMessage", "prepare-commit-msg");
-        MakeExecutable(hookPath);
+        if (IsChmodAvailable())
+        {
+            MakeExecutable(hookPath);
+        }
+    }
+
+    /// <summary>
+    /// Gets the git repository root level.
+    /// </summary>
+    /// <returns>System.String.</returns>
+    private static string GetGitRepositoryRootLevel()
+    {
+        var processStartInfo = new ProcessStartInfo
+        {
+            FileName = "git",
+            Arguments = "rev-parse --show-toplevel",
+            RedirectStandardOutput = true,
+            UseShellExecute = false,
+            CreateNoWindow = true,
+        };
+        using var process = new Process { StartInfo = processStartInfo };
+        process.Start();
+        var rootLevel = process.StandardOutput.ReadToEnd();
+        process.WaitForExit();
+        return rootLevel.Trim();
     }
 
     /// <summary>
@@ -65,6 +96,34 @@ internal class InstallHookService
         using var process = new Process { StartInfo = processStartInfo };
         process.Start();
         process.WaitForExit();
+    }
+
+    /// <summary>
+    /// Determines whether [is chmod available].
+    /// </summary>
+    /// <returns><c>true</c> if [is chmod available]; otherwise, <c>false</c>.</returns>
+    private static bool IsChmodAvailable()
+    {
+        try
+        {
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = "chmod",
+                Arguments = "--version",
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+            };
+
+            using var process = Process.Start(startInfo);
+            process?.WaitForExit();
+            return process is { ExitCode: 0 };
+        }
+        catch (Exception)
+        {
+            return false;
+        }
     }
 
     /// <summary>

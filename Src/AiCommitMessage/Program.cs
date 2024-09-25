@@ -21,9 +21,11 @@ internal class Program
     static void Main(string[] args)
     {
         Parser
-            .Default.ParseArguments<InstallHookOptions, GenerateMessageOptions, SetSettingsOptions>(
-                args
-            )
+            .Default.ParseArguments<
+                InstallHookOptions,
+                GenerateCommitMessageOptions,
+                SetSettingsOptions
+            >(args)
             .WithParsed(Run)
             .WithNotParsed(HandleErrors);
         ;
@@ -34,11 +36,11 @@ internal class Program
         switch (options)
         {
             case InstallHookOptions installHookOptions:
-                new InstallHookService().InstallHook();
+                new InstallHookService().InstallHook(installHookOptions);
                 break;
-            case GenerateMessageOptions generateMessageOptions:
+            case GenerateCommitMessageOptions generateMessageOptions:
                 var generatedMessage = new GenerateCommitMessageService().GenerateCommitMessage(
-                    generateMessageOptions.Diff
+                    generateMessageOptions
                 );
                 Output.InfoLine(generatedMessage);
                 break;
