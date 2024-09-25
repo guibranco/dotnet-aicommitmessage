@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
-using OpenAI.Chat;
-using Spectre.Console;
+using AiCommitMessage.Options;
+using AiCommitMessage.Services;
+using CommandLine;
 
 namespace AiCommitMessage;
 
@@ -20,55 +20,36 @@ internal class Program
     /// </remarks>
     static void Main(string[] args)
     {
-        if (args.Length == 0)
-        {
-            var versionString = Assembly
-                .GetEntryAssembly()
-                ?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-                ?.InformationalVersion;
-
-            AnsiConsole.WriteLine($"AiCommitMessage v{versionString}");
-            AnsiConsole.WriteLine("-------------");
-            AnsiConsole.WriteLine("\nUsage:");
-            AnsiConsole.WriteLine("dotnet-aicommitmessage generate-message $(git diff --staged)");
-            return;
-        }
-
-        var message = string.Join(' ', args);
-        OpenAI(message);
+        Parser
+            .Default.ParseArguments<InstallHookOptions, GenerateMessageOptions, SetSettingsOptions>(
+                args
+            )
+            .WithParsed(Run)
+            .WithNotParsed(HandleErrors);
+        ;
     }
 
-    /// <summary>
-    /// Sends a message to the OpenAI chat model and displays the response.
-    /// </summary>
-    /// <param name="message">The message to be sent to the OpenAI chat model.</param>
-    /// <remarks>
-    /// This method retrieves the OpenAI API key from the environment variables. If the API key is not set, it prompts the user to set the
-    /// "OPENAI_API_KEY" environment variable and exits the application. Once the key is obtained, it initializes a ChatClient with
-    /// the specified model ("gpt-4o-mini") and sends a chat completion request using the provided message. The response from the
-    /// chat model is then displayed to the user. This method relies on the AnsiConsole for output and requires proper configuration
-    /// of the environment variable for successful execution.
-    /// </remarks>
-    static void OpenAI(string message)
+    private static void Run(object options)
     {
-        var key = Environment.GetEnvironmentVariable(
-            "OPENAI_API_KEY",
-            EnvironmentVariableTarget.User
-        );
-        if (string.IsNullOrEmpty(key))
+        switch (options)
         {
-            AnsiConsole.WriteLine("Please set the OPENAI_API_KEY environment variable.");
-            Environment.Exit(1);
-            return;
+            case InstallHookOptions installHookOptions:
+                new InstallHookService().InstallHook();
+                break;
+            case GenerateMessageOptions generateMessageOptions:
+                var generatedMessage = new GenerateCommitMessageService().GenerateCommitMessage(
+                    generateMessageOptions.Diff
+                );
+                Output.InfoLine(generatedMessage);
+                break;
+            case SetSettingsOptions setSettingsOptions:
+                new SettingsService().SetSettings(setSettingsOptions);
+                break;
         }
+    }
 
-        var client = new ChatClient("gpt-4o-mini", key);
-
-        var chatCompletion = client.CompleteChat(
-            new SystemChatMessage(Constants.SystemMessage),
-            new UserChatMessage(message)
-        );
-
-        AnsiConsole.WriteLine(chatCompletion.Value.Content[0].Text);
+    private static void HandleErrors(IEnumerable<Error> obj)
+    {
+        Output.ErrorLine("Invalid command-line arguments.");
     }
 }
