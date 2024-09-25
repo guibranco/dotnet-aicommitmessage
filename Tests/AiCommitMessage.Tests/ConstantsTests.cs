@@ -3,6 +3,21 @@ using FluentAssertions;
 namespace AiCommitMessage.Tests;
 
 public class ConstantsTests
+    /// <summary>
+    /// Tests the system message output for commit quality analysis.
+    /// </summary>
+    /// <remarks>
+    /// This test method, <c>Test1</c>, is designed to verify that the system message 
+    /// used for analyzing the quality of commits in GitHub is correctly defined. 
+    /// It checks that the expected output matches the actual output from the 
+    /// <c>Constants.SystemMessage</c> property. The expected output includes a 
+    /// detailed list of commit types and their meanings, which are crucial for 
+    /// classifying changes made in a repository. The test ensures that the 
+    /// system message is accurate and adheres to the specified format, which 
+    /// includes recommendations for various commit types such as 'feat', 'fix', 
+    /// 'docs', and others. This is essential for maintaining clarity and 
+    /// consistency in commit messages across the project.
+    /// </remarks>
 {
     [Fact]
     public void Test1()
