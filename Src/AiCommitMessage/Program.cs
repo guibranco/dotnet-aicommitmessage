@@ -47,6 +47,7 @@ internal class Program
                 break;
             default:
                 Output.ErrorLine("Invalid command-line arguments.");
+                break;
         }
     }
 
