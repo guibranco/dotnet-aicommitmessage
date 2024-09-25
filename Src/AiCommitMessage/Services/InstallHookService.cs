@@ -109,9 +109,9 @@ internal class InstallHookService
     /// </summary>
     /// <param name="filePath">The path to the file that needs to be made executable.</param>
     /// <remarks>
-    /// This method uses the Unix command 'chmod' to change the file permissions of the specified <paramref name="filePath"/>. 
-    /// It sets the executable bit for the file, allowing it to be run as a program. 
-    /// The method creates a new process to execute the command and waits for it to complete before returning. 
+    /// This method uses the Unix command 'chmod' to change the file permissions of the specified <paramref name="filePath"/>.
+    /// It sets the executable bit for the file, allowing it to be run as a program.
+    /// The method creates a new process to execute the command and waits for it to complete before returning.
     /// Note that this method is intended for use in environments where the 'chmod' command is available, such as Unix-like operating systems.
     /// </remarks>
     private static void MakeExecutable(string filePath)
@@ -133,15 +133,15 @@ internal class InstallHookService
     /// Checks if the 'chmod' command is available on the system.
     /// </summary>
     /// <returns>
-    /// Returns true if the 'chmod' command is available (i.e., it executes successfully), 
+    /// Returns true if the 'chmod' command is available (i.e., it executes successfully),
     /// otherwise returns false.
     /// </returns>
     /// <remarks>
-    /// This method attempts to start a process that runs the 'chmod --version' command 
-    /// to check for its availability. It sets up the process with specific start information, 
-    /// including redirecting standard output and error, and ensuring that it does not use 
-    /// the shell to execute the command. The method waits for the process to exit and checks 
-    /// the exit code to determine if the command was successful. If any exception occurs during 
+    /// This method attempts to start a process that runs the 'chmod --version' command
+    /// to check for its availability. It sets up the process with specific start information,
+    /// including redirecting standard output and error, and ensuring that it does not use
+    /// the shell to execute the command. The method waits for the process to exit and checks
+    /// the exit code to determine if the command was successful. If any exception occurs during
     /// this process, it catches the exception and returns false, indicating that 'chmod' is not available.
     /// </remarks>
     private static bool IsChmodAvailable()

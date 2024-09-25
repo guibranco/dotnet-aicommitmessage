@@ -13,7 +13,7 @@ internal class Program
     /// </summary>
     /// <param name="args">An array of strings representing the command-line arguments passed to the application.</param>
     /// <remarks>
-    /// This method utilizes the Parser class to parse command-line arguments into specific options types: 
+    /// This method utilizes the Parser class to parse command-line arguments into specific options types:
     /// <see cref="InstallHookOptions"/>, <see cref="GenerateCommitMessageOptions"/>, and <see cref="SetSettingsOptions"/>.
     /// It calls the <c>Run</c> method if the parsing is successful, allowing the application to execute the intended functionality.
     /// If the parsing fails, it invokes the <c>HandleErrors</c> method to manage any errors that occurred during parsing.
@@ -37,21 +37,21 @@ internal class Program
     /// </summary>
     /// <param name="options">An object representing the command-line options to be processed.</param>
     /// <remarks>
-    /// This method uses a switch statement to determine the type of action to perform based on the 
+    /// This method uses a switch statement to determine the type of action to perform based on the
     /// runtime type of the <paramref name="options"/> parameter. It handles three specific cases:
-    /// 
-    /// 1. If the options are of type <see cref="InstallHookOptions"/>, it calls the 
+    ///
+    /// 1. If the options are of type <see cref="InstallHookOptions"/>, it calls the
     ///    <see cref="InstallHookService.InstallHook"/> method to install a hook based on the provided options.
-    /// 
-    /// 2. If the options are of type <see cref="GenerateCommitMessageOptions"/>, it generates a commit message 
-    ///    using the <see cref="GenerateCommitMessageService.GenerateCommitMessage"/> method and outputs the 
+    ///
+    /// 2. If the options are of type <see cref="GenerateCommitMessageOptions"/>, it generates a commit message
+    ///    using the <see cref="GenerateCommitMessageService.GenerateCommitMessage"/> method and outputs the
     ///    generated message to the console.
-    /// 
-    /// 3. If the options are of type <see cref="SetSettingsOptions"/>, it updates settings by invoking the 
+    ///
+    /// 3. If the options are of type <see cref="SetSettingsOptions"/>, it updates settings by invoking the
     ///    <see cref="SettingsService.SetSettings"/> method with the provided options.
-    /// 
+    ///
     /// If none of these types match, an error message indicating "Invalid command-line arguments." is outputted.
-    /// This method is designed to facilitate command-line operations by routing the execution flow to the 
+    /// This method is designed to facilitate command-line operations by routing the execution flow to the
     /// appropriate service based on user input.
     /// </remarks>
     private static void Run(object options)

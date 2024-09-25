@@ -12,10 +12,10 @@ public static class Output
     /// <param name="message">The message template that contains placeholders for formatting.</param>
     /// <param name="args">An array of objects to format and insert into the message template.</param>
     /// <remarks>
-    /// This method utilizes the AnsiConsole class to output a formatted string to the console. 
-    /// The <paramref name="message"/> can include markup syntax for styling, such as colors and bold text. 
-    /// The <paramref name="args"/> parameter allows for a variable number of arguments, which are formatted 
-    /// according to the placeholders defined in the <paramref name="message"/>. 
+    /// This method utilizes the AnsiConsole class to output a formatted string to the console.
+    /// The <paramref name="message"/> can include markup syntax for styling, such as colors and bold text.
+    /// The <paramref name="args"/> parameter allows for a variable number of arguments, which are formatted
+    /// according to the placeholders defined in the <paramref name="message"/>.
     /// This is particularly useful for creating dynamic and visually appealing console output.
     /// </remarks>
     public static void InfoLine(string message, params object[] args) =>
@@ -44,9 +44,9 @@ public static class Output
     /// <param name="message">The message format string that contains placeholders for the arguments.</param>
     /// <param name="args">An array of objects to format and insert into the message.</param>
     /// <remarks>
-    /// This method utilizes the AnsiConsole to output a message that is formatted according to the specified 
+    /// This method utilizes the AnsiConsole to output a message that is formatted according to the specified
     /// format string. The message is displayed in grey color, making it visually distinct from other console output.
-    /// The method supports a variable number of arguments, allowing for flexible message formatting. 
+    /// The method supports a variable number of arguments, allowing for flexible message formatting.
     /// It uses string interpolation to combine the message and its arguments before sending it to the console.
     /// </remarks>
     public static void TraceLine(string message, params object[] args) =>
