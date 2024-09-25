@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Net.Mime;
 using AiCommitMessage.Options;
 using AiCommitMessage.Services;
 using CommandLine;
@@ -29,7 +30,6 @@ internal class Program
             >(args)
             .WithParsed(Run)
             .WithNotParsed(HandleErrors);
-        ;
     }
 
     /// <summary>
@@ -72,6 +72,7 @@ internal class Program
                 break;
             default:
                 Output.ErrorLine("Invalid command-line arguments.");
+                Environment.ExitCode = 1;
                 break;
         }
     }
@@ -89,5 +90,6 @@ internal class Program
     private static void HandleErrors(IEnumerable<Error> obj)
     {
         Output.ErrorLine("Invalid command-line arguments.");
+        Environment.ExitCode = 2;
     }
 }

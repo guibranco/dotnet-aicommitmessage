@@ -12,7 +12,7 @@ public class GenerateCommitMessageOptions
     /// Gets or sets the message.
     /// </summary>
     /// <value>The message.</value>
-    [Option('m', "message", Required = true, HelpText = "The current GIT version.")]
+    [Option('m', "message", Required = true, HelpText = "The current commit message.")]
     public string Message { get; set; }
 
     /// <summary>
