@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Reflection;
 
 namespace AiCommitMessage.Services;
 
@@ -12,14 +13,58 @@ internal class InstallHookService
     /// </summary>
     public void InstallHook()
     {
-        var hookPath = Path.Combine(Environment.CurrentDirectory, ".git/hooks/prepare-commit-msg");
+        var directory = GetHooksDirectory();
+        var hookPath = Path.Combine(directory, "prepare-commit-msg");
         if (File.Exists(hookPath))
         {
             Output.ErrorLine("The prepare-commit-msg hook already exists.");
             return;
         }
 
-        ExtractEmbeddedResource(".git/hooks", "AiCommitMessage", "prepare-commit-msg");
+        ExtractEmbeddedResource(directory, "AiCommitMessage", "prepare-commit-msg");
+        MakeExecutable(hookPath);
+    }
+
+    /// <summary>
+    /// Gets the hooks directory.
+    /// </summary>
+    /// <returns>System.String.</returns>
+    private static string GetHooksDirectory()
+    {
+        var processStartInfo = new ProcessStartInfo
+        {
+            FileName = "git",
+            Arguments = "config core.hooksPath",
+            RedirectStandardOutput = true,
+            UseShellExecute = false,
+            CreateNoWindow = true,
+        };
+
+        using var process = new Process { StartInfo = processStartInfo };
+        process.Start();
+        var hooksPath = process.StandardOutput.ReadToEnd();
+        process.WaitForExit();
+
+        return string.IsNullOrEmpty(hooksPath) ? Path.Combine(".git", "hooks") : hooksPath.Trim();
+    }
+
+    /// <summary>
+    /// Makes the executable.
+    /// </summary>
+    /// <param name="filePath">The file path.</param>
+    private static void MakeExecutable(string filePath)
+    {
+        var processStartInfo = new ProcessStartInfo
+        {
+            FileName = "chmod",
+            Arguments = $"+x {filePath}",
+            UseShellExecute = false,
+            CreateNoWindow = true,
+        };
+
+        using var process = new Process { StartInfo = processStartInfo };
+        process.Start();
+        process.WaitForExit();
     }
 
     /// <summary>
