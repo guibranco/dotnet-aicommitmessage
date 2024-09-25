@@ -45,6 +45,8 @@ internal class Program
             case SetSettingsOptions setSettingsOptions:
                 new SettingsService().SetSettings(setSettingsOptions);
                 break;
+            default:
+                Output.ErrorLine("Invalid command-line arguments.");
         }
     }
 
