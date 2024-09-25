@@ -34,9 +34,9 @@ internal class InstallHookService
         string file
     )
     {
-        using var stream = Assembly
-            .GetExecutingAssembly()
-            .GetManifestResourceStream(resourceLocation + "." + file);
+        using var stream = typeof(InstallHookService).Assembly.GetManifestResourceStream(
+            resourceLocation + "." + file
+        );
         using var fileStream = new FileStream(Path.Combine(outputDir, file), FileMode.Create);
         for (var i = 0; i < stream.Length; i++)
         {
