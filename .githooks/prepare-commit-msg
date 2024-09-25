@@ -19,7 +19,7 @@ GIT_DIFF=$(git diff --staged)
 CURRENT=$(cat "$COMMIT_MSG_FILE")
 
 # Run dotnet-aicommitmessage with error handling  
-if ! AI_MESSAGE=$(dotnet-aicommitmessage -m "$CURRENT" -b "branch-name" -d "$GIT_DIFF" ); then  
+if ! AI_MESSAGE=$(dotnet-aicommitmessage generate-message -m "$CURRENT" -b "branch-name" -d "$GIT_DIFF" ); then  
     echo "Error: Failed to generate AI commit message. Using original message." >&2  
     exit 0  
 fi

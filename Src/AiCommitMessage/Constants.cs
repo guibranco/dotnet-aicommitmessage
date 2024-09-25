@@ -1,7 +1,13 @@
 ﻿namespace AiCommitMessage;
 
+/// <summary>
+/// Class Constants.
+/// </summary>
 public class Constants
 {
+    /// <summary>
+    /// The system message.
+    /// </summary>
     public const string SystemMessage = """
         You are an assistant specialized in analyzing the quality of commits for GitHub, using the output of the git diff command and classifying them according to the following recommendations list:
 
