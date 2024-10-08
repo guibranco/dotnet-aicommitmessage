@@ -22,6 +22,19 @@ public class Constants
         style - Commits of type style indicate that there have been changes related to code formatting, semicolons, trailing spaces, lint… (Does not include code changes).
         refactor - Commits of type refactor refer to changes due to refactoring that do not alter functionality, such as a change in the way a part of the screen is processed but maintaining the same functionality, or performance improvements due to a code review.
         chore - Commits of type chore indicate updates to build tasks, admin configurations, packages, etc... Such as adding a package to .gitignore file. (Does not include code changes).
+        /// <summary>
+        /// Provides a classification of commit types for continuous integration processes.
+        /// </summary>
+        /// <remarks>
+        /// This method categorizes commits into three distinct types: 
+        /// - <c>raw</c>: Indicates changes related to configuration files, data, features, and parameters.
+        /// - <c>cleanup</c>: Used for removing commented code, unnecessary snippets, or any other form of source code cleanup, 
+        ///   aiming to improve readability and maintainability.
+        /// - <c>remove</c>: Indicates the deletion of obsolete or unused files, directories, or functionalities, 
+        ///   which helps in reducing the project’s size and complexity while keeping it organized.
+        /// The output is a concise description of changes in up to 10 words in English based on the branch name, 
+        /// commit message, and diff output.
+        /// </remarks>
         ci - Commits of type ci indicate changes related to continuous integration.
         raw - Commits of type raw indicate changes related to configuration files, data, features, and parameters.
         cleanup - Commits of type cleanup are used to remove commented code, unnecessary snippets, or any other form of source code cleanup, aiming to improve its readability and maintainability.
