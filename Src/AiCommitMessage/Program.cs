@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Net.Mime;
 using AiCommitMessage.Options;
 using AiCommitMessage.Services;
 using CommandLine;

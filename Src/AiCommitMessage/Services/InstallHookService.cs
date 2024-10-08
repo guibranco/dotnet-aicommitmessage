@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Reflection;
 using AiCommitMessage.Options;
 
 namespace AiCommitMessage.Services;
@@ -63,7 +62,8 @@ internal class InstallHookService
             UseShellExecute = false,
             CreateNoWindow = true,
         };
-        using var process = new Process { StartInfo = processStartInfo };
+        using var process = new Process();
+        process.StartInfo = processStartInfo;
         process.Start();
         var rootLevel = process.StandardOutput.ReadToEnd();
         process.WaitForExit();
@@ -96,7 +96,8 @@ internal class InstallHookService
             CreateNoWindow = true,
         };
 
-        using var process = new Process { StartInfo = processStartInfo };
+        using var process = new Process();
+        process.StartInfo = processStartInfo;
         process.Start();
         var hooksPath = process.StandardOutput.ReadToEnd();
         process.WaitForExit();
@@ -124,7 +125,8 @@ internal class InstallHookService
             CreateNoWindow = true,
         };
 
-        using var process = new Process { StartInfo = processStartInfo };
+        using var process = new Process();
+        process.StartInfo = processStartInfo;
         process.Start();
         process.WaitForExit();
     }
@@ -190,9 +192,12 @@ internal class InstallHookService
             resourceLocation + "." + file
         );
         using var fileStream = new FileStream(Path.Combine(outputDir, file), FileMode.Create);
-        for (var i = 0; i < stream.Length; i++)
+        if (stream != null)
         {
-            fileStream.WriteByte((byte)stream.ReadByte());
+            for (var i = 0; i < stream.Length; i++)
+            {
+                fileStream.WriteByte((byte)stream.ReadByte());
+            }
         }
 
         fileStream.Close();

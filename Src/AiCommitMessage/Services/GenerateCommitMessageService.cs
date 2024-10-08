@@ -1,5 +1,5 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using System.ClientModel;
+using System.Text.Json;
 using AiCommitMessage.Options;
 using OpenAI;
 using OpenAI.Chat;
@@ -25,13 +25,25 @@ internal class GenerateCommitMessageService
     /// </remarks>
     public string GenerateCommitMessage(GenerateCommitMessageOptions options)
     {
+        var model = Environment.GetEnvironmentVariable(
+            "OPENAI_MODEL",
+            EnvironmentVariableTarget.User
+        );
+
+        if (string.IsNullOrWhiteSpace(model))
+        {
+            model = "gpt-4o-mini";
+        }
+
         var url = Environment.GetEnvironmentVariable(
-            "OPEN_API_URL",
+            "OPENAI_API_URL",
             EnvironmentVariableTarget.User
         );
 
         if (string.IsNullOrEmpty(url))
+        {
             url = "https://api.openai.com/v1";
+        }
 
         var key = Environment.GetEnvironmentVariable(
             "OPENAI_API_KEY",
@@ -39,11 +51,13 @@ internal class GenerateCommitMessageService
         );
 
         if (string.IsNullOrEmpty(key))
+        {
             return "Please set the OPENAI_API_KEY environment variable.";
+        }
 
         var client = new ChatClient(
-            "gpt-4o-mini",
-            key,
+            model,
+            new ApiKeyCredential(key),
             new OpenAIClientOptions { Endpoint = new Uri(url) }
         );
 
@@ -62,11 +76,13 @@ internal class GenerateCommitMessageService
             new UserChatMessage(message)
         );
 
-        if (options.Debug)
+        if (!options.Debug)
         {
-            var json = JsonSerializer.Serialize(chatCompletion);
-            File.WriteAllText("debug.json", json);
+            return chatCompletion.Value.Content[0].Text;
         }
+
+        var json = JsonSerializer.Serialize(chatCompletion);
+        File.WriteAllText("debug.json", json);
 
         return chatCompletion.Value.Content[0].Text;
     }
