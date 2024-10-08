@@ -53,9 +53,9 @@ public class GenerateCommitMessageService
 
         var text = chatCompletion.Value.Content[0].Text;
 
-        if (text.Length >= 6 && text[..6] == "type -")
+        if (text.Length >= 7 && text[..7] == "type - ")
         {
-            text = text[6..];
+            text = text[7..];
         }
 
         if (!options.Debug)
