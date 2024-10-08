@@ -37,4 +37,38 @@ public class BranchNameUtilityTests
         // Assert
         result.Should().BeEmpty();
     }
+
+    [Theory]
+    [InlineData("feature/XPTO-1234-some-branch-name_with_description", "XPTO-1234")]
+    [InlineData("feature/XPTO1234-some-branch-name_with_description", "XPTO-1234")]
+    [InlineData("XPTO1234-some-branch-name_with_description", "XPTO-1234")]
+    [InlineData("XPTO-1234-some-branch-name_with_description", "XPTO-1234")]
+    [InlineData("bugfix/XPTO-1234--some-branch-name_with_description", "XPTO-1234")]
+    [InlineData("hotfix/xpto-1234-some-branch-name", "XPTO-1234")]
+    [InlineData("release/XPTO1234", "XPTO-1234")]
+    [InlineData("XPTO-1234", "XPTO-1234")]
+    [InlineData("xpto1234", "XPTO-1234")]
+    public void ExtractJiraTicket_ShouldReturnExpectedResult(
+        string branchName,
+        string expectedTicket
+    )
+    {
+        // Act
+        var result = BranchNameUtility.ExtractJiraTicket(branchName);
+
+        // Assert
+        result.Should().NotBeEmpty();
+        result.Should().Be(expectedTicket);
+    }
+
+    [Theory]
+    [InlineData("chore/no-ticket-branch")]
+    public void ExtractJiraTicket_ShouldReturnEmptyString(string branchName)
+    {
+        // Act
+        var result = BranchNameUtility.ExtractJiraTicket(branchName);
+
+        // Assert
+        result.Should().BeEmpty();
+    }
 }
