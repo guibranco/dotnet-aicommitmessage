@@ -9,7 +9,7 @@ namespace AiCommitMessage.Services;
 /// <summary>
 /// Class GenerateCommitMessageService.
 /// </summary>
-internal class GenerateCommitMessageService
+public class GenerateCommitMessageService
 {
     /// <summary>
     /// Generates a commit message based on the provided options and the OpenAI API.
@@ -76,14 +76,21 @@ internal class GenerateCommitMessageService
             new UserChatMessage(message)
         );
 
+        var text = chatCompletion.Value.Content[0].Text;
+
+        if (text.Length >= 6 && text[..6] == "type -")
+        {
+            text = text[6..];
+        }
+
         if (!options.Debug)
         {
-            return chatCompletion.Value.Content[0].Text;
+            return text;
         }
 
         var json = JsonSerializer.Serialize(chatCompletion);
         File.WriteAllText("debug.json", json);
 
-        return chatCompletion.Value.Content[0].Text;
+        return text;
     }
 }
