@@ -81,9 +81,20 @@ public class GenerateCommitMessageService
     }
 
     /// <summary>
-    /// Gets the git provider.
+    /// Retrieves the current Git provider based on the remote origin URL.
     /// </summary>
-    /// <returns>GitProvider.</returns>
+    /// <returns>A <see cref="GitProvider"/> enumeration value representing the detected Git provider.</returns>
+    /// <remarks>
+    /// This method executes a Git command to fetch the remote origin URL configured for the repository.
+    /// It uses the <c>git config --get remote.origin.url</c> command to obtain the URL, which is then analyzed to determine the Git provider.
+    /// The method checks for specific substrings in the URL to identify the provider:
+    /// - If the URL contains "dev.azure.com", it returns <see cref="GitProvider.AzureDevOps"/>.
+    /// - If the URL contains "bitbucket.org", it returns <see cref="GitProvider.Bitbucket"/>.
+    /// - If the URL contains "github.com", it returns <see cref="GitProvider.GitHub"/>.
+    /// - If the URL contains "gitlab.com", it returns <see cref="GitProvider.GitLab"/>.
+    /// If none of these providers are identified, it returns <see cref="GitProvider.Unidentified"/>.
+    /// This method is useful for determining the source control environment in which the code is hosted.
+    /// </remarks>
     private static GitProvider GetGitProvider()
     {
         var processStartInfo = new ProcessStartInfo
