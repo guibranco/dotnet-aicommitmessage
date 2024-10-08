@@ -1,6 +1,7 @@
+using AiCommitMessage.Utility;
 using FluentAssertions;
 
-namespace AiCommitMessage.Tests;
+namespace AiCommitMessage.Tests.Utility;
 
 /// <summary>
 /// Class ConstantsTests.

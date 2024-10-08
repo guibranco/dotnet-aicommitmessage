@@ -1,4 +1,4 @@
-# ![GIT Hooks + OpenAI - Generate GIT commit messages from Open AI](https://raw.githubusercontent.com/guibranco/dotnet-aicommitmessage/main/docs/images/splash.png)
+# ![GIT Hooks + OpenAI - Generate GIT commit messages from OpenAI](https://raw.githubusercontent.com/guibranco/dotnet-aicommitmessage/main/docs/images/splash.png)
 
 🧠 🧰 This tool generates AI-powered commit messages via Git hooks, automating meaningful message suggestions from OpenAI and others to improve commit quality and efficiency.
 
