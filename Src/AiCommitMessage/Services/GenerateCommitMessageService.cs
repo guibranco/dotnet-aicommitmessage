@@ -1,4 +1,5 @@
 ﻿using System.ClientModel;
+using System.Diagnostics;
 using System.Text.Json;
 using AiCommitMessage.Options;
 using AiCommitMessage.Utility;
@@ -58,6 +59,16 @@ public class GenerateCommitMessageService
             text = text[7..];
         }
 
+        var provider = GetGitProvider();
+        if (provider == GitProvider.GitHub)
+        {
+            var issueNumber = BranchNameUtility.ExtractIssueNumber(options.Branch);
+            if (!string.IsNullOrEmpty(issueNumber))
+            {
+                text = $"#{issueNumber} {text}";
+            }
+        }
+
         if (!options.Debug)
         {
             return text;
@@ -67,5 +78,48 @@ public class GenerateCommitMessageService
         File.WriteAllText("debug.json", json);
 
         return text;
+    }
+
+    /// <summary>
+    /// Gets the git provider.
+    /// </summary>
+    /// <returns>GitProvider.</returns>
+    private static GitProvider GetGitProvider()
+    {
+        var processStartInfo = new ProcessStartInfo
+        {
+            FileName = "git",
+            Arguments = "config --get remote.origin.url",
+            RedirectStandardOutput = true,
+            UseShellExecute = false,
+            CreateNoWindow = true,
+        };
+        using var process = new Process();
+        process.StartInfo = processStartInfo;
+        process.Start();
+        var originUrl = process.StandardOutput.ReadToEnd();
+        process.WaitForExit();
+
+        if (originUrl.Contains("dev.azure.com"))
+        {
+            return GitProvider.AzureDevOps;
+        }
+
+        if (originUrl.Contains("bitbucket.org"))
+        {
+            return GitProvider.Bitbucket;
+        }
+
+        if (originUrl.Contains("github.com"))
+        {
+            return GitProvider.GitHub;
+        }
+
+        if (originUrl.Contains("gitlab.com"))
+        {
+            return GitProvider.GitLab;
+        }
+
+        return GitProvider.Unidentified;
     }
 }
