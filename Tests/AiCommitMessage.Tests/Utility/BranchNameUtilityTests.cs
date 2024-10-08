@@ -4,7 +4,7 @@ using FluentAssertions;
 namespace AiCommitMessage.Tests.Utility;
 
 public class BranchNameUtilityTests
-{
+{    
     [Theory]
     [InlineData("feature/123-duplicated-schedule-in-payment-lock", "123")]
     [InlineData("bugfix/456-fix-login-bug", "456")]
@@ -35,28 +35,6 @@ public class BranchNameUtilityTests
         var result = BranchNameUtility.ExtractIssueNumber(branchName);
 
         // Assert
-        result.Should().BeEmpty();
-    /// <summary>
-    /// Tests the ExtractIssueNumber method to ensure it returns an empty string for a given branch name.
-    /// </summary>
-    /// <param name="branchName">The branch name from which to extract the issue number.</param>
-    /// <remarks>
-    /// This test case uses the xUnit testing framework to validate the behavior of the 
-    /// <see cref="BranchNameUtility.ExtractIssueNumber"/> method. The test is designed to check 
-    /// that when the input branch name does not contain an issue number (in this case, "chore/no-issue-number"), 
-    /// the method correctly returns an empty string. This is important for ensuring that the method 
-    /// behaves as expected when provided with branch names that do not follow the expected format.
-    /// </remarks>
+        result.Should().BeEmpty();    
     }
-    /// <summary>
-    /// Tests the extraction of issue numbers from branch names.
-    /// </summary>
-    /// <param name="branchName">The name of the branch from which to extract the issue number.</param>
-    /// <param name="expectedIssueNumber">The expected issue number that should be extracted from the branch name.</param>
-    /// <remarks>
-    /// This method uses the <see cref="BranchNameUtility.ExtractIssueNumber"/> function to retrieve the issue number from the provided branch name.
-    /// It asserts that the result is not empty and matches the expected issue number.
-    /// The test cases cover various formats of branch names, including features, bug fixes, hotfixes, enhancements, releases, and tasks.
-    /// This ensures that the extraction logic is robust and can handle different naming conventions.
-    /// </remarks>
 }
