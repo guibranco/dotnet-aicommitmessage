@@ -2,9 +2,20 @@ using System.Text.RegularExpressions;
 
 namespace AiCommitMessage.Utility;
 
+/// <summary>
+/// Class BranchNameUtility.
+/// </summary>
 public static class BranchNameUtility
 {
-    private const string Pattern = @"(?:issue)?[-/]?(\d+)";
+    /// <summary>
+    /// The GitHub issue pattern.
+    /// </summary>
+    private const string GitHubIssuePattern = @"(?:issue)?[-/]?(\d+)";
+
+    /// <summary>
+    /// The Jira ticket pattern.
+    /// </summary>
+    private const string JiraTicketPattern = @"(?i)([A-Z]+)-?(\d+)";
 
     /// <summary>
     /// Extracts the GitHub issue number from a branch name.
@@ -15,11 +26,35 @@ public static class BranchNameUtility
     {
         var match = Regex.Match(
             branchName,
-            Pattern,
+            GitHubIssuePattern,
             RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase,
             TimeSpan.FromSeconds(5)
         );
 
         return match.Success ? match.Groups[1].Value : string.Empty;
+    }
+
+    /// <summary>
+    /// Extracts the JIRA ticket number from a given branch name.
+    /// </summary>
+    /// <param name="branchName">The branch name to extract the JIRA ticket from.</param>
+    /// <returns>The extracted JIRA ticket number in uppercase, or an empty string if not found.</returns>
+    public static string ExtractJiraTicket(string branchName)
+    {
+        var match = Regex.Match(
+            branchName,
+            JiraTicketPattern,
+            RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase,
+            TimeSpan.FromSeconds(5)
+        );
+
+        if (!match.Success)
+        {
+            return string.Empty;
+        }
+
+        var projectKey = match.Groups[1].Value.ToUpperInvariant();
+        var issueNumber = match.Groups[2].Value;
+        return $"{projectKey}-{issueNumber}";
     }
 }

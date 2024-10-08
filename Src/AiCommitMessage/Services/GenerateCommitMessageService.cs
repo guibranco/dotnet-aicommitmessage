@@ -63,9 +63,17 @@ public class GenerateCommitMessageService
         if (provider == GitProvider.GitHub)
         {
             var issueNumber = BranchNameUtility.ExtractIssueNumber(options.Branch);
-            if (!string.IsNullOrEmpty(issueNumber))
+            if (!string.IsNullOrWhiteSpace(issueNumber))
             {
                 text = $"#{issueNumber} {text}";
+            }
+        }
+        else
+        {
+            var jiraTicketNumber = BranchNameUtility.ExtractJiraTicket(options.Branch);
+            if (!string.IsNullOrWhiteSpace(jiraTicketNumber))
+            {
+                text = $"[{jiraTicketNumber}] {text}";
             }
         }
 
