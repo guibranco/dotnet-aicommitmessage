@@ -1,4 +1,4 @@
-﻿namespace AiCommitMessage;
+﻿namespace AiCommitMessage.Utility;
 
 /// <summary>
 /// Class Constants.

@@ -1,6 +1,7 @@
 ﻿using System.ClientModel;
 using System.Text.Json;
 using AiCommitMessage.Options;
+using AiCommitMessage.Utility;
 using OpenAI;
 using OpenAI.Chat;
 
@@ -25,35 +26,9 @@ public class GenerateCommitMessageService
     /// </remarks>
     public string GenerateCommitMessage(GenerateCommitMessageOptions options)
     {
-        var model = Environment.GetEnvironmentVariable(
-            "OPENAI_MODEL",
-            EnvironmentVariableTarget.User
-        );
-
-        if (string.IsNullOrWhiteSpace(model))
-        {
-            model = "gpt-4o-mini";
-        }
-
-        var url = Environment.GetEnvironmentVariable(
-            "OPENAI_API_URL",
-            EnvironmentVariableTarget.User
-        );
-
-        if (string.IsNullOrEmpty(url))
-        {
-            url = "https://api.openai.com/v1";
-        }
-
-        var key = Environment.GetEnvironmentVariable(
-            "OPENAI_API_KEY",
-            EnvironmentVariableTarget.User
-        );
-
-        if (string.IsNullOrEmpty(key))
-        {
-            return "Please set the OPENAI_API_KEY environment variable.";
-        }
+        var model = EnvironmentLoader.LoadOpenAiModel();
+        var url = EnvironmentLoader.LoadOpenAiApiUrl();
+        var key = EnvironmentLoader.LoadOpenAiApiKey();
 
         var client = new ChatClient(
             model,
@@ -78,9 +53,9 @@ public class GenerateCommitMessageService
 
         var text = chatCompletion.Value.Content[0].Text;
 
-        if (text.Length >= 6 && text[..6] == "type -")
+        if (text.Length >= 7 && text[..7] == "type - ")
         {
-            text = text[6..];
+            text = text[7..];
         }
 
         if (!options.Debug)

@@ -1,10 +1,14 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using AiCommitMessage.Options;
 using AiCommitMessage.Services;
+using AiCommitMessage.Utility;
 using CommandLine;
 
 namespace AiCommitMessage;
 
+/// <summary>
+/// Class Program.
+/// </summary>
 [ExcludeFromCodeCoverage]
 internal class Program
 {
@@ -19,8 +23,7 @@ internal class Program
     /// If the parsing fails, it invokes the <c>HandleErrors</c> method to manage any errors that occurred during parsing.
     /// This structure allows for a clean and organized way to handle different command-line options and their corresponding actions.
     /// </remarks>
-    static void Main(string[] args)
-    {
+    static void Main(string[] args) =>
         Parser
             .Default.ParseArguments<
                 InstallHookOptions,
@@ -29,7 +32,6 @@ internal class Program
             >(args)
             .WithParsed(Run)
             .WithNotParsed(HandleErrors);
-    }
 
     /// <summary>
     /// Executes the appropriate action based on the provided options object.
