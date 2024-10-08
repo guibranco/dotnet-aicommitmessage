@@ -2,25 +2,16 @@ using FluentAssertions;
 
 namespace AiCommitMessage.Tests;
 
-public class ConstantsTests
 /// <summary>
-/// Tests the system message output for commit quality analysis.
+/// Class ConstantsTests.
 /// </summary>
-/// <remarks>
-/// This test method, <c>Test1</c>, is designed to verify that the system message
-/// used for analyzing the quality of commits in GitHub is correctly defined.
-/// It checks that the expected output matches the actual output from the
-/// <c>Constants.SystemMessage</c> property. The expected output includes a
-/// detailed list of commit types and their meanings, which are crucial for
-/// classifying changes made in a repository. The test ensures that the
-/// system message is accurate and adheres to the specified format, which
-/// includes recommendations for various commit types such as 'feat', 'fix',
-/// 'docs', and others. This is essential for maintaining clarity and
-/// consistency in commit messages across the project.
-/// </remarks>
+public class ConstantsTests
 {
+    /// <summary>
+    /// Defines the test method SystemMessageShouldMatch.
+    /// </summary>
     [Fact]
-    public void Test1()
+    public void SystemMessageShouldMatch()
     {
         // Arrange
         const string expected = """
@@ -42,10 +33,9 @@ public class ConstantsTests
             cleanup - Commits of type cleanup are used to remove commented code, unnecessary snippets, or any other form of source code cleanup, aiming to improve its readability and maintainability.
             remove - Commits of type remove indicate the deletion of obsolete or unused files, directories, or functionalities, reducing the project’s size and complexity and keeping it more organized.
 
-            OUTPUT:
-            type - description of changes in up to 10 words in English.
+            OUTPUT: type - description of changes in up to 10 words in English.
 
-            The type must be one of the ones listed above.
+            The 'type' must be one of the ones listed above in the recommendations list.
             The description should be based on the branch name, the commit message, and the diff output.
             """;
 

@@ -27,10 +27,9 @@ public class Constants
         cleanup - Commits of type cleanup are used to remove commented code, unnecessary snippets, or any other form of source code cleanup, aiming to improve its readability and maintainability.
         remove - Commits of type remove indicate the deletion of obsolete or unused files, directories, or functionalities, reducing the project’s size and complexity and keeping it more organized.
 
-        OUTPUT:
-        type - description of changes in up to 10 words in English.
+        OUTPUT: type - description of changes in up to 10 words in English.
 
-        The type must be one of the ones listed above.
+        The 'type' must be one of the ones listed above in the recommendations list.
         The description should be based on the branch name, the commit message, and the diff output.
         """;
 }
