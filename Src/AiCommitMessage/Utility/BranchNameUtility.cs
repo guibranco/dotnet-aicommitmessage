@@ -53,7 +53,7 @@ public static class BranchNameUtility
             return string.Empty;
         }
 
-        var projectKey = match.Groups[1].Value.ToUpper();
+        var projectKey = match.Groups[1].Value.ToUpperInvariant();
         var issueNumber = match.Groups[2].Value;
         return $"{projectKey}-{issueNumber}";
     }
