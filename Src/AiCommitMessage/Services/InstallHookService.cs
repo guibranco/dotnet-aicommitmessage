@@ -210,9 +210,9 @@ internal class InstallHookService
     /// </summary>
     /// <param name="path">The path of the directory to ensure exists.</param>
     /// <remarks>
-    /// This method checks the directory name extracted from the provided <paramref name="path"/>. 
-    /// If the directory name is not null and has a length greater than zero, it attempts to create the directory 
-    /// using the <see cref="Directory.CreateDirectory"/> method. This is useful for ensuring that a directory 
+    /// This method checks the directory name extracted from the provided <paramref name="path"/>.
+    /// If the directory name is not null and has a length greater than zero, it attempts to create the directory
+    /// using the <see cref="Directory.CreateDirectory"/> method. This is useful for ensuring that a directory
     /// is available before performing file operations that require it.
     /// </remarks>
     private static void EnsureDirectoryExists(string path)
