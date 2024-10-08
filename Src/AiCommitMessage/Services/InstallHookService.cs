@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using AiCommitMessage.Options;
+using AiCommitMessage.Utility;
 
 namespace AiCommitMessage.Services;
 

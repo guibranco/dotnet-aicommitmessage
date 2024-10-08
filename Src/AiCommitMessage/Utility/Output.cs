@@ -1,6 +1,6 @@
 ﻿using Spectre.Console;
 
-namespace AiCommitMessage;
+namespace AiCommitMessage.Utility;
 
 public static class Output
 {
