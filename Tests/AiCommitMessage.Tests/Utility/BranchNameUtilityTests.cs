@@ -14,7 +14,6 @@ public class BranchNameUtilityTests
     [InlineData("enhancement/ISSUE-654-enhance-performance", "654")]
     [InlineData("release/321", "321")]
     [InlineData("task/ISSUE-1111-complete-task", "1111")]
-    [InlineData("chore/no-issue-number", "No issue number found.")]
     public void ExtractIssueNumber_ShouldReturnCorrectIssueNumber(
         string branchName,
         string expectedIssueNumber
@@ -26,5 +25,16 @@ public class BranchNameUtilityTests
         // Assert
         result.Should().NotBeEmpty();
         result.Should().Be(expectedIssueNumber);
+    }
+
+    [Theory]
+    [InlineData("chore/no-issue-number")]
+    public void ExtractIssueNumber_ShouldReturnEmptyString(string branchName)
+    {
+        // Act
+        var result = BranchNameUtility.ExtractIssueNumber(branchName);
+
+        // Assert
+        result.Should().BeEmpty();
     }
 }

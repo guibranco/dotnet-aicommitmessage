@@ -4,7 +4,7 @@ namespace AiCommitMessage.Utility;
 
 public static class BranchNameUtility
 {
-    private const string Pattern = @"(?i)issue?-?(\d+)";
+    private const string Pattern = @"(?:issue)?[-/]?(\d+)";
 
     /// <summary>
     /// Extracts the GitHub issue number from a branch name.
