@@ -189,6 +189,7 @@ internal class InstallHookService
         string file
     )
     {
+        EnsureDirectoryExists(outputDir);
         using var stream = typeof(InstallHookService).Assembly.GetManifestResourceStream(
             resourceLocation + "." + file
         );
@@ -202,5 +203,18 @@ internal class InstallHookService
         }
 
         fileStream.Close();
+    }
+
+    /// <summary>
+    /// Ensures the directory exists.
+    /// </summary>
+    /// <param name="path">The path.</param>
+    private static void EnsureDirectoryExists(string path)
+    {
+        var directoryName = Path.GetDirectoryName(path);
+        if (directoryName is { Length: > 0 })
+        {
+            Directory.CreateDirectory(directoryName);
+        }
     }
 }
