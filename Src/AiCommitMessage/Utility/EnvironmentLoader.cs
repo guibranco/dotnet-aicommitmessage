@@ -12,8 +12,8 @@ public static class EnvironmentLoader
     /// </summary>
     /// <returns>The name of the OpenAI model as a string. If the environment variable is not set, it defaults to "gpt-4o-mini".</returns>
     /// <remarks>
-    /// This method retrieves the value of the environment variable "OPENAI_MODEL". 
-    /// If the variable is not found, it returns a default value of "gpt-4o-mini". 
+    /// This method retrieves the value of the environment variable "OPENAI_MODEL".
+    /// If the variable is not found, it returns a default value of "gpt-4o-mini".
     /// This allows for flexibility in specifying which model to use without hardcoding it into the application.
     /// It is particularly useful in scenarios where different models may be used in different environments, such as development, testing, or production.
     /// </remarks>
@@ -24,9 +24,9 @@ public static class EnvironmentLoader
     /// </summary>
     /// <returns>A string representing the OpenAI API URL. If the environment variable is not set, it returns a default URL.</returns>
     /// <remarks>
-    /// This method retrieves the OpenAI API URL by checking the environment variable named "OPENAI_API_URL". 
-    /// If this variable is not defined, it falls back to a default value of "https://api.openai.com/v1". 
-    /// This allows for flexibility in configuring the API endpoint without hardcoding it into the application, 
+    /// This method retrieves the OpenAI API URL by checking the environment variable named "OPENAI_API_URL".
+    /// If this variable is not defined, it falls back to a default value of "https://api.openai.com/v1".
+    /// This allows for flexibility in configuring the API endpoint without hardcoding it into the application,
     /// making it easier to manage different environments (e.g., development, testing, production).
     /// </remarks>
     public static string LoadOpenAiApiUrl() =>
