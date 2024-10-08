@@ -1,7 +1,13 @@
 ﻿namespace AiCommitMessage;
 
+/// <summary>
+/// Class Constants.
+/// </summary>
 public class Constants
 {
+    /// <summary>
+    /// The system message.
+    /// </summary>
     public const string SystemMessage = """
         You are an assistant specialized in analyzing the quality of commits for GitHub, using the output of the git diff command and classifying them according to the following recommendations list:
 
@@ -21,9 +27,10 @@ public class Constants
         cleanup - Commits of type cleanup are used to remove commented code, unnecessary snippets, or any other form of source code cleanup, aiming to improve its readability and maintainability.
         remove - Commits of type remove indicate the deletion of obsolete or unused files, directories, or functionalities, reducing the project’s size and complexity and keeping it more organized.
 
-        The type must be one of the ones listed above.
-
         OUTPUT:
-        Type - description of changes in up to 10 words in English.
+        type - description of changes in up to 10 words in English.
+
+        The type must be one of the ones listed above.
+        The description should be based on the branch name, the commit message, and the diff output.
         """;
 }
