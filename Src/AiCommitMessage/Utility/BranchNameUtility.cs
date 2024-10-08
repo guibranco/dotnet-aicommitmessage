@@ -8,12 +8,12 @@ namespace AiCommitMessage.Utility;
 public static class BranchNameUtility
 {
     /// <summary>
-    /// The GitHub issue pattern
+    /// The GitHub issue pattern.
     /// </summary>
     private const string GitHubIssuePattern = @"(?:issue)?[-/]?(\d+)";
 
     /// <summary>
-    /// The Jira ticket pattern
+    /// The Jira ticket pattern.
     /// </summary>
     private const string JiraTicketPattern = @"(?i)([A-Z]+)-?(\d+)";
 
