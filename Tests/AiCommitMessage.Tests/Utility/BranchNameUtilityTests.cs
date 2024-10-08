@@ -4,7 +4,7 @@ using FluentAssertions;
 namespace AiCommitMessage.Tests.Utility;
 
 public class BranchNameUtilityTests
-{    
+{
     [Theory]
     [InlineData("feature/123-duplicated-schedule-in-payment-lock", "123")]
     [InlineData("bugfix/456-fix-login-bug", "456")]
@@ -35,6 +35,6 @@ public class BranchNameUtilityTests
         var result = BranchNameUtility.ExtractIssueNumber(branchName);
 
         // Assert
-        result.Should().BeEmpty();    
+        result.Should().BeEmpty();
     }
 }
