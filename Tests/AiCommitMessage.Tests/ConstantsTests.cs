@@ -6,18 +6,18 @@ namespace AiCommitMessage.Tests;
 /// Class ConstantsTests.
 /// </summary>
 public class ConstantsTests
+{
     /// <summary>
     /// Defines a test method to verify that the system message matches the expected output.
     /// </summary>
     /// <remarks>
-    /// This test method, <c>SystemMessageShouldMatch</c>, is designed to ensure that the system message defined in the <c>Constants</c> class 
-    /// accurately reflects the expected format and content as outlined in the provided recommendations list. 
-    /// The expected message includes various commit types and their meanings, which are crucial for analyzing the quality of commits 
-    /// in a GitHub repository. The test checks if the actual system message matches the expected string, which serves as a guideline 
-    /// for commit messages based on the output of the git diff command. 
+    /// This test method, <c>SystemMessageShouldMatch</c>, is designed to ensure that the system message defined in the <c>Constants</c> class
+    /// accurately reflects the expected format and content as outlined in the provided recommendations list.
+    /// The expected message includes various commit types and their meanings, which are crucial for analyzing the quality of commits
+    /// in a GitHub repository. The test checks if the actual system message matches the expected string, which serves as a guideline
+    /// for commit messages based on the output of the git diff command.
     /// The test uses the FluentAssertions library to assert that the actual system message is equal to the expected message.
     /// </remarks>
-{
     [Fact]
     public void SystemMessageShouldMatch()
     {
