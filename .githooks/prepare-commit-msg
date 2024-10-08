@@ -10,7 +10,7 @@ fi
 
 if ! command -v dotnet-aicommitmessage &> /dev/null; then
     echo "Error: dotnet-aicommitmessage is not installed or not in PATH" >&2
-    echo "Please install it by running 'dotnet tool install -g dotnet-aicommitmessage'" >&2
+    echo "Please install it by running 'dotnet tool install -g aicommitmessage'" >&2
     exit 1 
 fi
 
