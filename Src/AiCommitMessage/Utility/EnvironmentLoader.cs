@@ -8,15 +8,27 @@ namespace AiCommitMessage.Utility;
 public static class EnvironmentLoader
 {
     /// <summary>
-    /// Loads the OpenAI model.
+    /// Loads the OpenAI model configuration from the environment variables.
     /// </summary>
-    /// <returns>System.String.</returns>
+    /// <returns>The name of the OpenAI model as a string. If the environment variable is not set, it defaults to "gpt-4o-mini".</returns>
+    /// <remarks>
+    /// This method retrieves the value of the environment variable "OPENAI_MODEL". 
+    /// If the variable is not found, it returns a default value of "gpt-4o-mini". 
+    /// This allows for flexibility in specifying which model to use without hardcoding it into the application.
+    /// It is particularly useful in scenarios where different models may be used in different environments, such as development, testing, or production.
+    /// </remarks>
     public static string LoadOpenAiModel() => GetEnvironmentVariable("OPENAI_MODEL", "gpt-4o-mini");
 
     /// <summary>
-    /// Loads the OpenAI API URL.
+    /// Loads the OpenAI API URL from the environment variables.
     /// </summary>
-    /// <returns>System.String.</returns>
+    /// <returns>A string representing the OpenAI API URL. If the environment variable is not set, it returns a default URL.</returns>
+    /// <remarks>
+    /// This method retrieves the OpenAI API URL by checking the environment variable named "OPENAI_API_URL". 
+    /// If this variable is not defined, it falls back to a default value of "https://api.openai.com/v1". 
+    /// This allows for flexibility in configuring the API endpoint without hardcoding it into the application, 
+    /// making it easier to manage different environments (e.g., development, testing, production).
+    /// </remarks>
     public static string LoadOpenAiApiUrl() =>
         GetEnvironmentVariable("OPENAI_API_URL", "https://api.openai.com/v1");
 
@@ -62,11 +74,17 @@ public static class EnvironmentLoader
     }
 
     /// <summary>
-    /// Gets the environment variable.
+    /// Retrieves the value of an environment variable, searching first in the user environment and then in the machine environment.
     /// </summary>
-    /// <param name="name">The name.</param>
-    /// <param name="defaultValue">The default value.</param>
-    /// <returns>System.String.</returns>
+    /// <param name="name">The name of the environment variable to retrieve.</param>
+    /// <param name="defaultValue">The value to return if the environment variable is not found.</param>
+    /// <returns>The value of the specified environment variable, or <paramref name="defaultValue"/> if the variable is not set.</returns>
+    /// <remarks>
+    /// This method first attempts to get the value of the specified environment variable from the user-level environment variables.
+    /// If the variable is not found or its value is null or whitespace, it then checks the machine-level environment variables.
+    /// If the variable is still not found, the method returns the provided <paramref name="defaultValue"/>.
+    /// This allows for a fallback mechanism when dealing with environment variables, ensuring that a sensible default can be used.
+    /// </remarks>
     private static string GetEnvironmentVariable(string name, string defaultValue)
     {
         var value = Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.User);
