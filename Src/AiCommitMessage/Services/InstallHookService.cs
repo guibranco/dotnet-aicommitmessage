@@ -26,6 +26,7 @@ internal class InstallHookService
         if (string.IsNullOrWhiteSpace(options.Path))
         {
             directory = Path.Combine(GetGitRepositoryRootLevel(), GetHooksDirectory());
+            EnsureDirectoryExists(directory);
         }
 
         var hookPath = Path.Combine(directory, "prepare-commit-msg");
