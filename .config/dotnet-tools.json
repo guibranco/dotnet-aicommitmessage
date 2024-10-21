@@ -10,7 +10,7 @@
       "rollForward": false
     },
     "aicommitmessage": {
-      "version": "0.4.7",
+      "version": "0.4.20",
       "commands": [
         "dotnet-aicommitmessage"
       ],
