@@ -67,6 +67,23 @@ The training model for the AI used is designed using as reference these two guid
 
 ---
 
+## Sequence of Execution
+
+Here’s a flow diagram showing the sequence of execution of the `prepare-commit-msg` hook and its integration with `dotnet-aicommitmessage` to generate commit messages using the OpenAI API:
+
+```mermaid
+graph TD
+    A[Git Commit] --> B[prepare-commit-msg Hook Trigger]
+    B --> C[Invoke dotnet-aicommitmessage Tool]
+    C --> D[Send Data to OpenAI API]
+    D --> E[Generate Commit Message]
+    E --> F[Return Generated Commit Message]
+    F --> G[Insert Commit Message into Git Commit]
+    G --> H[Finalize Commit]
+```
+
+---
+
 ## Commands
 
 This tool accepts an argument as the command to execute. Here is a list of available commands:
@@ -78,3 +95,4 @@ This tool accepts an argument as the command to execute. Here is a list of avail
 | `set-settings`             | Set the OpenAI settings.                                                                                        |
 | `help`                     | Display information about this program.                                                                         |
 | `version`                  | Display version information.                                                                                    |
+```
