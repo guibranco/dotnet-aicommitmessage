@@ -61,6 +61,9 @@ The training model for the AI used is designed using as reference these two guid
 
 - [Conventional Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/).
 - [Padrões de Commits](https://github.com/tiagolofi/padroes-de-commits) (in Portuguese).
+- [Conventional Commit Messages](https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13).
+- [Emoji for Conventional Commits](https://gist.github.com/parmentf/359667bf23e08a1bd8241fbf47ecdef0).
+- [conventional-commit-types](https://github.com/pvdlg/conventional-commit-types).
 
 ---
 
