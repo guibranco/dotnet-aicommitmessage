@@ -19,7 +19,7 @@ public static class Output
     /// This is particularly useful for creating dynamic and visually appealing console output.
     /// </remarks>
     public static void InfoLine(string message, params object[] args) =>
-        AnsiConsole.MarkupLine(message, args);
+        AnsiConsole.MarkupLineInterpolated($"[green]{string.Format(message, args)}[/]");
 
     public static void ErrorLine(string message) => ErrorLine(message, Array.Empty<object>());
 
