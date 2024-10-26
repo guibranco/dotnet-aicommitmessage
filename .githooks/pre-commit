@@ -14,3 +14,4 @@ then
 fi
 
 dotnet tool restore && dotnet csharpier . --check
+dotnet csharpier .
