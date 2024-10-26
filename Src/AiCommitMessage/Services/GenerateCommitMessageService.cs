@@ -43,7 +43,6 @@ public class GenerateCommitMessageService
         var client = new ChatClient(
     : options.Diff;
             model,
-    : options.Diff;
             new ApiKeyCredential(key),
             new OpenAIClientOptions { Endpoint = new Uri(url) }
         );
