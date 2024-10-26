@@ -1,3 +1,23 @@
+name: Linter
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: CSharpier format check
 name: Linter check
 
 on:
