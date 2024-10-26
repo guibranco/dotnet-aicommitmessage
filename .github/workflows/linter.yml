@@ -13,6 +13,9 @@ jobs:
       - name: Set up .NET
         uses: actions/setup-dotnet@v3
         with:
+         echo "Run 'dotnet csharpier .' to format the code automatically"
+         echo "Run 'dotnet build' to fix the formatting of the code automatically"
+       continue-on-error: false
           dotnet-version: '7.0.x'
 
       - name: Restore dependencies
