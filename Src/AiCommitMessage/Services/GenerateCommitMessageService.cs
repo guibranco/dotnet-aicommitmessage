@@ -38,6 +38,7 @@ public class GenerateCommitMessageService
         var url = EnvironmentLoader.LoadOpenAiApiUrl();
         var key = EnvironmentLoader.LoadOpenAiApiKey();
 
+
         var client = new ChatClient(
             model,
             new ApiKeyCredential(key),
