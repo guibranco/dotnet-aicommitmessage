@@ -35,7 +35,6 @@ public class GenerateCommitMessageService
         string diff = string.IsNullOrEmpty(options.Diff)
             ? GitHelper.GetGitDiff() 
             : options.Diff;
-            ;
         var url = EnvironmentLoader.LoadOpenAiApiUrl();
         var model = EnvironmentLoader.LoadOpenAiModel();
         var key = EnvironmentLoader.LoadOpenAiApiKey();
