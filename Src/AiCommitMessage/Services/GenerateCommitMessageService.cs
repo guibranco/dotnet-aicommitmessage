@@ -44,6 +44,7 @@ public class GenerateCommitMessageService
             model,
             new ApiKeyCredential(key),
             new OpenAIClientOptions { Endpoint = new Uri(url) }
+    : options.Diff;
         );
 
         // Use the provided message (this will come from the prepare-commit-msg hook)
