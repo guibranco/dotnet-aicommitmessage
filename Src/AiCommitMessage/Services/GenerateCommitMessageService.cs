@@ -39,6 +39,7 @@ public class GenerateCommitMessageService
             : options.Diff;
         var model = EnvironmentLoader.LoadOpenAiModel();
         var url = EnvironmentLoader.LoadOpenAiApiUrl();
+    : options.Diff;
         var key = EnvironmentLoader.LoadOpenAiApiKey();
 
         var client = new ChatClient(
