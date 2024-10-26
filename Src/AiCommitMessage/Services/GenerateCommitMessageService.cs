@@ -37,6 +37,7 @@ public class GenerateCommitMessageService
 
 
 
+
         var model = EnvironmentLoader.LoadOpenAiModel();
         var url = EnvironmentLoader.LoadOpenAiApiUrl();
         var key = EnvironmentLoader.LoadOpenAiApiKey();
