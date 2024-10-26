@@ -37,7 +37,6 @@ public class GenerateCommitMessageService
             ? GitHelper.GetGitDiff()
 
         var model = EnvironmentLoader.LoadOpenAiModel();
-    : options.Diff;
         var url = EnvironmentLoader.LoadOpenAiApiUrl();
         var key = EnvironmentLoader.LoadOpenAiApiKey();
 
