@@ -1,0 +1,36 @@
+name: CI Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set Up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Restore Dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Run Tests
+        run: dotnet test --no-build --verbosity normal
+
+      - name: Get Remote File Content
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PATH_TO_FILE="src/commit_message_processor.cs" # specify the correct path
+          ENCODED_REF=$(echo "${GITHUB_REF}" | jq -s -R -r @uri)
+          curl -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/repos/guibranco/dotnet-aicommitmessage/contents/${PATH_TO_FILE}?ref=${ENCODED_REF}" -o retrieved_file.cs
