@@ -3,7 +3,8 @@ using System.Text.RegularExpressions;
 
 public class CommitMessageProcessor
 {
-    private static readonly string semverPattern = @"\+semver:\s?(breaking|major|feature|minor|fix|patch|none|skip)";
+    private static readonly string semverPattern =
+        @"\+semver:\s?(breaking|major|feature|minor|fix|patch|none|skip)";
 
     public static string ProcessCommitMessage(string originalMessage)
     {
@@ -32,6 +33,6 @@ public class CommitMessageProcessor
     }
 }
 
-// Note: This is a basic implementation. In a real-world scenario, 
+// Note: This is a basic implementation. In a real-world scenario,
 // you would integrate this into your commit handling workflow.
 // Additionally, you would write unit tests to validate the behavior.
