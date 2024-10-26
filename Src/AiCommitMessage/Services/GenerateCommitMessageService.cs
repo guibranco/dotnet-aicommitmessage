@@ -40,11 +40,9 @@ public class GenerateCommitMessageService
         var key = EnvironmentLoader.LoadOpenAiApiKey();
 
         var client = new ChatClient(
-    : options.Diff;
             model,
             new ApiKeyCredential(key),
             new OpenAIClientOptions { Endpoint = new Uri(url) }
-    : options.Diff;
         );
 
         // Use the provided message (this will come from the prepare-commit-msg hook)
