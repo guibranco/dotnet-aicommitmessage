@@ -33,7 +33,7 @@ public class GenerateCommitMessageService
             : options.Branch;
         // Use the provided diff or retrieve it from GIT if not supplied
         string diff = string.IsNullOrEmpty(options.Diff)
-            ? GitHelper.GetGitDiff() 
+            ? GitHelper.GetGitDiff()
             : options.Diff;
         var url = EnvironmentLoader.LoadOpenAiApiUrl();
         var model = EnvironmentLoader.LoadOpenAiModel();
