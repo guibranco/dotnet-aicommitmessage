@@ -72,7 +72,9 @@ jobs:
       run: dotnet restore
 
     - name: Build with dotnet
-      run: dotnet build --no-restore --configuration Release
+      run: |
+        dotnet build AiCommitMessage.sln --configuration Release --no-restore
+        dotnet test AiCommitMessage.sln --no-build
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
