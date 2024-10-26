@@ -35,6 +35,7 @@ public class GenerateCommitMessageService
         string diff = string.IsNullOrEmpty(options.Diff)
             ? GitHelper.GetGitDiff()
         var model = EnvironmentLoader.LoadOpenAiModel();
+        var url = EnvironmentLoader.LoadOpenAiApiUrl();
         var key = EnvironmentLoader.LoadOpenAiApiKey();
 
         var client = new ChatClient(
