@@ -27,6 +27,16 @@ public class GenerateCommitMessageService
     /// </remarks>
     public string GenerateCommitMessage(GenerateCommitMessageOptions options)
     {
+        // Use the provided branch or retrieve it from GIT if not supplied
+        string branch = string.IsNullOrEmpty(options.Branch)
+            ? GitHelper.GetBranchName()
+            : options.Branch;
+
+        // Use the provided diff or retrieve it from GIT if not supplied
+        string diff = string.IsNullOrEmpty(options.Diff)
+            ? GitHelper.GetGitDiff()
+            : options.Diff;
+
         var model = EnvironmentLoader.LoadOpenAiModel();
         var url = EnvironmentLoader.LoadOpenAiApiUrl();
         var key = EnvironmentLoader.LoadOpenAiApiKey();
@@ -37,19 +47,27 @@ public class GenerateCommitMessageService
             new OpenAIClientOptions { Endpoint = new Uri(url) }
         );
 
-        var message =
-            "Branch: "
-            + options.Branch
-            + "\n\n"
-            + "Original message: "
-            + options.Message
-            + "\n\n"
-            + "Git Diff: "
-            + options.Diff;
+        // Use the provided message (this will come from the prepare-commit-msg hook)
+        string message = options.Message; // No fallback to GIT, as commit message is passed in the hook
+
+        if (string.IsNullOrEmpty(branch) && string.IsNullOrEmpty(diff))
+        {
+            throw new InvalidOperationException("Unable to generate commit message: Both branch and diff are empty.");
+        }
+
+        var formattedMessage =
+        "Branch: "
+        + (string.IsNullOrEmpty(branch) ? "<unknown>" : branch)
+        + "\n\n"
+        + "Original message: "
+        + message
+        + "\n\n"
+        + "Git Diff: "
+        + (string.IsNullOrEmpty(diff) ? "<no changes>" : diff);
 
         var chatCompletion = client.CompleteChat(
             new SystemChatMessage(Constants.SystemMessage),
-            new UserChatMessage(message)
+            new UserChatMessage(formattedMessage)
         );
 
         var text = chatCompletion.Value.Content[0].Text;
