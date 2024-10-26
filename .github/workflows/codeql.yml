@@ -69,12 +69,12 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore AiCommitMessage.sln
+      run: dotnet restore
 
     - name: Build with dotnet
       run: |
-        dotnet build AiCommitMessage.sln --configuration Release --no-restore
-        dotnet test AiCommitMessage.sln --no-build
+        dotnet build --configuration Release --no-restore
+        dotnet test --no-build
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
