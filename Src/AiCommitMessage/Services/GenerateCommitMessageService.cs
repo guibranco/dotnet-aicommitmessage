@@ -48,6 +48,7 @@ public class GenerateCommitMessageService
 
 
 
+
         var client = new ChatClient(
             model,
             new ApiKeyCredential(key),
