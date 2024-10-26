@@ -1,4 +1,5 @@
 # Check for formatting issues
+
 dotnet csharpier . --check
 LC_ALL=C
 #!/usr/bin/env bash
