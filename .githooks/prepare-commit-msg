@@ -31,7 +31,7 @@ if ! AI_MESSAGE=$(dotnet-aicommitmessage generate-message -m "$CURRENT_MESSAGE" 
     exit 0  
 fi
 
-if [[ -z "$AI_MESSAGE" || "$AI_MESSAGE" =~ ^[[:space:]]*$ ]]; then  
+if [ -z "$AI_MESSAGE" ]; then  
     echo "Error: Generated commit message is empty." >&2  
     exit 1  
 fi  
