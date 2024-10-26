@@ -17,12 +17,10 @@ jobs:
          echo "Run 'dotnet csharpier .' to format the code automatically"
          echo "Run 'dotnet build' to fix the formatting of the code automatically"
        continue-on-error: false
-          dotnet-version: '7.0.x'
 
       - name: Restore dependencies
         run: dotnet restore
       - name: CSharpier format check
-name: Linter check
 
 on:
   workflow_dispatch:
