@@ -35,5 +35,5 @@ if [ -z "$AI_MESSAGE" ]; then
     echo "Error: Generated commit message is empty or invalid." >&2  
     exit 1  
 fi  
-echo "$AI_MESSAGE" > "$COMMIT_MSG_FILE" 
+echo "$AI_MESSAGE" > "$COMMIT_MSG_FILE" 2>/dev/null
 exit 0
