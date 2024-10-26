@@ -8,6 +8,7 @@ jobs:
   linter:
     runs-on: ubuntu-latest
 
+       continue-on-error: false
     steps:
       - uses: actions/checkout@v3
       - name: Set up .NET
