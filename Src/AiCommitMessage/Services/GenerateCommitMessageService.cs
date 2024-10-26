@@ -34,6 +34,8 @@ public class GenerateCommitMessageService
 
         // Use the provided diff or retrieve it from GIT if not supplied
         string diff = string.IsNullOrEmpty(options.Diff)
+            ? GitHelper.GetGitDiff() 
+            : options.Diff;
             ? GitHelper.GetGitDiff()
             : options.Diff;
 
