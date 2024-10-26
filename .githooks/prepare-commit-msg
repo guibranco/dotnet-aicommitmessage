@@ -26,7 +26,7 @@ CURRENT_MESSAGE=$(cat "$COMMIT_MSG_FILE")
 # Version 0.6.1 and higher: dotnet-aicommitmessage generate-message -m "$CURRENT_MESSAGE"
 # Version 0.6.0 and lower: dotnet-aicommitmessage generate-message -m "$CURRENT_MESSAGE" -b "$GIT_BRANCH_NAME" -d "$GIT_DIFF"
 
-if ! AI_MESSAGE=$(dotnet-aicommitmessage generate-message -m "$CURRENT_MESSAGE"); then  
+if ! AI_MESSAGE=$(dotnet-aicommitmessage generate-message -m "$CURRENT_MESSAGE" 2>/dev/null); then  
     echo "Error: Failed to generate AI commit message. Using original message." >&2  
     exit 0  
 fi
