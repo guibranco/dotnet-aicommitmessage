@@ -50,15 +50,20 @@ public class GenerateCommitMessageService
         // Use the provided message (this will come from the prepare-commit-msg hook)
         string message = options.Message; // No fallback to GIT, as commit message is passed in the hook
 
+        if (string.IsNullOrEmpty(branch) && string.IsNullOrEmpty(diff))
+        {
+            throw new InvalidOperationException("Unable to generate commit message: Both branch and diff are empty.");
+        }
+
         var formattedMessage =
         "Branch: "
-        + branch
+        + (string.IsNullOrEmpty(branch) ? "<unknown>" : branch)
         + "\n\n"
         + "Original message: "
         + message
         + "\n\n"
         + "Git Diff: "
-        + diff;
+        + (string.IsNullOrEmpty(diff) ? "<no changes>" : diff);
 
         var chatCompletion = client.CompleteChat(
             new SystemChatMessage(Constants.SystemMessage),
