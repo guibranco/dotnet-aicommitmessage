@@ -31,7 +31,6 @@ public class GenerateCommitMessageService
         string branch = string.IsNullOrEmpty(options.Branch)
             ? GitHelper.GetBranchName()
             : options.Branch;
-
         // Use the provided diff or retrieve it from GIT if not supplied
         string diff = string.IsNullOrEmpty(options.Diff)
             ? GitHelper.GetGitDiff() 
