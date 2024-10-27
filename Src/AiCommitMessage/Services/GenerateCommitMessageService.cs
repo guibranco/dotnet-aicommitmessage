@@ -33,10 +33,7 @@ public class GenerateCommitMessageService
             : options.Branch;
 
         // Use the provided diff or retrieve it from GIT if not supplied
-        string diff = string.IsNullOrEmpty(options.Diff)
-            ? GitHelper.GetGitDiff()
-            : options.Diff;
-
+        string diff = string.IsNullOrEmpty(options.Diff) ? GitHelper.GetGitDiff() : options.Diff;
         var model = EnvironmentLoader.LoadOpenAiModel();
         var url = EnvironmentLoader.LoadOpenAiApiUrl();
         var key = EnvironmentLoader.LoadOpenAiApiKey();
@@ -52,18 +49,20 @@ public class GenerateCommitMessageService
 
         if (string.IsNullOrEmpty(branch) && string.IsNullOrEmpty(diff))
         {
-            throw new InvalidOperationException("Unable to generate commit message: Both branch and diff are empty.");
+            throw new InvalidOperationException(
+                "Unable to generate commit message: Both branch and diff are empty."
+            );
         }
 
         var formattedMessage =
-        "Branch: "
-        + (string.IsNullOrEmpty(branch) ? "<unknown>" : branch)
-        + "\n\n"
-        + "Original message: "
-        + message
-        + "\n\n"
-        + "Git Diff: "
-        + (string.IsNullOrEmpty(diff) ? "<no changes>" : diff);
+            "Branch: "
+            + (string.IsNullOrEmpty(branch) ? "<unknown>" : branch)
+            + "\n\n"
+            + "Original message: "
+            + message
+            + "\n\n"
+            + "Git Diff: "
+            + (string.IsNullOrEmpty(diff) ? "<no changes>" : diff);
 
         var chatCompletion = client.CompleteChat(
             new SystemChatMessage(Constants.SystemMessage),

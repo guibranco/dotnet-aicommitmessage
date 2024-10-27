@@ -15,12 +15,18 @@ if ! command -v dotnet-aicommitmessage &> /dev/null; then
 fi
 
 COMMIT_MSG_FILE=$1
-GIT_DIFF=$(git diff --staged)
-GIT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 CURRENT_MESSAGE=$(cat "$COMMIT_MSG_FILE")
 
+# From version 0.6.1, this is not needed anymore.
+# GIT_DIFF=$(git diff --staged)
+# GIT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+
 # Run dotnet-aicommitmessage with error handling  
-if ! AI_MESSAGE=$(dotnet-aicommitmessage generate-message -m "$CURRENT_MESSAGE" -b "$GIT_BRANCH_NAME" -d "$GIT_DIFF" ); then  
+# From version 0.6.1 branch and diff are now retrieved by the tool and don't need to be passed manually.
+# Version 0.6.1 and higher: dotnet-aicommitmessage generate-message -m "$CURRENT_MESSAGE"
+# Version 0.6.0 and lower: dotnet-aicommitmessage generate-message -m "$CURRENT_MESSAGE" -b "$GIT_BRANCH_NAME" -d "$GIT_DIFF"
+
+if ! AI_MESSAGE=$(dotnet-aicommitmessage generate-message -m "$CURRENT_MESSAGE"); then
     echo "Error: Failed to generate AI commit message. Using original message." >&2  
     exit 0  
 fi
