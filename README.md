@@ -57,7 +57,7 @@ Use `git log -1` to review the last commit details and find the automatically ge
 
 ## Commit message pattern
 
-The training model for the AI used is designed using as reference these two guidelines:
+The training model for the AI used is designed using as reference these guidelines:
 
 - [Conventional Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/).
 - [Padrões de Commits](https://github.com/tiagolofi/padroes-de-commits) (in Portuguese).
