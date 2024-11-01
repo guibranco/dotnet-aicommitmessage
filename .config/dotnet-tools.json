@@ -8,13 +8,6 @@
         "dotnet-csharpier"
       ],
       "rollForward": false
-    },
-    "aicommitmessage": {
-      "version": "0.7.3",
-      "commands": [
-        "dotnet-aicommitmessage"
-      ],
-      "rollForward": false
     }
   }
 }
