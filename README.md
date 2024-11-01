@@ -77,10 +77,26 @@ graph TD
     B --> C[Invoke dotnet-aicommitmessage Tool]
     C --> D[Send Data to OpenAI API]
     D --> E[Generate Commit Message]
-    E --> F[Return Generated Commit Message]
-    F --> G[Insert Commit Message into Git Commit]
-    G --> H[Finalize Commit]
+    E --> F[Check and append pre-defined commands to Commit Message]
+    F --> G[Return Generated Commit Message]
+    G --> H[Insert Commit Message into Git Commit]
+    H --> I[Finalize Commit]
 ```
+
+---
+
+## Features
+
+- Detects and preserves semantic versioning commands in commit messages.
+- Supports the following commands:
+  - `+semver: breaking`
+  - `+semver: major`
+  - `+semver: feature`
+  - `+semver: minor`
+  - `+semver: fix`
+  - `+semver: patch`
+  - `+semver: none`
+  - `+semver: skip`
 
 ---
 
@@ -97,6 +113,7 @@ This tool accepts an argument as the command to execute. Here is a list of avail
 | `version`                  | Display version information.                                                                                    |
 
 ---
+
 ## Example output
 
 Here is an example of the commit messages generated in a real-world project:

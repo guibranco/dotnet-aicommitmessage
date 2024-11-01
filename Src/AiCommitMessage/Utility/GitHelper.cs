@@ -1,29 +1,35 @@
-﻿using System.ClientModel;
-using System.Diagnostics;
-using System.Text.Json;
-using AiCommitMessage.Options;
-using AiCommitMessage.Utility;
-using OpenAI;
-using OpenAI.Chat;
+﻿using System.Diagnostics;
+
+namespace AiCommitMessage.Utility;
 
 /// <summary>
 /// Class GitHelper.
 /// </summary>
-public class GitHelper
+public static class GitHelper
 {
-    // Retrieves the current branch name
+    /// <summary>
+    /// Gets the name of the branch.
+    /// </summary>
+    /// <returns>System.String.</returns>
     public static string GetBranchName()
     {
         return ExecuteGitCommand("rev-parse --abbrev-ref HEAD");
     }
 
-    // Retrieves the staged diff
+    /// <summary>
+    /// Gets the git difference.
+    /// </summary>
+    /// <returns>System.String.</returns>
     public static string GetGitDiff()
     {
         return ExecuteGitCommand("diff --staged");
     }
 
-    // Executes the provided GIT command and returns the result
+    /// <summary>
+    /// Executes the git command.
+    /// </summary>
+    /// <param name="arguments">The arguments.</param>
+    /// <returns>System.String.</returns>
     private static string ExecuteGitCommand(string arguments)
     {
         var processStartInfo = new ProcessStartInfo
@@ -35,7 +41,8 @@ public class GitHelper
             CreateNoWindow = true,
         };
 
-        using var process = new Process { StartInfo = processStartInfo };
+        using var process = new Process();
+        process.StartInfo = processStartInfo;
         process.Start();
         var result = process.StandardOutput.ReadToEnd();
         process.WaitForExit();

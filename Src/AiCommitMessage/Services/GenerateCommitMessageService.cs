@@ -27,14 +27,6 @@ public class GenerateCommitMessageService
     /// </remarks>
     public string GenerateCommitMessage(GenerateCommitMessageOptions options)
     {
-        // Use the provided branch or retrieve it from GIT if not supplied
-        string branch = string.IsNullOrEmpty(options.Branch)
-            ? GitHelper.GetBranchName()
-            : options.Branch;
-
-        // Use the provided diff or retrieve it from GIT if not supplied
-        string diff = string.IsNullOrEmpty(options.Diff) ? GitHelper.GetGitDiff() : options.Diff;
-
         var model = EnvironmentLoader.LoadOpenAiModel();
         var url = EnvironmentLoader.LoadOpenAiApiUrl();
         var key = EnvironmentLoader.LoadOpenAiApiKey();
@@ -45,8 +37,14 @@ public class GenerateCommitMessageService
             new OpenAIClientOptions { Endpoint = new Uri(url) }
         );
 
+        var branch = string.IsNullOrEmpty(options.Branch)
+            ? GitHelper.GetBranchName()
+            : options.Branch;
+
+        var diff = string.IsNullOrEmpty(options.Diff) ? GitHelper.GetGitDiff() : options.Diff;
+
         // Use the provided message (this will come from the prepare-commit-msg hook)
-        string message = options.Message; // No fallback to GIT, as commit message is passed in the hook
+        var message = options.Message; // No fallback to GIT, as commit message is passed in the hook
 
         if (string.IsNullOrEmpty(branch) && string.IsNullOrEmpty(diff))
         {
@@ -80,7 +78,7 @@ public class GenerateCommitMessageService
         var provider = GetGitProvider();
         if (provider == GitProvider.GitHub)
         {
-            var issueNumber = BranchNameUtility.ExtractIssueNumber(options.Branch);
+            var issueNumber = BranchNameUtility.ExtractIssueNumber(branch);
             if (!string.IsNullOrWhiteSpace(issueNumber))
             {
                 text = $"#{issueNumber} {text}";
@@ -88,11 +86,17 @@ public class GenerateCommitMessageService
         }
         else
         {
-            var jiraTicketNumber = BranchNameUtility.ExtractJiraTicket(options.Branch);
+            var jiraTicketNumber = BranchNameUtility.ExtractJiraTicket(branch);
             if (!string.IsNullOrWhiteSpace(jiraTicketNumber))
             {
                 text = $"[{jiraTicketNumber}] {text}";
             }
+        }
+
+        var gitVersionCommand = GitVersionUtility.ExtractGitVersionBumpCommand(message);
+        if (!string.IsNullOrEmpty(gitVersionCommand))
+        {
+            text = $"{text} {gitVersionCommand}";
         }
 
         if (!options.Debug)

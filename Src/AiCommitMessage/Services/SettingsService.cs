@@ -2,7 +2,7 @@
 
 namespace AiCommitMessage.Services;
 
-public class SettingsService
+public static class SettingsService
 {
     /// <summary>
     /// Sets the environment variables for the OpenAI API key and URL based on the provided settings.
@@ -15,7 +15,7 @@ public class SettingsService
     /// Otherwise, it sets the "OPEN_API_URL" variable to the specified URL.
     /// These environment variables are set at the user level, making them accessible to applications running under the user's context.
     /// </remarks>
-    public void SetSettings(SetSettingsOptions setSettingsOptions)
+    public static void SetSettings(SetSettingsOptions setSettingsOptions)
     {
         Environment.SetEnvironmentVariable(
             "OPENAI_API_KEY",
