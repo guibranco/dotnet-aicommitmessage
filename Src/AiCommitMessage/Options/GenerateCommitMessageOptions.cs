@@ -19,14 +19,14 @@ public class GenerateCommitMessageOptions
     /// Gets or sets the branch.
     /// </summary>
     /// <value>The branch.</value>
-    [Option('b', "branch", Required = true, HelpText = "The current branch name.")]
+    [Option('b', "branch", Required = false, HelpText = "The current branch name.")]
     public string Branch { get; set; }
 
     /// <summary>
     /// Gets or sets the difference.
     /// </summary>
     /// <value>The difference.</value>
-    [Option('d', "diff", Required = true, HelpText = "The staged changes.")]
+    [Option('d', "diff", Required = false, HelpText = "The staged changes.")]
     public string Diff { get; set; }
 
     /// <summary>
