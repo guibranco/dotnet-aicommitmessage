@@ -85,21 +85,6 @@ graph TD
 
 ---
 
-## Features
-
-- Detects and preserves semantic versioning commands in commit messages.
-- Supports the following commands:
-  - `+semver: breaking`
-  - `+semver: major`
-  - `+semver: feature`
-  - `+semver: minor`
-  - `+semver: fix`
-  - `+semver: patch`
-  - `+semver: none`
-  - `+semver: skip`
-
----
-
 ## Commands
 
 This tool accepts an argument as the command to execute. Here is a list of available commands:
