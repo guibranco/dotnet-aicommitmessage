@@ -57,10 +57,30 @@ Use `git log -1` to review the last commit details and find the automatically ge
 
 ## Commit message pattern
 
-The training model for the AI used is designed using as reference these two guidelines:
+The training model for the AI used is designed using as reference these guidelines:
 
 - [Conventional Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/).
 - [Padrões de Commits](https://github.com/tiagolofi/padroes-de-commits) (in Portuguese).
+- [Conventional Commit Messages](https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13).
+- [Emoji for Conventional Commits](https://gist.github.com/parmentf/359667bf23e08a1bd8241fbf47ecdef0).
+- [conventional-commit-types](https://github.com/pvdlg/conventional-commit-types).
+
+---
+
+## Sequence of Execution
+
+Here’s a flow diagram showing the sequence of execution of the `prepare-commit-msg` hook and its integration with `dotnet-aicommitmessage` to generate commit messages using the OpenAI API:
+
+```mermaid
+graph TD
+    A[Git Commit] --> B[prepare-commit-msg Hook Trigger]
+    B --> C[Invoke dotnet-aicommitmessage Tool]
+    C --> D[Send Data to OpenAI API]
+    D --> E[Generate Commit Message]
+    E --> F[Return Generated Commit Message]
+    F --> G[Insert Commit Message into Git Commit]
+    G --> H[Finalize Commit]
+```
 
 ---
 
@@ -75,3 +95,10 @@ This tool accepts an argument as the command to execute. Here is a list of avail
 | `set-settings`             | Set the OpenAI settings.                                                                                        |
 | `help`                     | Display information about this program.                                                                         |
 | `version`                  | Display version information.                                                                                    |
+
+---
+## Example output
+
+Here is an example of the commit messages generated in a real-world project:
+
+![example](docs/images/dotnet-aicommitmessage.png)

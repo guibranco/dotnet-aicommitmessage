@@ -1,0 +1,39 @@
+title: "AI Commit Message (.NET tool)"
+description: "🧠 🧰 This tool generates AI-powered commit messages via Git hooks, automating meaningful message suggestions from OpenAI and others to improve commit quality and efficiency."
+baseurl: "dotnet-aicommitmessage"
+minimal_mistakes_skin: "plum"
+remote_theme: "mmistakes/minimal-mistakes"
+repository: "guibranco/dotnet-aicommitmessage"
+logo: "docs/images/logo.png"
+name: "Guilherme Branco Stracini"
+plugins:
+  - jekyll-remote-theme
+  - jekyll-include-cache
+atom_feed:
+  hide: true
+footer:
+  links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "mailto:guilherme@guilhermebranco.com.br"
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      url: "https://guilhermebranco.com.br"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/guibranco"
+    - label: "Facebook"
+      icon: "fab fa-fw fa-facebook-square"
+      url: "https://facebook.com/guilherme.stracini"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/guibranco"
+    - label: "Instagram"
+      icon: "fab fa-fw fa-instagram"
+      url: "https://instagram.com/gui.stracini"
+defaults:
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
