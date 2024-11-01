@@ -95,4 +95,10 @@ This tool accepts an argument as the command to execute. Here is a list of avail
 | `set-settings`             | Set the OpenAI settings.                                                                                        |
 | `help`                     | Display information about this program.                                                                         |
 | `version`                  | Display version information.                                                                                    |
-```
+
+---
+## Example output
+
+Here is an example of the commit messages generated in a real-world project:
+
+![example](docs/images/dotnet-aicommitmessage.png)
