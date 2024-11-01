@@ -10,7 +10,7 @@ namespace AiCommitMessage;
 /// Class Program.
 /// </summary>
 [ExcludeFromCodeCoverage]
-internal class Program
+internal static class Program
 {
     /// <summary>
     /// The entry point of the application that processes command-line arguments.
@@ -23,7 +23,7 @@ internal class Program
     /// If the parsing fails, it invokes the <c>HandleErrors</c> method to manage any errors that occurred during parsing.
     /// This structure allows for a clean and organized way to handle different command-line options and their corresponding actions.
     /// </remarks>
-    static void Main(string[] args) =>
+    private static void Main(string[] args) =>
         Parser
             .Default.ParseArguments<
                 InstallHookOptions,
@@ -60,7 +60,7 @@ internal class Program
         switch (options)
         {
             case InstallHookOptions installHookOptions:
-                new InstallHookService().InstallHook(installHookOptions);
+                InstallHookService.InstallHook(installHookOptions);
                 break;
             case GenerateCommitMessageOptions generateMessageOptions:
                 var generatedMessage = new GenerateCommitMessageService().GenerateCommitMessage(
@@ -69,7 +69,7 @@ internal class Program
                 Output.InfoLine(generatedMessage);
                 break;
             case SetSettingsOptions setSettingsOptions:
-                new SettingsService().SetSettings(setSettingsOptions);
+                SettingsService.SetSettings(setSettingsOptions);
                 break;
             default:
                 Output.ErrorLine("Invalid command-line arguments.");
@@ -81,15 +81,22 @@ internal class Program
     /// <summary>
     /// Handles errors by outputting an error message to the console.
     /// </summary>
-    /// <param name="obj">An enumerable collection of errors that occurred.</param>
+    /// <param name="errors">An enumerable collection of errors that occurred.</param>
     /// <remarks>
     /// This method is designed to be called when invalid command-line arguments are detected.
-    /// It takes an enumerable collection of <paramref name="obj"/> which contains the details of the errors.
+    /// It takes an enumerable collection of <paramref name="errors"/> which contains the details of the errors.
     /// The method outputs a generic error message indicating that the command-line arguments provided are invalid.
     /// This is useful for informing users about incorrect input and guiding them to provide valid arguments.
     /// </remarks>
-    private static void HandleErrors(IEnumerable<Error> obj)
+    private static void HandleErrors(IEnumerable<Error> errors)
     {
+        var listOfErrors = errors.ToList();
+        if (listOfErrors.IsHelp() || listOfErrors.IsVersion())
+        {
+            Environment.ExitCode = 0;
+            return;
+        }
+
         Output.ErrorLine("Invalid command-line arguments.");
         Environment.ExitCode = 2;
     }

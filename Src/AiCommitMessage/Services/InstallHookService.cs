@@ -7,7 +7,7 @@ namespace AiCommitMessage.Services;
 /// <summary>
 /// Class InstallHookService.
 /// </summary>
-internal class InstallHookService
+internal static class InstallHookService
 {
     /// <summary>
     /// Installs a Git hook for preparing commit messages.
@@ -20,7 +20,7 @@ internal class InstallHookService
     /// not exist or if the override option is true, the method extracts an embedded resource for the hook and places it in
     /// the specified directory. Additionally, if the system supports changing file permissions, it makes the hook executable.
     /// </remarks>
-    public void InstallHook(InstallHookOptions options)
+    public static void InstallHook(InstallHookOptions options)
     {
         var directory = options.Path;
         if (string.IsNullOrWhiteSpace(options.Path))
@@ -30,7 +30,7 @@ internal class InstallHookService
         }
 
         var hookPath = Path.Combine(directory, "prepare-commit-msg");
-        if (File.Exists(hookPath) && options.Override == false)
+        if (File.Exists(hookPath) && !options.Override)
         {
             Output.ErrorLine("The prepare-commit-msg hook already exists.");
             return;
@@ -213,7 +213,7 @@ internal class InstallHookService
     /// <remarks>
     /// This method checks the directory name extracted from the provided <paramref name="path"/>.
     /// If the directory name is not null and has a length greater than zero, it attempts to create the directory
-    /// using the <see cref="Directory.CreateDirectory"/> method. This is useful for ensuring that a directory
+    /// using the Directory.CreateDirector method. This is useful for ensuring that a directory
     /// is available before performing file operations that require it.
     /// </remarks>
     private static void EnsureDirectoryExists(string path)
