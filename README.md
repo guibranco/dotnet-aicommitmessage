@@ -101,4 +101,4 @@ This tool accepts an argument as the command to execute. Here is a list of avail
 
 Here is an example of the commit messages generated in a real-world project:
 
-![example](docs/images/dotnet-aicommitmessage.png)
+![example](https://raw.githubusercontent.com/guibranco/dotnet-aicommitmessage/main/docs/images/dotnet-aicommitmessage.png)
