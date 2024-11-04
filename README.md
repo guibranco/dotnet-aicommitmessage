@@ -104,3 +104,13 @@ This tool accepts an argument as the command to execute. Here is a list of avail
 Here is an example of the commit messages generated in a real-world project:
 
 ![example](https://raw.githubusercontent.com/guibranco/dotnet-aicommitmessage/main/docs/images/dotnet-aicommitmessage.png)
+
+## Code Scanning with CodeQL
+
+This repository uses GitHub's CodeQL for automated code scanning to enhance code quality and security.
+
+### Setup
+
+The CodeQL analysis is configured to run on every push and pull request to the `main` branch, as well as on a weekly schedule.
+
+### Addressing Issues
