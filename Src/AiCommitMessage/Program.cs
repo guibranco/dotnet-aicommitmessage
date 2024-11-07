@@ -31,9 +31,11 @@ internal static class Program
             if (IsMergeConflictResolution(options.Message))
             {
                 Console.WriteLine(options.Message); // Preserve original message
-    private static void Main(string[] args) =>
+    private static void Main(string[] args)
                 return;
+    {
             }
+    }
         Parser
             .Default.ParseArguments<
                 InstallHookOptions,
