@@ -30,7 +30,6 @@ internal static class Program
 
     /// </remarks>
     private static void Main(string[] args)
-    private static void Main(string[] args)
     {
         var options = Parser.Default.ParseArguments<GenerateCommitMessageOptions>(args)
             .WithParsed(RunGenerateCommitMessage)
