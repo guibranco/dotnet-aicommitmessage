@@ -28,12 +28,12 @@ internal static class Program
     /// If the parsing fails, it invokes the <c>HandleErrors</c> method to manage any errors that occurred during parsing.
     /// This structure allows for a clean and organized way to handle different command-line options and their corresponding actions.
     /// </remarks>
-            if (IsMergeConflictResolution(options.Message))
-            {
-                Console.WriteLine(options.Message); // Preserve original message
     {
-    private static void Main(string[] args)
-    {
+        if (IsMergeConflictResolution(options.Message))
+        {
+            Console.WriteLine(options.Message); // Preserve original message
+            return;
+        }
         if (IsMergeConflictResolution(options.Message))
         {
             Console.WriteLine(options.Message); // Preserve original message
