@@ -156,4 +156,3 @@ internal static class Program
         Output.ErrorLine("Invalid command-line arguments.");
         Environment.ExitCode = 2;
     }
-}
