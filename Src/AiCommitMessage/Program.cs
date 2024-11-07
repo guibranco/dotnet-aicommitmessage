@@ -29,6 +29,24 @@ internal static class Program
     /// This structure allows for a clean and organized way to handle different command-line options and their corresponding actions.
     /// </remarks>
     private static void Main(string[] args)
+{
+    var options = // ... initialize options as needed
+
+    if (IsMergeConflictResolution(options.Message))
+    {
+        Console.WriteLine(options.Message); // Preserve original message
+        return;
+    }
+
+    // Existing code for handling non-merge conflict commit messages
+    Parser
+        .Default.ParseArguments<
+            InstallHookOptions,
+            // ... other options
+        >(args)
+        .WithParsed<InstallHookOptions>(opts => RunInstall(opts))
+        // ... other parsers
+        ;
     {
         if (IsMergeConflictResolution(options.Message))
         {
