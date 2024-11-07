@@ -3,6 +3,7 @@ using AiCommitMessage.Options;
 using AiCommitMessage.Services;
 using AiCommitMessage.Utility;
 using CommandLine;
+using System.Text.RegularExpressions;
 
 namespace AiCommitMessage;
 
@@ -13,6 +14,10 @@ namespace AiCommitMessage;
 internal static class Program
 {
     /// <summary>
+        private static readonly Regex MergeConflictPattern = new Regex(@"^Merge branch '.*' into .*$", RegexOptions.Compiled);
+
+        private static bool IsMergeConflictResolution(string message) => MergeConflictPattern.IsMatch(message);
+
     /// The entry point of the application that processes command-line arguments.
     /// </summary>
     /// <param name="args">An array of strings representing the command-line arguments passed to the application.</param>
@@ -23,7 +28,12 @@ internal static class Program
     /// If the parsing fails, it invokes the <c>HandleErrors</c> method to manage any errors that occurred during parsing.
     /// This structure allows for a clean and organized way to handle different command-line options and their corresponding actions.
     /// </remarks>
+            if (IsMergeConflictResolution(options.Message))
+            {
+                Console.WriteLine(options.Message); // Preserve original message
     private static void Main(string[] args) =>
+                return;
+            }
         Parser
             .Default.ParseArguments<
                 InstallHookOptions,
