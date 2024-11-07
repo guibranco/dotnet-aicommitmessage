@@ -27,8 +27,24 @@ internal static class Program
     /// It calls the <c>Run</c> method if the parsing is successful, allowing the application to execute the intended functionality.
     /// If the parsing fails, it invokes the <c>HandleErrors</c> method to manage any errors that occurred during parsing.
     /// This structure allows for a clean and organized way to handle different command-line options and their corresponding actions.
+
     /// </remarks>
     private static void Main(string[] args)
+    private static void Main(string[] args)
+    {
+        var options = Parser.Default.ParseArguments<GenerateCommitMessageOptions>(args)
+            .WithParsed(RunGenerateCommitMessage)
+            .WithNotParsed(HandleErrors);
+
+        if (IsMergeConflictResolution(options.Message))
+        {
+            Console.WriteLine(options.Message); // Preserve original message
+            return;
+        }
+
+        Parser.Default.ParseArguments<InstallHookOptions>(args)
+            .WithParsed(RunInstallHook)
+            .WithNotParsed(HandleErrors);
 {
     var options = // ... initialize options as needed
 
