@@ -9,12 +9,12 @@
 [![Build](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/build.yml/badge.svg)](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/build.yml)
 [![Continuous Integration](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/ci.yml/badge.svg)](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/ci.yml)
 [![Infisical secrets check](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/infisical-secrets-check.yml/badge.svg)](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/infisical-secrets-check.yml)
-[![Linter check](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/linter.yml/badge.svg)](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/linter.yml)
+[![Linter check](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/linter.yml/badge.svg?branch=main)](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/linter.yml)
 
 ---
 
 > [!CAUTION]
-> This is still in development/beta. It will be **GA** when a major release 1 becomes available.
+> This is still in development/beta. It will be **GA** when a major release 1.0 becomes available.
 
 ## What this tool does
 
