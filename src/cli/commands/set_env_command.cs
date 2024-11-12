@@ -6,7 +6,9 @@ namespace Cli.Commands
 {
     public class SetEnvCommand : Command
     {
-        public SetEnvCommand() : base("set-env", "Sets an environment variable.")
+        public SetEnvCommand()
+            : base("set-env", "Sets an environment variable.")
+        {
         {
             var variableArgument = new Argument<string>("variable", "The environment variable in the format VAR_NAME=value.");
             var targetOption = new Option<string>("--target", () => "User", "The target scope: User or Machine.");
