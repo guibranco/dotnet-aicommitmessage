@@ -9,7 +9,7 @@
 [![Build](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/build.yml/badge.svg)](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/build.yml)
 [![Continuous Integration](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/ci.yml/badge.svg)](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/ci.yml)
 [![Infisical secrets check](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/infisical-secrets-check.yml/badge.svg)](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/infisical-secrets-check.yml)
-[![Linter check](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/linter.yml/badge.svg)](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/linter.yml)
+[![Linter check](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/linter.yml/badge.svg?branch=main)](https://github.com/guibranco/dotnet-aicommitmessage/actions/workflows/linter.yml)
 
 ---
 
