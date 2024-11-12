@@ -3,6 +3,7 @@ using AiCommitMessage.Options;
 using AiCommitMessage.Services;
 using AiCommitMessage.Utility;
 using CommandLine;
+using System.Text.RegularExpressions;
 
 namespace AiCommitMessage;
 
@@ -13,6 +14,10 @@ namespace AiCommitMessage;
 internal static class Program
 {
     /// <summary>
+        private static readonly Regex MergeConflictPattern = new Regex(@"^Merge branch '.*' into .*$", RegexOptions.Compiled);
+
+        private static bool IsMergeConflictResolution(string message) => MergeConflictPattern.IsMatch(message);
+
     /// The entry point of the application that processes command-line arguments.
     /// </summary>
     /// <param name="args">An array of strings representing the command-line arguments passed to the application.</param>
@@ -22,8 +27,59 @@ internal static class Program
     /// It calls the <c>Run</c> method if the parsing is successful, allowing the application to execute the intended functionality.
     /// If the parsing fails, it invokes the <c>HandleErrors</c> method to manage any errors that occurred during parsing.
     /// This structure allows for a clean and organized way to handle different command-line options and their corresponding actions.
+
     /// </remarks>
-    private static void Main(string[] args) =>
+    private static void Main(string[] args)
+    {
+        var options = Parser.Default.ParseArguments<GenerateCommitMessageOptions>(args)
+            .WithParsed(RunGenerateCommitMessage)
+            .WithNotParsed(HandleErrors);
+
+        if (IsMergeConflictResolution(options.Message))
+        {
+            Console.WriteLine(options.Message); // Preserve original message
+            return;
+        }
+
+        Parser.Default.ParseArguments<InstallHookOptions>(args)
+            .WithParsed(RunInstallHook)
+            .WithNotParsed(HandleErrors);
+{
+    var options = // ... initialize options as needed
+
+    if (IsMergeConflictResolution(options.Message))
+    {
+        Console.WriteLine(options.Message); // Preserve original message
+        return;
+    }
+
+    // Existing code for handling non-merge conflict commit messages
+    Parser
+        .Default.ParseArguments<
+            InstallHookOptions,
+            // ... other options
+        >(args)
+        .WithParsed<InstallHookOptions>(opts => RunInstall(opts))
+        // ... other parsers
+        ;
+    {
+        if (IsMergeConflictResolution(options.Message))
+        {
+            Console.WriteLine(options.Message); // Preserve original message
+            return;
+        }
+    }
+        if (IsMergeConflictResolution(options.Message))
+        {
+            Console.WriteLine(options.Message); // Preserve original message
+            return;
+        }
+
+        Parser
+            .Default.ParseArguments<
+                InstallHookOptions,
+            }
+    }
         Parser
             .Default.ParseArguments<
                 InstallHookOptions,
@@ -100,4 +156,3 @@ internal static class Program
         Output.ErrorLine("Invalid command-line arguments.");
         Environment.ExitCode = 2;
     }
-}

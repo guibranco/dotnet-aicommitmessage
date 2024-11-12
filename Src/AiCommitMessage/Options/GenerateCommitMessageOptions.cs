@@ -3,6 +3,7 @@
 namespace AiCommitMessage.Options;
 
 /// <summary>
+/// Includes options for detecting merge conflict resolution messages.
 /// Class GenerateMessageOptions.
 /// </summary>
 [Verb("generate-message", HelpText = "Generate a commit message based on staged changes.")]
