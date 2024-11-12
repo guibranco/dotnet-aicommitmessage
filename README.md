@@ -14,7 +14,7 @@
 ---
 
 > [!CAUTION]
-> This is still in development/beta. It will be **GA** when a major release 1 becomes available.
+> This is still in development/beta. It will be **GA** when a major release 1.0 becomes available.
 
 ## What this tool does
 
