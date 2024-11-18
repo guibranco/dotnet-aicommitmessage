@@ -29,8 +29,10 @@ namespace DotNetMyTool
             Console.WriteLine($"Environment variable {variable} set to {value} for {target}.");
         }
                 {
+                {
                     Console.WriteLine("Invalid format. Use VAR_NAME=value.");
                     return;
+                }
                 }
 
             rootCommand.AddCommand(setEnvCommand);
