@@ -62,6 +62,12 @@ jobs:
 
 
     # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift).
+     # Setup .NET 9.0 SDK
+     - name: Setup .NET
+       uses: actions/setup-dotnet@v3
+       with:
+         dotnet-version: '9.0.x'  # Use the latest 9.0 SDK
+
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Autobuild
       uses: github/codeql-action/autobuild@v3
