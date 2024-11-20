@@ -36,7 +36,6 @@ public class ConstantsTests
             Do not include punctuation at the end of the output message, such as a dot, exclamation point, or interrogation point.
             Only generate a single output per request. Return the one that is more compatible with the input data.
             """;
-        ;
 
         // Act
         var actual = Constants.SystemMessage;
