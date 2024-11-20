@@ -15,7 +15,7 @@ public class ConstantsTests
 
             RECOMMENDATIONS (type - meaning):
             initial commit - commits for when the diff file is empty and there is no history in the repository (only the very beginning commits area allowed for this type).
-            feat - Commits of type feat indicate that your code snippet is adding a new feature (related to MINOR in semantic versioning). Suggest this when the branch name starts with the feature or feat words.
+            feat - Commits of type feat indicate that your code snippet is adding a new feature (related to MINOR in semantic versioning). Suggest this when the branch name starts with the feature or feat words and no other better option is suitable.
             fix - Commits of type fix indicate that your committed code snippet is solving a problem (bug fix) (related to PATCH in semantic versioning). Suggest this when the branch name starts with fix, hotfix, bugfix, and bug.
             docs - Commits of type docs indicate that there have been changes in the documentation, such as in your repository’s Readme or the docs directory. (Does not include code changes).
             test - Commits of type test are used when changes are made to tests, whether creating, altering, or deleting unit/integration tests under the tests directory. (Does not include code changes).
