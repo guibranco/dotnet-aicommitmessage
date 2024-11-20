@@ -107,21 +107,22 @@ Here is an example of the commit messages generated in a real-world project:
 
 ## Debug
 
-You can run the message generation manually to debug it, which will not commit the content to your GIT repository. 
+You can run the message generation manually to debug it, but it will not commit the content to your GIT repository. 
 If you also want to check the OpenAI JSON response, append the `-D` parameter.
 
 ### Manually generating the commit message
 
-To manually generate a commit message without committing the staged changes, run the following command: 
-```bash
+To manually generate a commit message without committing the staged changes, run the following command:
+
+```ps
 dotnet-aicommitmessage generate-message -m "."
 ```
 
 ### Saving the OpenAI JSON response
 
-If you want to persist the OpenAI JSON response, add the `-D` parameter, and a `debug.json` file will be created with the response JSON.
+If you want to persist the OpenAI JSON response, add the `-D` parameter and a `debug.json` file will be created with the response JSON.
 
-```bash
+```ps
 dotnet-aicommitmessage generate-message -Dm "."
 ```
 
