@@ -105,7 +105,6 @@ Here is an example of the commit messages generated in a real-world project:
 
 ![example](https://raw.githubusercontent.com/guibranco/dotnet-aicommitmessage/main/docs/images/dotnet-aicommitmessage.png)
 
-
 ## Debug
 
 You can run the message generation manually to debug it, which will not commit the content to your GIT repository. 
