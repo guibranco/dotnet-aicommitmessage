@@ -7,7 +7,6 @@ valid_branch_regex="^(penify|gitauto|dependabot|feature|fix|docs|style|refactor|
 
 message="There is something wrong with your branch name. Branch names in this project must adhere to this contract: $valid_branch_regex. Your commit will be rejected. You should rename your branch to a valid name and try again."
 
-# Use 'case' to match the branch name with the regex
 echo "$local_branch" | grep -qE "$valid_branch_regex"
 if [ $? -ne 0 ]; then
     echo "$message"
