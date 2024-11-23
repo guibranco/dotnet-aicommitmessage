@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 # This script generates an AI-powered commit message using dotnet-aicommitmessage.
 # It can be bypassed by setting the GIT_AICOMMIT_SKIP environment variable.
