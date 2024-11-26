@@ -36,8 +36,7 @@ CURRENT_MESSAGE=$(cat "$COMMIT_MSG_FILE")
 cp "$COMMIT_MSG_FILE" "${COMMIT_MSG_FILE}.bak"
 
 # Generate the AI commit message
-AI_MESSAGE=$(dotnet-aicommitmessage generate-message -m "$CURRENT_MESSAGE" 2>/dev/null)
-if [ $? -ne 0 ]; then
+if ! AI_MESSAGE=$(dotnet-aicommitmessage generate-message -m "$CURRENT_MESSAGE" 2>/dev/null); then
     echo "Error: Failed to generate AI commit message. Using original message." >&2
     exit 0
 fi
