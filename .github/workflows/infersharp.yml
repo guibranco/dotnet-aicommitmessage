@@ -18,7 +18,7 @@ jobs:
           binary-path: './Src/'
 
       - name: Upload SARIF output to GitHub Security Center
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@17573ee1cc1b36302710b23b3e0b1172f2c9c068
         if: success() && hashFiles('infer-out/report.sarif') != ''
         with:
           sarif_file: infer-out/report.sarif
