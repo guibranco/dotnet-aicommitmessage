@@ -29,7 +29,7 @@ Thank you for your interest in contributing to the `dotnet-aicommitmessage` proj
 
 ### Compatibility 💻
 
-- The tool targets **.NET 8 and higher**, but it may run on lower versions (not tested). If you are adding features or fixing bugs, ensure the tool retains compatibility with lower versions if possible.
+- The tool targets **.NET 8 and higher**. While it might technically run on lower versions, this is not officially supported or tested. If you are adding features or fixing bugs, ensure the tool retains compatibility with lower versions if possible.
 
 ### Testing ✅
 
