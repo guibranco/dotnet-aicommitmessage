@@ -69,11 +69,11 @@ Thank you for your interest in contributing to the `dotnet-aicommitmessage` proj
 
 ### Pull Request Checklist ✅
 
-- [x] Code follows the .NET coding conventions.
-- [x] All xUnit tests pass locally.
-- [x] Code changes are covered with tests.
-- [x] Documentation has been updated (if required).
-- [x] PR description clearly explains the purpose and changes.
+[ ] Code follows the .NET coding conventions.
+[ ] All xUnit tests pass locally.
+[ ] Code changes are covered with tests.
+[ ] Documentation has been updated (if required).
+[ ] PR description clearly explains the purpose and changes.
 
 ## Reporting Issues 🐞
 
