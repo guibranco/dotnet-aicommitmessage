@@ -13,6 +13,10 @@ namespace AiCommitMessage.Services;
 /// </summary>
 public class GenerateCommitMessageService
 {
+    private static readonly Regex MergeConflictPattern = new Regex(@"^Merge branch '.*' into .*$", RegexOptions.Compiled);
+
+    private static bool IsMergeConflictResolution(string message) => MergeConflictPattern.IsMatch(message);
+    
     /// <summary>
     /// Generates a commit message based on the provided options and the OpenAI API.
     /// </summary>
