@@ -17,7 +17,7 @@ public class GenerateCommitMessageService
     /// <summary>
     /// Regular expression to detect merge conflict resolution messages.
     /// </summary>
-    private static readonly Regex MergeConflictPattern = new (
+    private static readonly Regex MergeConflictPattern = new(
         @"^Merge branch '.*' into .*$",
         RegexOptions.Compiled
     );
