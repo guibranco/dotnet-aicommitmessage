@@ -26,7 +26,6 @@ internal static class InstallHookService
         if (string.IsNullOrWhiteSpace(options.Path))
         {
             directory = Path.Combine(GetGitRepositoryRootLevel(), GetHooksDirectory());
-            EnsureDirectoryExists(directory);
         }
 
         var hookPath = Path.Combine(directory, "prepare-commit-msg");
@@ -190,7 +189,7 @@ internal static class InstallHookService
         string file
     )
     {
-        EnsureDirectoryExists(outputDir);
+        EnsureDirectoryExists(Path.Combine(outputDir, file));
         using var stream = typeof(InstallHookService).Assembly.GetManifestResourceStream(
             resourceLocation + "." + file
         );
@@ -219,7 +218,7 @@ internal static class InstallHookService
     private static void EnsureDirectoryExists(string path)
     {
         var directoryName = Path.GetDirectoryName(path);
-        if (directoryName is { Length: > 0 })
+        if (directoryName is { Length: > 0 } && !Directory.Exists(directoryName))
         {
             Directory.CreateDirectory(directoryName);
         }

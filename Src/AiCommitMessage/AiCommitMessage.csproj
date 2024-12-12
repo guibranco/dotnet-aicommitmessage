@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <PackAsTool>true</PackAsTool>
@@ -29,7 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
-    <PackageReference Include="OpenAI" Version="2.0.0" />
+    <PackageReference Include="OpenAI" Version="2.1.0" />
     <PackageReference Include="Spectre.Console" Version="0.49.1" />
     <PackageReference Include="Spectre.Console.Analyzer" Version="1.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

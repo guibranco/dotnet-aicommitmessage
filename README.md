@@ -1,6 +1,6 @@
 # ![GIT Hooks + OpenAI - Generate GIT commit messages from OpenAI](https://raw.githubusercontent.com/guibranco/dotnet-aicommitmessage/main/docs/images/splash.png)
 
-🧠 🧰 This tool generates AI-powered commit messages via Git hooks, automating meaningful message suggestions from OpenAI and others to improve commit quality and efficiency.
+🧠 🤖 This tool generates AI-powered commit messages via Git hooks, automating meaningful message suggestions from OpenAI and others to improve commit quality and efficiency.
 
 [![GitHub last commit](https://img.shields.io/github/last-commit/guibranco/dotnet-aicommitmessage)](https://wakatime.com/badge/github/guibranco/dotnet-aicommitmessage)
 [![GitHub license](https://img.shields.io/github/license/guibranco/dotnet-aicommitmessage)](https://wakatime.com/badge/github/guibranco/dotnet-aicommitmessage)
@@ -104,3 +104,62 @@ This tool accepts an argument as the command to execute. Here is a list of avail
 Here is an example of the commit messages generated in a real-world project:
 
 ![example](https://raw.githubusercontent.com/guibranco/dotnet-aicommitmessage/main/docs/images/dotnet-aicommitmessage.png)
+
+## Debug
+
+You can run the message generation manually to debug it, but it will not commit the content to your GIT repository. 
+If you also want to check the OpenAI JSON response, append the `-D` parameter.
+
+### Manually generating the commit message
+
+To manually generate a commit message without committing the staged changes, run the following command:
+
+```ps
+dotnet-aicommitmessage generate-message -m "."
+```
+
+### Saving the OpenAI JSON response
+
+If you want to persist the OpenAI JSON response, add the `-D` parameter and a `debug.json` file will be created with the response JSON.
+
+```ps
+dotnet-aicommitmessage generate-message -Dm "."
+```
+
+Here is a sample `debug.json` content:
+
+```json
+{
+  "Value": {
+    "CreatedAt": "2024-11-20T12:54:03+00:00",
+    "FinishReason": 0,
+    "ContentTokenLogProbabilities": [],
+    "RefusalTokenLogProbabilities": [],
+    "Role": 2,
+    "Content": [
+      {
+        "Kind": 0,
+        "Text": "feat - add reactivation handling for refunds due today",
+        "ImageUri": null,
+        "ImageBytes": null,
+        "ImageBytesMediaType": null,
+        "ImageDetailLevel": null,
+        "Refusal": null
+      }
+    ],
+    "ToolCalls": [],
+    "Refusal": null,
+    "FunctionCall": null,
+    "Id": "chatcmpl-[[REDACTED]]",
+    "Model": "gpt-4o-mini-2024-07-18",
+    "SystemFingerprint": "fp-[[REDACTED]]",
+    "Usage": {
+      "OutputTokenCount": 10,
+      "InputTokenCount": 6229,
+      "TotalTokenCount": 6239,
+      "OutputTokenDetails": {
+        "ReasoningTokenCount": 0
+      }
+    }
+  }
+}
