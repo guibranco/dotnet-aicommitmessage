@@ -26,7 +26,7 @@ public class GenerateCommitMessageService
     /// This method retrieves the OpenAI API URL and API key from the environment variables. If the URL is not set, it defaults to "https://api.openai.com/v1".
     /// If the API key is not provided, it returns a message prompting the user to set the <c>OPENAI_API_KEY</c> environment variable.
     /// It constructs a message that includes the branch name, original commit message, and git diff, which is then sent to the OpenAI API using a chat client.
-    /// If debugging is enabled, it serializes the chat completion response to JSON and writes it to a file named "debug.json".
+    /// If debugging is enabled, it serializes the chat completion response to JSON and writes it to a file named "debug.json.
     /// Finally, it returns the generated commit message from the chat completion response.
     /// </remarks>
     public string GenerateCommitMessage(GenerateCommitMessageOptions options)
@@ -48,8 +48,12 @@ public class GenerateCommitMessageService
         var diff = string.IsNullOrEmpty(options.Diff) ? GitHelper.GetGitDiff() : options.Diff;
 
         // Use the provided message (this will come from the prepare-commit-msg hook)
-        var message = options.Message; // No fallback to GIT, as commit message is passed in the hook
+        var message = options.Message; // No fallback to GIT, as the commit message is passed in the hook
 
+        if (IsMergeConflictResolution(message)) {
+            return message;
+        }
+        
         if (string.IsNullOrEmpty(branch) && string.IsNullOrEmpty(diff))
         {
             throw new InvalidOperationException(
