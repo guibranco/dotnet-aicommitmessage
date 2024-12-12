@@ -3,9 +3,6 @@
 /// <summary>
 /// Class Constants.
 /// </summary>
-/// Includes constants for system messages and patterns.
-///
-/// <remarks>Used for commit message generation and detection.</remarks>
 public class Constants
 {
     /// <summary>
