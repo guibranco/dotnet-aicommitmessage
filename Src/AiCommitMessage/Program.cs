@@ -1,9 +1,8 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using AiCommitMessage.Options;
 using AiCommitMessage.Services;
 using AiCommitMessage.Utility;
 using CommandLine;
-using System.Text.RegularExpressions;
 
 namespace AiCommitMessage;
 
@@ -24,44 +23,7 @@ internal static class Program
     /// If the parsing fails, it invokes the <c>HandleErrors</c> method to manage any errors that occurred during parsing.
     /// This structure allows for a clean and organized way to handle different command-line options and their corresponding actions.
     /// </remarks>
-    private static void Main(string[] args)
-    {
-        var options = Parser.Default.ParseArguments<GenerateCommitMessageOptions>(args)
-            .WithParsed(RunGenerateCommitMessage)
-            .WithNotParsed(HandleErrors);
-
-        Parser.Default.ParseArguments<InstallHookOptions>(args)
-            .WithParsed(RunInstallHook)
-            .WithNotParsed(HandleErrors);
-{
-    var options = // ... initialize options as needed
-
-    Parser
-        .Default.ParseArguments<
-            InstallHookOptions,
-            // ... other options
-        >(args)
-        .WithParsed<InstallHookOptions>(opts => RunInstall(opts))
-        // ... other parsers
-        ;
-    {
-        if (IsMergeConflictResolution(options.Message))
-        {
-            Console.WriteLine(options.Message); // Preserve original message
-            return;
-        }
-    }
-        if (IsMergeConflictResolution(options.Message))
-        {
-            Console.WriteLine(options.Message); // Preserve original message
-            return;
-        }
-
-        Parser
-            .Default.ParseArguments<
-                InstallHookOptions,
-            }
-    }
+    private static void Main(string[] args) =>
         Parser
             .Default.ParseArguments<
                 InstallHookOptions,
@@ -138,3 +100,4 @@ internal static class Program
         Output.ErrorLine("Invalid command-line arguments.");
         Environment.ExitCode = 2;
     }
+}
