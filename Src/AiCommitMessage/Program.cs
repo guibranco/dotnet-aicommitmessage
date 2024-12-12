@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using AiCommitMessage.Options;
 using AiCommitMessage.Services;
 using AiCommitMessage.Utility;
