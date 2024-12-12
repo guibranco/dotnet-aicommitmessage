@@ -22,7 +22,7 @@ public class GenerateCommitMessageServiceTests
 
     public GenerateCommitMessageServiceTests()
     {
-        _mockChatClient = Substitute.For<ChatClient>(null, Substitute.For<ApiKeyCredential>(), Substitute.For<OpenAIClientOptions>());
+        _mockChatClient = Substitute.For<ChatClient>(null, new ApiKeyCredential("key"), Substitute.For<OpenAIClientOptions>());
         _service = new GenerateCommitMessageService();
     }
 
