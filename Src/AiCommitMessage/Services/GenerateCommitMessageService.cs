@@ -19,7 +19,7 @@ public class GenerateCommitMessageService
     /// </summary>
     private static readonly Regex MergeConflictPattern = new(
         @"^Merge branch '.*' into .*$",
-        RegexOptions.Compiled
+        RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase
     );
 
     /// <summary>
@@ -46,24 +46,11 @@ public class GenerateCommitMessageService
     /// <exception cref="InvalidOperationException">Thrown if both the branch and diff are empty, as meaningful commit generation is not possible.</exception>
     public string GenerateCommitMessage(GenerateCommitMessageOptions options)
     {
-        var model = EnvironmentLoader.LoadOpenAiModel();
-        var url = EnvironmentLoader.LoadOpenAiApiUrl();
-        var key = EnvironmentLoader.LoadOpenAiApiKey();
-
-        var client = new ChatClient(
-            model,
-            new ApiKeyCredential(key),
-            new OpenAIClientOptions { Endpoint = new Uri(url) }
-        );
-
         var branch = string.IsNullOrEmpty(options.Branch)
             ? GitHelper.GetBranchName()
             : options.Branch;
-
         var diff = string.IsNullOrEmpty(options.Diff) ? GitHelper.GetGitDiff() : options.Diff;
-
-        // Use the provided message (this will come from the prepare-commit-msg hook)
-        var message = options.Message; // No fallback to GIT, as the commit message is passed in the hook
+        var message = options.Message;
 
         if (IsMergeConflictResolution(message))
         {
@@ -86,6 +73,16 @@ public class GenerateCommitMessageService
             + "\n\n"
             + "Git Diff: "
             + (string.IsNullOrEmpty(diff) ? "<no changes>" : diff);
+
+        var model = EnvironmentLoader.LoadOpenAiModel();
+        var url = EnvironmentLoader.LoadOpenAiApiUrl();
+        var key = EnvironmentLoader.LoadOpenAiApiKey();
+
+        var client = new ChatClient(
+            model,
+            new ApiKeyCredential(key),
+            new OpenAIClientOptions { Endpoint = new Uri(url) }
+        );
 
         var chatCompletion = client.CompleteChat(
             new SystemChatMessage(Constants.SystemMessage),
