@@ -1,6 +1,7 @@
 ﻿using System.ClientModel;
 using System.Diagnostics;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using AiCommitMessage.Options;
 using AiCommitMessage.Utility;
 using OpenAI;
