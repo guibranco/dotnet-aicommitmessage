@@ -1,4 +1,5 @@
 using System;
+using System.ClientModel;
 using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
@@ -21,10 +22,7 @@ public class GenerateCommitMessageServiceTests
 
     public GenerateCommitMessageServiceTests()
     {
-        // Mock the ChatClient using NSubstitute
-        _mockChatClient = Substitute.For<ChatClient>(null, null, null);
-
-        // Initialize the service
+        _mockChatClient = Substitute.For<ChatClient>(null, Substitute.For<ApiKeyCredential>(), Substitute.For<OpenAIClientOptions>());
         _service = new GenerateCommitMessageService();
     }
 
