@@ -1,6 +1,7 @@
 ﻿using System.ClientModel;
 using System.Diagnostics;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using AiCommitMessage.Options;
 using AiCommitMessage.Utility;
 using OpenAI;
@@ -9,42 +10,52 @@ using OpenAI.Chat;
 namespace AiCommitMessage.Services;
 
 /// <summary>
-/// Class GenerateCommitMessageService.
+/// Service for generating commit messages based on staged changes and contextual information.
 /// </summary>
 public class GenerateCommitMessageService
 {
+    /// <summary>
+    /// Regular expression to detect merge conflict resolution messages.
+    /// </summary>
+    private static readonly Regex MergeConflictPattern = new(
+        @"^Merge branch '.*' into .*$",
+        RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase
+    );
+
+    /// <summary>
+    /// Checks whether the given commit message is a merge conflict resolution message.
+    /// </summary>
+    /// <param name="message">The commit message to evaluate.</param>
+    /// <returns><c>true</c> if the message indicates a merge conflict resolution; otherwise, <c>false</c>.</returns>
+    /// <remarks>
+    /// This helper method uses a predefined regular expression to match patterns commonly seen in merge conflict resolutions.
+    /// </remarks>
+    private static bool IsMergeConflictResolution(string message) =>
+        MergeConflictPattern.IsMatch(message);
+
     /// <summary>
     /// Generates a commit message based on the provided options and the OpenAI API.
     /// </summary>
     /// <param name="options">An instance of <see cref="GenerateCommitMessageOptions"/> containing the branch name, original message, and git diff.</param>
     /// <returns>A string containing the generated commit message from the OpenAI API.</returns>
     /// <remarks>
-    /// This method retrieves the OpenAI API URL and API key from the environment variables. If the URL is not set, it defaults to "https://api.openai.com/v1".
-    /// If the API key is not provided, it returns a message prompting the user to set the <c>OPENAI_API_KEY</c> environment variable.
-    /// It constructs a message that includes the branch name, original commit message, and git diff, which is then sent to the OpenAI API using a chat client.
-    /// If debugging is enabled, it serializes the chat completion response to JSON and writes it to a file named "debug.json".
-    /// Finally, it returns the generated commit message from the chat completion response.
+    /// This method retrieves API details (URL and key) from environment variables, constructs a message including the branch name,
+    /// original commit message, and git diff, and sends it to the OpenAI API for processing. It also handles debugging, saving
+    /// API responses to a JSON file if debugging is enabled. If the commit message is a merge conflict resolution, it is returned as-is.
     /// </remarks>
+    /// <exception cref="InvalidOperationException">Thrown if both the branch and diff are empty, as meaningful commit generation is not possible.</exception>
     public string GenerateCommitMessage(GenerateCommitMessageOptions options)
     {
-        var model = EnvironmentLoader.LoadOpenAiModel();
-        var url = EnvironmentLoader.LoadOpenAiApiUrl();
-        var key = EnvironmentLoader.LoadOpenAiApiKey();
-
-        var client = new ChatClient(
-            model,
-            new ApiKeyCredential(key),
-            new OpenAIClientOptions { Endpoint = new Uri(url) }
-        );
-
         var branch = string.IsNullOrEmpty(options.Branch)
             ? GitHelper.GetBranchName()
             : options.Branch;
-
         var diff = string.IsNullOrEmpty(options.Diff) ? GitHelper.GetGitDiff() : options.Diff;
+        var message = options.Message;
 
-        // Use the provided message (this will come from the prepare-commit-msg hook)
-        var message = options.Message; // No fallback to GIT, as commit message is passed in the hook
+        if (IsMergeConflictResolution(message))
+        {
+            return message;
+        }
 
         if (string.IsNullOrEmpty(branch) && string.IsNullOrEmpty(diff))
         {
@@ -62,6 +73,16 @@ public class GenerateCommitMessageService
             + "\n\n"
             + "Git Diff: "
             + (string.IsNullOrEmpty(diff) ? "<no changes>" : diff);
+
+        var model = EnvironmentLoader.LoadOpenAiModel();
+        var url = EnvironmentLoader.LoadOpenAiApiUrl();
+        var key = EnvironmentLoader.LoadOpenAiApiKey();
+
+        var client = new ChatClient(
+            model,
+            new ApiKeyCredential(key),
+            new OpenAIClientOptions { Endpoint = new Uri(url) }
+        );
 
         var chatCompletion = client.CompleteChat(
             new SystemChatMessage(Constants.SystemMessage),
@@ -115,15 +136,8 @@ public class GenerateCommitMessageService
     /// </summary>
     /// <returns>A <see cref="GitProvider"/> enumeration value representing the detected Git provider.</returns>
     /// <remarks>
-    /// This method executes a Git command to fetch the remote origin URL configured for the repository.
-    /// It uses the <c>git config --get remote.origin.url</c> command to obtain the URL, which is then analyzed to determine the Git provider.
-    /// The method checks for specific substrings in the URL to identify the provider:
-    /// - If the URL contains "dev.azure.com", it returns <see cref="GitProvider.AzureDevOps"/>.
-    /// - If the URL contains "bitbucket.org", it returns <see cref="GitProvider.Bitbucket"/>.
-    /// - If the URL contains "github.com", it returns <see cref="GitProvider.GitHub"/>.
-    /// - If the URL contains "gitlab.com", it returns <see cref="GitProvider.GitLab"/>.
-    /// If none of these providers are identified, it returns <see cref="GitProvider.Unidentified"/>.
-    /// This method is useful for determining the source control environment in which the code is hosted.
+    /// This method uses the <c>git config --get remote.origin.url</c> command to determine the Git provider based on substrings in the URL.
+    /// If no known provider is identified, it defaults to <see cref="GitProvider.Unidentified"/>.
     /// </remarks>
     private static GitProvider GetGitProvider()
     {
