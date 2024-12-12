@@ -34,7 +34,7 @@ public class GenerateCommitMessageOptions
     /// </summary>
     /// <value>A string representation of the staged changes (e.g., diff output).</value>
     /// <remarks>
-    /// Including the diff can provide more detailed context for generating a commit message 
+    /// Including the diff can provide more detailed context for generating a commit message
     /// tailored to the exact changes being staged.
     /// </remarks>
     [Option('d', "diff", Required = false, HelpText = "The staged changes.")]

@@ -17,7 +17,10 @@ public class GenerateCommitMessageService
     /// <summary>
     /// Regular expression to detect merge conflict resolution messages.
     /// </summary>
-    private static readonly Regex MergeConflictPattern = new Regex(@"^Merge branch '.*' into .*$", RegexOptions.Compiled);
+    private static readonly Regex MergeConflictPattern = new Regex(
+        @"^Merge branch '.*' into .*$",
+        RegexOptions.Compiled
+    );
 
     /// <summary>
     /// Checks whether the given commit message is a merge conflict resolution message.
@@ -27,7 +30,8 @@ public class GenerateCommitMessageService
     /// <remarks>
     /// This helper method uses a predefined regular expression to match patterns commonly seen in merge conflict resolutions.
     /// </remarks>
-    private static bool IsMergeConflictResolution(string message) => MergeConflictPattern.IsMatch(message);
+    private static bool IsMergeConflictResolution(string message) =>
+        MergeConflictPattern.IsMatch(message);
 
     /// <summary>
     /// Generates a commit message based on the provided options and the OpenAI API.
@@ -36,7 +40,7 @@ public class GenerateCommitMessageService
     /// <returns>A string containing the generated commit message from the OpenAI API.</returns>
     /// <remarks>
     /// This method retrieves API details (URL and key) from environment variables, constructs a message including the branch name,
-    /// original commit message, and git diff, and sends it to the OpenAI API for processing. It also handles debugging, saving 
+    /// original commit message, and git diff, and sends it to the OpenAI API for processing. It also handles debugging, saving
     /// API responses to a JSON file if debugging is enabled. If the commit message is a merge conflict resolution, it is returned as-is.
     /// </remarks>
     /// <exception cref="InvalidOperationException">Thrown if both the branch and diff are empty, as meaningful commit generation is not possible.</exception>
@@ -61,10 +65,11 @@ public class GenerateCommitMessageService
         // Use the provided message (this will come from the prepare-commit-msg hook)
         var message = options.Message; // No fallback to GIT, as the commit message is passed in the hook
 
-        if (IsMergeConflictResolution(message)) {
+        if (IsMergeConflictResolution(message))
+        {
             return message;
         }
-        
+
         if (string.IsNullOrEmpty(branch) && string.IsNullOrEmpty(diff))
         {
             throw new InvalidOperationException(
