@@ -50,12 +50,24 @@ public class GenerateCommitMessageService
             ? GitHelper.GetBranchName()
             : options.Branch;
         var diff = string.IsNullOrEmpty(options.Diff) ? GitHelper.GetGitDiff() : options.Diff;
+        if (Encoding.UTF8.GetByteCount(diff) > 10240) // 10 KB limit
+        {
+            throw new InvalidOperationException("🚫 The staged changes are too large to process. Please reduce the number of files or size of changes and try again.");
+        }
+
         var message = options.Message;
 
         if (IsMergeConflictResolution(message))
         {
             return message;
         }
+        try
+        {
+            // Existing code to call OpenAI API
+        }
+        catch (Exception ex) when (ex is HttpRequestException || ex is TaskCanceledException)
+
+            throw new InvalidOperationException("⚠️ OpenAI API is currently unavailable. Please try again later.");
 
         if (string.IsNullOrEmpty(branch) && string.IsNullOrEmpty(diff))
         {
