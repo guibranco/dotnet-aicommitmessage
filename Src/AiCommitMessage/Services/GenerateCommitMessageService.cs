@@ -50,6 +50,11 @@ public class GenerateCommitMessageService
             ? GitHelper.GetBranchName()
             : options.Branch;
         var diff = string.IsNullOrEmpty(options.Diff) ? GitHelper.GetGitDiff() : options.Diff;
+        if (Encoding.UTF8.GetByteCount(diff) > 10240) // 10 KB limit
+        {
+            throw new InvalidOperationException("🚫 The staged changes are too large to process. Please reduce the number of files or size of changes and try again.");
+        }
+
         var message = options.Message;
 
         if (IsMergeConflictResolution(message))
@@ -78,22 +83,31 @@ public class GenerateCommitMessageService
         var url = EnvironmentLoader.LoadOpenAiApiUrl();
         var key = EnvironmentLoader.LoadOpenAiApiKey();
 
-        var client = new ChatClient(
-            model,
-            new ApiKeyCredential(key),
-            new OpenAIClientOptions { Endpoint = new Uri(url) }
-        );
-
-        var chatCompletion = client.CompleteChat(
-            new SystemChatMessage(Constants.SystemMessage),
-            new UserChatMessage(formattedMessage)
-        );
-
-        var text = chatCompletion.Value.Content[0].Text;
-
-        if (text.Length >= 7 && text[..7] == "type - ")
+        var text = string.Empty;
+        
+        try
         {
-            text = text[7..];
+            var client = new ChatClient(
+                model,
+                new ApiKeyCredential(key),
+                new OpenAIClientOptions { Endpoint = new Uri(url) }
+            );
+    
+            var chatCompletion = client.CompleteChat(
+                new SystemChatMessage(Constants.SystemMessage),
+                new UserChatMessage(formattedMessage)
+            );
+    
+            text = chatCompletion.Value.Content[0].Text;
+    
+            if (text.Length >= 7 && text[..7] == "type - ")
+            {
+                text = text[7..];
+            }
+        }
+        catch (Exception ex) when (ex is HttpRequestException || ex is TaskCanceledException)
+        {
+            throw new InvalidOperationException("⚠️ OpenAI API is currently unavailable. Please try again later.");
         }
 
         var provider = GetGitProvider();
