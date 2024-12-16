@@ -61,14 +61,7 @@ public class GenerateCommitMessageService
         {
             return message;
         }
-        try
-        {
-            // Existing code to call OpenAI API
-        }
-        catch (Exception ex) when (ex is HttpRequestException || ex is TaskCanceledException)
-
-            throw new InvalidOperationException("⚠️ OpenAI API is currently unavailable. Please try again later.");
-
+        
         if (string.IsNullOrEmpty(branch) && string.IsNullOrEmpty(diff))
         {
             throw new InvalidOperationException(
@@ -90,22 +83,31 @@ public class GenerateCommitMessageService
         var url = EnvironmentLoader.LoadOpenAiApiUrl();
         var key = EnvironmentLoader.LoadOpenAiApiKey();
 
-        var client = new ChatClient(
-            model,
-            new ApiKeyCredential(key),
-            new OpenAIClientOptions { Endpoint = new Uri(url) }
-        );
-
-        var chatCompletion = client.CompleteChat(
-            new SystemChatMessage(Constants.SystemMessage),
-            new UserChatMessage(formattedMessage)
-        );
-
-        var text = chatCompletion.Value.Content[0].Text;
-
-        if (text.Length >= 7 && text[..7] == "type - ")
+        var text = string.Empty;
+        
+        try
         {
-            text = text[7..];
+            var client = new ChatClient(
+                model,
+                new ApiKeyCredential(key),
+                new OpenAIClientOptions { Endpoint = new Uri(url) }
+            );
+    
+            var chatCompletion = client.CompleteChat(
+                new SystemChatMessage(Constants.SystemMessage),
+                new UserChatMessage(formattedMessage)
+            );
+    
+            text = chatCompletion.Value.Content[0].Text;
+    
+            if (text.Length >= 7 && text[..7] == "type - ")
+            {
+                text = text[7..];
+            }
+        }
+        catch (Exception ex) when (ex is HttpRequestException || ex is TaskCanceledException)
+        {
+            throw new InvalidOperationException("⚠️ OpenAI API is currently unavailable. Please try again later.");
         }
 
         var provider = GetGitProvider();
