@@ -61,7 +61,7 @@ public class GenerateCommitMessageService
         {
             return message;
         }
-        
+
         if (string.IsNullOrEmpty(branch) && string.IsNullOrEmpty(diff))
         {
             throw new InvalidOperationException(
