@@ -101,7 +101,7 @@ public class GenerateCommitMessageService
                 Temperature = 1.0f,
                 NucleusSamplingFactor = 1.0f,
                 MaxTokens = 1000,
-                Model = "Llama-3.1-405B-Instruct"
+                Model = "Meta-Llama-3.1-405B-Instruct"
             };
 
             var response = client.Complete(requestOptions);
