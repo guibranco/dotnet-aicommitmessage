@@ -63,8 +63,10 @@ To configure and use models with `dotnet-aicommitmessage`, users need to set the
 
 Run the following commands to configure the model and related settings:
 
-`dotnet-aicommitmessage set-settings -m gpt-4o-mini -k {api-key} -u {api-url}`
-`dotnet-aicommitmessage set-settings -m llama-3-1-405b-instruct -k {api-key} -u {api-url}`
+```
+dotnet-aicommitmessage set-settings -m gpt-4o-mini -k {api-key} -u {api-url}
+dotnet-aicommitmessage set-settings -m llama-3-1-405b-instruct -k {api-key} -u {api-url}
+```
 
 Replace `{api-key}` with your API key and `{api-url}` with the URL of your API provider.
 
@@ -72,8 +74,10 @@ Replace `{api-key}` with your API key and `{api-url}` with the URL of your API p
 
 After the initial setup, you can easily switch between models without needing to provide the API key or URL again:
 
-`dotnet-aicommitmessage set-settings -m gpt-4o-mini` 
-`dotnet-aicommitmessage set-settings -m llama-3-1-405b-instruct`
+```
+dotnet-aicommitmessage set-settings -m gpt-4o-mini
+dotnet-aicommitmessage set-settings -m llama-3-1-405b-instruct
+```
 
 This allows for quick model changes while retaining your previously configured API details.
 
