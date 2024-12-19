@@ -138,7 +138,6 @@ public class GenerateCommitMessageServiceTests
 
         // Assert
         result.Should().MatchRegex("(?i)(?=.*add)(?=.*llama)");
-
     }
     [Fact]
     public void GenerateCommitMessage_WithGPTModel_Should_MatchExpectedPattern()
