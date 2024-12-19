@@ -113,7 +113,7 @@ public class GenerateCommitMessageService
             var apiKey = EnvironmentLoader.LoadOpenAiApiKey();
 
             var client = new ChatClient(
-                model,
+                "gpt-4o-mini",
                 new ApiKeyCredential(apiKey),
                 new OpenAIClientOptions { Endpoint = new Uri(apiUrl) }
             );

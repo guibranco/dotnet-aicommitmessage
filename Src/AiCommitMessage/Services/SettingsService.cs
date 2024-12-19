@@ -1,5 +1,6 @@
 ﻿using AiCommitMessage.Options;
 using AiCommitMessage.Utility;
+using Spectre.Console;
 
 namespace AiCommitMessage.Services;
 
@@ -59,7 +60,10 @@ public static class SettingsService
         }
         else
         {
-            throw new NotSupportedException($"Model '{model}' is not supported.");
+            AnsiConsole.MarkupLine($"[red]{model} is not supported.[/]");
+            return;
         }
+
+        AnsiConsole.MarkupLine($"[green]Successfully switched to {model}[/]");
     }
 }
