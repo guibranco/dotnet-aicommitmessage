@@ -1,4 +1,5 @@
 ﻿using AiCommitMessage.Options;
+using AiCommitMessage.Utility;
 
 namespace AiCommitMessage.Services;
 
@@ -17,21 +18,48 @@ public static class SettingsService
     /// </remarks>
     public static void SetSettings(SetSettingsOptions setSettingsOptions)
     {
-        Environment.SetEnvironmentVariable(
-            "OPENAI_API_KEY",
-            setSettingsOptions.Key,
-            EnvironmentVariableTarget.User
-        );
-
-        if (string.IsNullOrWhiteSpace(setSettingsOptions.Url))
+        if (!string.IsNullOrWhiteSpace(setSettingsOptions.Model))
         {
-            return;
+            Environment.SetEnvironmentVariable(
+                "AI_MODEL",
+                setSettingsOptions.Model,
+                EnvironmentVariableTarget.User
+            );
         }
 
-        Environment.SetEnvironmentVariable(
-            "OPEN_API_URL",
-            setSettingsOptions.Url,
-            EnvironmentVariableTarget.User
-        );
+        var model = EnvironmentLoader.LoadModelName();
+
+        if (model.Equals("gpt-4o-mini", StringComparison.OrdinalIgnoreCase))
+        {
+            EnvironmentLoader.SetEnvironmentVariableIfProvided(
+                "OPENAI_API_KEY",
+                setSettingsOptions.Key,
+                EnvironmentLoader.LoadOpenAiApiKey()
+            );
+
+            EnvironmentLoader.SetEnvironmentVariableIfProvided(
+                "OPENAI_API_URL",
+                setSettingsOptions.Url,
+                EnvironmentLoader.LoadOpenAiApiUrl()
+            );
+        }
+        else if (model.Equals("llama-3-1-405B-Instruct", StringComparison.OrdinalIgnoreCase))
+        {
+            EnvironmentLoader.SetEnvironmentVariableIfProvided(
+                "LLAMA_API_KEY",
+                setSettingsOptions.Key,
+                EnvironmentLoader.LoadLlamaApiKey()
+            );
+
+            EnvironmentLoader.SetEnvironmentVariableIfProvided(
+                "LLAMA_API_URL",
+                setSettingsOptions.Url,
+                EnvironmentLoader.LoadLlamaApiUrl()
+            );
+        }
+        else
+        {
+            throw new NotSupportedException($"Model '{model}' is not supported.");
+        }
     }
 }

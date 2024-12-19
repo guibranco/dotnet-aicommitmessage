@@ -17,7 +17,7 @@ public static class EnvironmentLoader
     /// This allows for flexibility in specifying which model to use without hardcoding it into the application.
     /// It is particularly useful in scenarios where different models may be used in different environments, such as development, testing, or production.
     /// </remarks>
-    public static string LoadOpenAiModel() => GetEnvironmentVariable("OPENAI_MODEL", "gpt-4o-mini");
+    public static string LoadModelName() => GetEnvironmentVariable("AI_MODEL", "gpt-4o-mini");
 
     /// <summary>
     /// Loads the OpenAI API URL from the environment variables.
@@ -33,10 +33,10 @@ public static class EnvironmentLoader
         GetEnvironmentVariable("OPENAI_API_URL", "https://api.openai.com/v1");
 
     /// <summary>
-    /// Loads the OpenAI API key.
+    /// Loads the OpenAI API key from the environment variables.
     /// </summary>
-    /// <returns>System.String.</returns>
-    /// <exception cref="InvalidOperationException">Please set the OPENAI_API_KEY environment variable.</exception>
+    /// <returns>A string representing the OpenAI API key.</returns>
+    /// <exception cref="InvalidOperationException">Thrown if the API key is not set in the environment variables.</exception>
     public static string LoadOpenAiApiKey()
     {
         var encryptStr = GetEnvironmentVariable("OPENAI_KEY_ENCRYPTED", "false");
@@ -55,7 +55,21 @@ public static class EnvironmentLoader
     }
 
     /// <summary>
-    /// Loads the optional emoji.
+    /// Loads the Llama API key from the environment variables.
+    /// </summary>
+    /// <returns>A string representing the Llama API key.</returns>
+    public static string LoadLlamaApiKey() =>
+        GetEnvironmentVariable("LLAMA_API_KEY", string.Empty);
+
+    /// <summary>
+    /// Loads the Llama API URL from the environment variables.
+    /// </summary>
+    /// <returns>A string representing the Llama API URL.</returns>
+    public static string LoadLlamaApiUrl() =>
+        GetEnvironmentVariable("LLAMA_API_URL", string.Empty);
+
+    /// <summary>
+    /// Loads the optional emoji setting from the environment variables.
     /// </summary>
     /// <returns><c>true</c> if should include emoji in the commit message, <c>false</c> otherwise.</returns>
     public static bool LoadOptionalEmoji() =>
@@ -64,8 +78,8 @@ public static class EnvironmentLoader
     /// <summary>
     /// Decrypts the specified encrypted text.
     /// </summary>
-    /// <param name="encryptedText">The encrypted text.</param>
-    /// <returns>System.String.</returns>
+    /// <param name="encryptedText">The encrypted text to decrypt.</param>
+    /// <returns>A string representing the decrypted text.</returns>
     private static string Decrypt(string encryptedText)
     {
         // Placeholder for decryption logic
@@ -95,5 +109,23 @@ public static class EnvironmentLoader
         value = Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.Machine);
 
         return !string.IsNullOrWhiteSpace(value) ? value : defaultValue;
+    }
+
+    public static void SetEnvironmentVariableIfProvided(
+        string variableName,
+        string newValue,
+        string existingValue
+    )
+    {
+        if (!string.IsNullOrWhiteSpace(newValue))
+        {
+            Environment.SetEnvironmentVariable(variableName, newValue, EnvironmentVariableTarget.User);
+            Environment.SetEnvironmentVariable(variableName, newValue, EnvironmentVariableTarget.Process);
+        }
+        else if (!string.IsNullOrWhiteSpace(existingValue))
+        {
+            Environment.SetEnvironmentVariable(variableName, existingValue, EnvironmentVariableTarget.User);
+            Environment.SetEnvironmentVariable(variableName, existingValue, EnvironmentVariableTarget.Process);
+        }
     }
 }
