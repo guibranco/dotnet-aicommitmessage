@@ -130,7 +130,7 @@ public class GenerateCommitMessageServiceTests
         {
             Branch = "feature/llama",
             Diff = "Add llama-specific functionality",
-            Message = "Initial llama commit"
+            Message = "Initial llama commit",
         };
 
         // Act
@@ -139,18 +139,23 @@ public class GenerateCommitMessageServiceTests
         // Assert
         result.Should().MatchRegex("(?i)(?=.*add)(?=.*llama)");
     }
+
     [Fact]
     public void GenerateCommitMessage_WithGPTModel_Should_MatchExpectedPattern()
     {
         // Arrange
-        Environment.SetEnvironmentVariable("AI_MODEL", "gpt-4o-mini", EnvironmentVariableTarget.User);
+        Environment.SetEnvironmentVariable(
+            "AI_MODEL",
+            "gpt-4o-mini",
+            EnvironmentVariableTarget.User
+        );
 
         var service = new GenerateCommitMessageService();
         var options = new GenerateCommitMessageOptions
         {
             Branch = "feature/gpt",
             Diff = "Add GPT-specific improvements",
-            Message = "Initial GPT commit"
+            Message = "Initial GPT commit",
         };
 
         // Act

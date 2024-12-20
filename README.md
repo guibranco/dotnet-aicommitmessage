@@ -195,3 +195,16 @@ Here is a sample `debug.json` content:
     }
   }
 }
+```
+
+---
+
+### Contributors
+
+<!-- readme: collaborators,contributors,snyk-bot/-,guistracini-outsurance-ie/-,codefactor-io/- -start -->
+<!-- readme: collaborators,contributors,snyk-bot/-,guistracini-outsurance-ie/-,codefactor-io/- -end -->
+
+### Bots
+
+<!-- readme: bots,snyk-bot,codefactor-io -start -->
+<!-- readme: bots,snyk-bot,codefactor-io -end -->
