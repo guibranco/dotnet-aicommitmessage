@@ -13,7 +13,6 @@ jobs:
         name: Update files
         permissions:
           contents: write
-          pull-requests: write
         steps:
         
             - name: Contribute List in README.md
