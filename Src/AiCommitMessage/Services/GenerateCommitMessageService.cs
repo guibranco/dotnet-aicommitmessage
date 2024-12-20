@@ -80,7 +80,13 @@ public class GenerateCommitMessageService
         return GenerateWithModel(model, formattedMessage, branch, message, options.Debug);
     }
 
-    private static string GenerateWithModel(string model, string formattedMessage, string branch, string message, bool debug)
+    private static string GenerateWithModel(
+        string model,
+        string formattedMessage,
+        string branch,
+        string message,
+        bool debug
+    )
     {
         string text;
 
@@ -89,7 +95,11 @@ public class GenerateCommitMessageService
             var endpoint = new Uri(EnvironmentLoader.LoadLlamaApiUrl());
             var credential = new AzureKeyCredential(EnvironmentLoader.LoadLlamaApiKey());
 
-            var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
+            var client = new ChatCompletionsClient(
+                endpoint,
+                credential,
+                new AzureAIInferenceClientOptions()
+            );
 
             var requestOptions = new ChatCompletionsOptions
             {
@@ -101,7 +111,7 @@ public class GenerateCommitMessageService
                 Temperature = 1.0f,
                 NucleusSamplingFactor = 1.0f,
                 MaxTokens = 1000,
-                Model = "Meta-Llama-3.1-405B-Instruct"
+                Model = "Meta-Llama-3.1-405B-Instruct",
             };
 
             var response = client.Complete(requestOptions);
