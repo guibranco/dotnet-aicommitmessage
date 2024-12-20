@@ -1,4 +1,6 @@
 ﻿using AiCommitMessage.Options;
+using AiCommitMessage.Utility;
+using Spectre.Console;
 
 namespace AiCommitMessage.Services;
 
@@ -17,21 +19,51 @@ public static class SettingsService
     /// </remarks>
     public static void SetSettings(SetSettingsOptions setSettingsOptions)
     {
-        Environment.SetEnvironmentVariable(
-            "OPENAI_API_KEY",
-            setSettingsOptions.Key,
-            EnvironmentVariableTarget.User
-        );
-
-        if (string.IsNullOrWhiteSpace(setSettingsOptions.Url))
+        if (!string.IsNullOrWhiteSpace(setSettingsOptions.Model))
         {
+            Environment.SetEnvironmentVariable(
+                "AI_MODEL",
+                setSettingsOptions.Model,
+                EnvironmentVariableTarget.User
+            );
+        }
+
+        var model = EnvironmentLoader.LoadModelName();
+
+        if (model.Equals("gpt-4o-mini", StringComparison.OrdinalIgnoreCase))
+        {
+            EnvironmentLoader.SetEnvironmentVariableIfProvided(
+                "OPENAI_API_KEY",
+                setSettingsOptions.Key,
+                EnvironmentLoader.LoadOpenAiApiKey()
+            );
+
+            EnvironmentLoader.SetEnvironmentVariableIfProvided(
+                "OPENAI_API_URL",
+                setSettingsOptions.Url,
+                EnvironmentLoader.LoadOpenAiApiUrl()
+            );
+        }
+        else if (model.Equals("llama-3-1-405B-Instruct", StringComparison.OrdinalIgnoreCase))
+        {
+            EnvironmentLoader.SetEnvironmentVariableIfProvided(
+                "LLAMA_API_KEY",
+                setSettingsOptions.Key,
+                EnvironmentLoader.LoadLlamaApiKey()
+            );
+
+            EnvironmentLoader.SetEnvironmentVariableIfProvided(
+                "LLAMA_API_URL",
+                setSettingsOptions.Url,
+                EnvironmentLoader.LoadLlamaApiUrl()
+            );
+        }
+        else
+        {
+            AnsiConsole.MarkupLine($"[red]{model} is not supported.[/]");
             return;
         }
 
-        Environment.SetEnvironmentVariable(
-            "OPEN_API_URL",
-            setSettingsOptions.Url,
-            EnvironmentVariableTarget.User
-        );
+        AnsiConsole.MarkupLine($"[green]Successfully switched to {model}[/]");
     }
 }
