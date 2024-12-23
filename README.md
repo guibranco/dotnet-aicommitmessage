@@ -202,9 +202,77 @@ Here is a sample `debug.json` content:
 ### Contributors
 
 <!-- readme: collaborators,contributors,snyk-bot/-,guistracini-outsurance-ie/-,codefactor-io/- -start -->
+<table>
+	<tbody>
+		<tr>
+            <td align="center">
+                <a href="https://github.com/guibranco">
+                    <img src="https://avatars.githubusercontent.com/u/3362854?v=4" width="100;" alt="guibranco"/>
+                    <br />
+                    <sub><b>Guilherme Branco Stracini</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/Malay-dev">
+                    <img src="https://avatars.githubusercontent.com/u/91375797?v=4" width="100;" alt="Malay-dev"/>
+                    <br />
+                    <sub><b>Malay Kumar</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/RyanFloresTT">
+                    <img src="https://avatars.githubusercontent.com/u/53247675?v=4" width="100;" alt="RyanFloresTT"/>
+                    <br />
+                    <sub><b>Ryan Flores</b></sub>
+                </a>
+            </td>
+		</tr>
+	<tbody>
+</table>
 <!-- readme: collaborators,contributors,snyk-bot/-,guistracini-outsurance-ie/-,codefactor-io/- -end -->
 
 ### Bots
 
 <!-- readme: bots,snyk-bot,codefactor-io -start -->
+<table>
+	<tbody>
+		<tr>
+            <td align="center">
+                <a href="https://github.com/dependabot[bot]">
+                    <img src="https://avatars.githubusercontent.com/in/29110?v=4" width="100;" alt="dependabot[bot]"/>
+                    <br />
+                    <sub><b>dependabot[bot]</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/penify-dev[bot]">
+                    <img src="https://avatars.githubusercontent.com/in/399279?v=4" width="100;" alt="penify-dev[bot]"/>
+                    <br />
+                    <sub><b>penify-dev[bot]</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/gitauto-ai[bot]">
+                    <img src="https://avatars.githubusercontent.com/in/844909?v=4" width="100;" alt="gitauto-ai[bot]"/>
+                    <br />
+                    <sub><b>gitauto-ai[bot]</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/snyk-bot">
+                    <img src="https://avatars.githubusercontent.com/u/19733683?v=4" width="100;" alt="snyk-bot"/>
+                    <br />
+                    <sub><b>Snyk bot</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/codefactor-io">
+                    <img src="https://avatars.githubusercontent.com/u/11671095?v=4" width="100;" alt="codefactor-io"/>
+                    <br />
+                    <sub><b>CodeFactor</b></sub>
+                </a>
+            </td>
+		</tr>
+	<tbody>
+</table>
 <!-- readme: bots,snyk-bot,codefactor-io -end -->
