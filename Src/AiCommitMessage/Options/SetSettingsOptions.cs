@@ -26,7 +26,12 @@ public class SetSettingsOptions
     /// Gets or sets the model.
     /// </summary>
     /// <value>The model.</value>
-    [Option('m', "model", Required = false, HelpText = "The model name (e.g., GPT-4o, Llama-3-1-405B-Instruct).")]
+    [Option(
+        'm',
+        "model",
+        Required = false,
+        HelpText = "The model name (e.g., GPT-4o, Llama-3-1-405B-Instruct)."
+    )]
     public string Model { get; set; }
 
     /// <summary>

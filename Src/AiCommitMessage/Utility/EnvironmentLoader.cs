@@ -58,15 +58,13 @@ public static class EnvironmentLoader
     /// Loads the Llama API key from the environment variables.
     /// </summary>
     /// <returns>A string representing the Llama API key.</returns>
-    public static string LoadLlamaApiKey() =>
-        GetEnvironmentVariable("LLAMA_API_KEY", string.Empty);
+    public static string LoadLlamaApiKey() => GetEnvironmentVariable("LLAMA_API_KEY", string.Empty);
 
     /// <summary>
     /// Loads the Llama API URL from the environment variables.
     /// </summary>
     /// <returns>A string representing the Llama API URL.</returns>
-    public static string LoadLlamaApiUrl() =>
-        GetEnvironmentVariable("LLAMA_API_URL", string.Empty);
+    public static string LoadLlamaApiUrl() => GetEnvironmentVariable("LLAMA_API_URL", string.Empty);
 
     /// <summary>
     /// Loads the optional emoji setting from the environment variables.
@@ -119,13 +117,29 @@ public static class EnvironmentLoader
     {
         if (!string.IsNullOrWhiteSpace(newValue))
         {
-            Environment.SetEnvironmentVariable(variableName, newValue, EnvironmentVariableTarget.User);
-            Environment.SetEnvironmentVariable(variableName, newValue, EnvironmentVariableTarget.Process);
+            Environment.SetEnvironmentVariable(
+                variableName,
+                newValue,
+                EnvironmentVariableTarget.User
+            );
+            Environment.SetEnvironmentVariable(
+                variableName,
+                newValue,
+                EnvironmentVariableTarget.Process
+            );
         }
         else if (!string.IsNullOrWhiteSpace(existingValue))
         {
-            Environment.SetEnvironmentVariable(variableName, existingValue, EnvironmentVariableTarget.User);
-            Environment.SetEnvironmentVariable(variableName, existingValue, EnvironmentVariableTarget.Process);
+            Environment.SetEnvironmentVariable(
+                variableName,
+                existingValue,
+                EnvironmentVariableTarget.User
+            );
+            Environment.SetEnvironmentVariable(
+                variableName,
+                existingValue,
+                EnvironmentVariableTarget.Process
+            );
         }
     }
 }
