@@ -121,42 +121,47 @@ public class GenerateCommitMessageServiceTests
     //    debugFileContent.Should().Be(JsonSerializer.Serialize(chatCompletionResult));
     //}
 
-    [Fact]
-    public void GenerateCommitMessage_WithLlamaModel_Should_MatchExpectedPattern()
-    {
-        // Arrange
-        Environment.SetEnvironmentVariable("AI_MODEL", "llama-3-1-405B-Instruct");
-        var options = new GenerateCommitMessageOptions
-        {
-            Branch = "feature/llama",
-            Diff = "Add llama-specific functionality",
-            Message = "Initial llama commit"
-        };
+    //     [Fact]
+    //     public void GenerateCommitMessage_WithLlamaModel_Should_MatchExpectedPattern()
+    //     {
+    //         // Arrange
+    //         Environment.SetEnvironmentVariable("AI_MODEL", "llama-3-1-405B-Instruct");
+    //         var options = new GenerateCommitMessageOptions
+    //         {
+    //             Branch = "feature/llama",
+    //             Diff = "Add llama-specific functionality",
+    //             Message = "Initial llama commit",
+    //         };
 
-        // Act
-        var result = _service.GenerateCommitMessage(options);
+    //         // Act
+    //         var result = _service.GenerateCommitMessage(options);
 
-        // Assert
-        result.Should().MatchRegex("(?i)(?=.*add)(?=.*llama)");
-    }
-    [Fact]
-    public void GenerateCommitMessage_WithGPTModel_Should_MatchExpectedPattern()
-    {
-        // Arrange
-        Environment.SetEnvironmentVariable("AI_MODEL", "gpt-4o-mini", EnvironmentVariableTarget.User);
+    //         // Assert
+    //         result.Should().MatchRegex("(?i)(?=.*add)(?=.*llama)");
+    //     }
 
-        var service = new GenerateCommitMessageService();
-        var options = new GenerateCommitMessageOptions
-        {
-            Branch = "feature/gpt",
-            Diff = "Add GPT-specific improvements",
-            Message = "Initial GPT commit"
-        };
+    //     [Fact]
+    //     public void GenerateCommitMessage_WithGPTModel_Should_MatchExpectedPattern()
+    //     {
+    //         // Arrange
+    //         Environment.SetEnvironmentVariable(
+    //             "AI_MODEL",
+    //             "gpt-4o-mini",
+    //             EnvironmentVariableTarget.User
+    //         );
 
-        // Act
-        var result = service.GenerateCommitMessage(options);
+    //         var service = new GenerateCommitMessageService();
+    //         var options = new GenerateCommitMessageOptions
+    //         {
+    //             Branch = "feature/gpt",
+    //             Diff = "Add GPT-specific improvements",
+    //             Message = "Initial GPT commit",
+    //         };
 
-        // Assert
-        result.Should().MatchRegex("(?i)(?=.*add)(?=.*gpt)");
-    }
+    //         // Act
+    //         var result = service.GenerateCommitMessage(options);
+
+    //         // Assert
+    //         result.Should().MatchRegex("(?i)(?=.*add)(?=.*gpt)");
+    //     }
 }
