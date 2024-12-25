@@ -13,9 +13,6 @@
 
 ---
 
-> [!CAUTION]
-> This is still in development/beta. It will be **GA** when a major release 1.0 becomes available.
-
 ## What this tool does
 
 Generates a commit message based on the `git diff` result using the [OpenAI API](https://platform.openai.com/docs/overview).
@@ -80,6 +77,8 @@ dotnet-aicommitmessage set-settings -m llama-3-1-405b-instruct
 ```
 
 This allows for quick model changes while retaining your previously configured API details.
+
+---
 
 #### Supported Models
 
@@ -152,7 +151,7 @@ dotnet-aicommitmessage generate-message -m "."
 
 ### Saving the OpenAI JSON response
 
-If you want to persist the OpenAI JSON response, add the `-D` parameter and a `debug.json` file will be created with the response JSON.
+If you want to persist the OpenAI JSON response, add the `-D` parameter, and a `debug.json` file will be created with the response JSON.
 
 ```ps
 dotnet-aicommitmessage generate-message -Dm "."
