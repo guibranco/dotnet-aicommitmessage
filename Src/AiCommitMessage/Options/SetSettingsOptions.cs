@@ -5,28 +5,33 @@ namespace AiCommitMessage.Options;
 /// <summary>
 /// Class SetSettingsOptions.
 /// </summary>
-[Verb("set-settings", HelpText = "Set the OpenAI settings.")]
+[Verb("set-settings", HelpText = "Set the AI model settings.")]
 public class SetSettingsOptions
 {
     /// <summary>
     /// Gets or sets the URL.
     /// </summary>
     /// <value>The URL.</value>
-    [Option('u', "url", Required = false, HelpText = "The OpenAI url.")]
+    [Option('u', "url", Required = false, HelpText = "The model url.")]
     public string Url { get; set; }
 
     /// <summary>
     /// Gets or sets the key.
     /// </summary>
     /// <value>The key.</value>
-    [Option('k', "key", Required = false, HelpText = "The OpenAI API key.")]
+    [Option('k', "key", Required = false, HelpText = "The model API key.")]
     public string Key { get; set; }
 
     /// <summary>
     /// Gets or sets the model.
     /// </summary>
     /// <value>The model.</value>
-    [Option('m', "model", Required = false, HelpText = "The OpenAI model.")]
+    [Option(
+        'm',
+        "model",
+        Required = false,
+        HelpText = "The model name (e.g., GPT-4o, Llama-3-1-405B-Instruct)."
+    )]
     public string Model { get; set; }
 
     /// <summary>
@@ -40,6 +45,6 @@ public class SetSettingsOptions
     /// Gets or sets a value indicating whether [save encrypted].
     /// </summary>
     /// <value><c>true</c> if [save encrypted]; otherwise, <c>false</c>.</value>
-    [Option('e', "encrypted", Required = false, HelpText = "Persiste key encrypted or plain-text.")]
+    [Option('e', "encrypted", Required = false, HelpText = "Persist key encrypted or plain-text.")]
     public bool SaveEncrypted { get; set; }
 }
