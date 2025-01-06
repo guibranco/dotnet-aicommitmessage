@@ -2,8 +2,9 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using AiCommitMessage.Services.AIProviders.Core;
+using AiCommitMessage.Services.AIProviders.Implementation.LMStudio.Models;
 
-namespace AiCommitMessage.Services.AIProviders.Implementation;
+namespace AiCommitMessage.Services.AIProviders.Implementation.LMStudio;
 
 public class LmStudioAiServiceProvider : IAiServiceProvider
 {
@@ -127,52 +128,3 @@ public class LmStudioAiServiceProvider : IAiServiceProvider
         }
     }
 }
-
-public class LmCompletationResponseModel
-{
-    [JsonPropertyName("id")]
-    public string Id { get; set; }
-
-    [JsonPropertyName("object")]
-    public string Object { get; set; }
-
-    [JsonPropertyName("created")]
-    public long Created { get; set; }
-
-    [JsonPropertyName("model")]
-    public string Model { get; set; }
-
-    [JsonPropertyName("choices")]
-    public Choice[] Choices { get; set; }
-
-    [JsonPropertyName("usage")]
-    public Usage Usage { get; set; }
-}
-
-public class Choice
-{
-    [JsonPropertyName("index")]
-    public long Index { get; set; }
-
-    [JsonPropertyName("text")]
-    public string Text { get; set; }
-
-    [JsonPropertyName("logprobs")]
-    public object Logprobs { get; set; }
-
-    [JsonPropertyName("finish_reason")]
-    public string FinishReason { get; set; }
-}
-
-public class Usage
-{
-    [JsonPropertyName("prompt_tokens")]
-    public long PromptTokens { get; set; }
-
-    [JsonPropertyName("completion_tokens")]
-    public long CompletionTokens { get; set; }
-
-    [JsonPropertyName("total_tokens")]
-    public long TotalTokens { get; set; }
-}
-
