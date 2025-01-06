@@ -8,3 +8,4 @@ namespace AiCommitMessage.Services
         }
     }
 }
+
