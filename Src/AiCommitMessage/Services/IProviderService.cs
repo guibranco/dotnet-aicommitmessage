@@ -5,3 +5,10 @@ namespace AiCommitMessage.Services
         void Execute();
     }
 }
+namespace AiCommitMessage.Services
+{
+    public interface IProviderService
+    {
+        void Execute();
+    }
+}
