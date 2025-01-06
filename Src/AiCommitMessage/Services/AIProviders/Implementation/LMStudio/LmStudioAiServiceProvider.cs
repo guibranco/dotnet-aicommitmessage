@@ -128,7 +128,7 @@ public class LmStudioAiServiceProvider : IAiServiceProvider
     }
 }
 
-public partial class LmCompletationResponseModel
+public class LmCompletationResponseModel
 {
     [JsonPropertyName("id")]
     public string Id { get; set; }
@@ -149,7 +149,7 @@ public partial class LmCompletationResponseModel
     public Usage Usage { get; set; }
 }
 
-public partial class Choice
+public class Choice
 {
     [JsonPropertyName("index")]
     public long Index { get; set; }
@@ -164,7 +164,7 @@ public partial class Choice
     public string FinishReason { get; set; }
 }
 
-public partial class Usage
+public class Usage
 {
     [JsonPropertyName("prompt_tokens")]
     public long PromptTokens { get; set; }
