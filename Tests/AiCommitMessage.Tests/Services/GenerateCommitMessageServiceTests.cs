@@ -75,7 +75,9 @@ public class GenerateCommitMessageServiceTests
         // Assert
         act.Should()
             .Throw<InvalidOperationException>()
-            .WithMessage("🚫 The staged changes are too large to process. Please reduce the number of files or size of changes and try again.");
+            .WithMessage(
+                "🚫 The staged changes are too large to process. Please reduce the number of files or size of changes and try again."
+            );
     }
 
     //[Fact]

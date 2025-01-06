@@ -1,9 +1,12 @@
 ﻿using System.ClientModel;
 using System.Diagnostics;
+using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using AiCommitMessage.Options;
 using AiCommitMessage.Utility;
+using Azure;
+using Azure.AI.Inference;
 using OpenAI;
 using OpenAI.Chat;
 
@@ -37,10 +40,10 @@ public class GenerateCommitMessageService
     /// Generates a commit message based on the provided options and the OpenAI API.
     /// </summary>
     /// <param name="options">An instance of <see cref="GenerateCommitMessageOptions"/> containing the branch name, original message, and git diff.</param>
-    /// <returns>A string containing the generated commit message from the OpenAI API.</returns>
+    /// <returns>A string containing the generated commit message from the API.</returns>
     /// <remarks>
     /// This method retrieves API details (URL and key) from environment variables, constructs a message including the branch name,
-    /// original commit message, and git diff, and sends it to the OpenAI API for processing. It also handles debugging, saving
+    /// original commit message, and git diff, and sends it to the respective API for processing. It also handles debugging, saving
     /// API responses to a JSON file if debugging is enabled. If the commit message is a merge conflict resolution, it is returned as-is.
     /// </remarks>
     /// <exception cref="InvalidOperationException">Thrown if both the branch and diff are empty, as meaningful commit generation is not possible.</exception>
@@ -50,16 +53,18 @@ public class GenerateCommitMessageService
             ? GitHelper.GetBranchName()
             : options.Branch;
         var diff = string.IsNullOrEmpty(options.Diff) ? GitHelper.GetGitDiff() : options.Diff;
-        if (Encoding.UTF8.GetByteCount(diff) > 10240) // 10 KB limit
-        {
-            throw new InvalidOperationException("🚫 The staged changes are too large to process. Please reduce the number of files or size of changes and try again.");
-        }
-
         var message = options.Message;
 
         if (IsMergeConflictResolution(message))
         {
             return message;
+        }
+
+        if (Encoding.UTF8.GetByteCount(diff) > 10240)
+        {
+            throw new InvalidOperationException(
+                "🚫 The staged changes are too large to process. Please reduce the number of files or size of changes and try again."
+            );
         }
 
         if (string.IsNullOrEmpty(branch) && string.IsNullOrEmpty(diff))
@@ -79,35 +84,96 @@ public class GenerateCommitMessageService
             + "Git Diff: "
             + (string.IsNullOrEmpty(diff) ? "<no changes>" : diff);
 
-        var model = EnvironmentLoader.LoadOpenAiModel();
-        var url = EnvironmentLoader.LoadOpenAiApiUrl();
-        var key = EnvironmentLoader.LoadOpenAiApiKey();
+        var model = EnvironmentLoader.LoadModelName();
+        return GenerateWithModel(model, formattedMessage, branch, message, options.Debug);
+    }
 
-        var text = string.Empty;
-        
-        try
+    private static string GenerateWithModel(
+        string model,
+        string formattedMessage,
+        string branch,
+        string message,
+        bool debug
+    )
+    {
+        string text;
+
+        if (model.Equals("llama-3-1-405B-Instruct", StringComparison.OrdinalIgnoreCase))
         {
-            var client = new ChatClient(
-                model,
-                new ApiKeyCredential(key),
-                new OpenAIClientOptions { Endpoint = new Uri(url) }
+            var endpoint = new Uri(EnvironmentLoader.LoadLlamaApiUrl());
+            var credential = new AzureKeyCredential(EnvironmentLoader.LoadLlamaApiKey());
+
+            var client = new ChatCompletionsClient(
+                endpoint,
+                credential,
+                new AzureAIInferenceClientOptions()
             );
-    
-            var chatCompletion = client.CompleteChat(
-                new SystemChatMessage(Constants.SystemMessage),
-                new UserChatMessage(formattedMessage)
-            );
-    
-            text = chatCompletion.Value.Content[0].Text;
-    
-            if (text.Length >= 7 && text[..7] == "type - ")
+
+            var requestOptions = new ChatCompletionsOptions
             {
-                text = text[7..];
+                Messages =
+                {
+                    new ChatRequestSystemMessage(Constants.SystemMessage),
+                    new ChatRequestUserMessage(formattedMessage),
+                },
+                Temperature = 1.0f,
+                NucleusSamplingFactor = 1.0f,
+                MaxTokens = 1000,
+                Model = "Meta-Llama-3.1-405B-Instruct",
+            };
+
+            var response = client.Complete(requestOptions);
+            text = response.Value.Content;
+        }
+        else if (model.Equals("gpt-4o-mini", StringComparison.OrdinalIgnoreCase))
+        {
+            try
+            {
+                var apiUrl = EnvironmentLoader.LoadOpenAiApiUrl();
+                var apiKey = EnvironmentLoader.LoadOpenAiApiKey();
+
+                var client = new ChatClient(
+                    "gpt-4o-mini",
+                    new ApiKeyCredential(apiKey),
+                    new OpenAIClientOptions { Endpoint = new Uri(apiUrl) }
+                );
+
+                var chatCompletion = client.CompleteChat(
+                    new SystemChatMessage(Constants.SystemMessage),
+                    new UserChatMessage(formattedMessage)
+                );
+
+                text = chatCompletion.Value.Content[0].Text;
+            }
+            catch (Exception ex) when (ex is HttpRequestException || ex is TaskCanceledException)
+            {
+                throw new InvalidOperationException(
+                    "⚠️ OpenAI API is currently unavailable. Please try again later."
+                );
             }
         }
-        catch (Exception ex) when (ex is HttpRequestException || ex is TaskCanceledException)
+        else
         {
-            throw new InvalidOperationException("⚠️ OpenAI API is currently unavailable. Please try again later.");
+            throw new NotSupportedException($"Model '{model}' is not supported.");
+        }
+
+        text = ProcessGeneratedMessage(text, branch, message);
+
+        if (!debug)
+        {
+            return text;
+        }
+
+        SaveDebugInfo(text);
+
+        return text;
+    }
+
+    private static string ProcessGeneratedMessage(string text, string branch, string message)
+    {
+        if (text.Length >= 7 && text[..7] == "type - ")
+        {
+            text = text[7..];
         }
 
         var provider = GetGitProvider();
@@ -134,15 +200,13 @@ public class GenerateCommitMessageService
             text = $"{text} {gitVersionCommand}";
         }
 
-        if (!options.Debug)
-        {
-            return text;
-        }
-
-        var json = JsonSerializer.Serialize(chatCompletion);
-        File.WriteAllText("debug.json", json);
-
         return text;
+    }
+
+    private static void SaveDebugInfo(string text)
+    {
+        var json = JsonSerializer.Serialize(new { DebugInfo = text });
+        File.WriteAllText("debug.json", json);
     }
 
     /// <summary>
@@ -163,8 +227,7 @@ public class GenerateCommitMessageService
             UseShellExecute = false,
             CreateNoWindow = true,
         };
-        using var process = new Process();
-        process.StartInfo = processStartInfo;
+        using var process = new Process { StartInfo = processStartInfo };
         process.Start();
         var originUrl = process.StandardOutput.ReadToEnd();
         process.WaitForExit();
