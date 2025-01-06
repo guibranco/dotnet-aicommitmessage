@@ -1,10 +1,3 @@
-# Error Handling
-
-This tool includes error handling for two main scenarios:
-
-1. **OpenAI Downtime/Unresponsiveness**: Displays an error message if the OpenAI API is unavailable.
-2. **Large Requests**: Aborts the commit process if the Git diff output size exceeds limits, instructing the user to reduce the size.
-
 # ![GIT Hooks + OpenAI - Generate GIT commit messages from OpenAI](https://raw.githubusercontent.com/guibranco/dotnet-aicommitmessage/main/docs/images/splash.png)
 
 🧠 🤖 This tool generates AI-powered commit messages via Git hooks, automating meaningful message suggestions from OpenAI and others to improve commit quality and efficiency.
