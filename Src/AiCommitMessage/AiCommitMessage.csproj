@@ -52,6 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="..\..\.githooks\prepare-commit-msg" />
-    <Compile Include="Services\IProviderService.cs" />
   </ItemGroup>
+    <Compile Include="Services\IProviderService.cs" />
 </Project>
