@@ -1,7 +1,5 @@
 using AiCommitMessage.Services.AIProviders.Implementation;
-
-namespace AiCommitMessage.Tests.Units.Services.AIProviders.Implementation;
-
+using AiCommitMessage.Services.AIProviders.Implementation.LMStudio;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -11,6 +9,10 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
+
+namespace AiCommitMessage.Tests.Units.Services.AIProviders.Implementation;
+
+
 
 public class LmStudioAiServiceProviderTests
 {

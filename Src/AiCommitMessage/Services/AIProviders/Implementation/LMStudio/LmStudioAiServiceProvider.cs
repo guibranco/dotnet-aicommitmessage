@@ -31,8 +31,6 @@ public class LmStudioAiServiceProvider : IAiServiceProvider
             }
             modelName = model;
         }
-
-       
         _modelName = modelName;
         
     }
@@ -65,26 +63,9 @@ public class LmStudioAiServiceProvider : IAiServiceProvider
     }
 
 // Helper class to deserialize response
-    public class LmStudioModelsResponse
-    {
-        [JsonPropertyName("data")]
-        public Datum[] Data { get; set; }
+   
 
-        [JsonPropertyName("object")]
-        public string Object { get; set; }
-    }
-
-    public class Datum
-    {
-        [JsonPropertyName("id")]
-        public string Id { get; set; }
-
-        [JsonPropertyName("object")]
-        public string Object { get; set; }
-
-        [JsonPropertyName("owned_by")]
-        public string OwnedBy { get; set; }
-    }
+   
 
     public string GenerateAnswer(string prompt)
     {

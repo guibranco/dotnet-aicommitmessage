@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace AiCommitMessage.Services.AIProviders.Implementation;
+namespace AiCommitMessage.Services.AIProviders.Implementation.LMStudio.Models;
 
 public class Choice
 {
