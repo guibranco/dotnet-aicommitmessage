@@ -100,57 +100,11 @@ public class GenerateCommitMessageService
 
         if (model.Equals("llama-3-1-405B-Instruct", StringComparison.OrdinalIgnoreCase))
         {
-            var endpoint = new Uri(EnvironmentLoader.LoadLlamaApiUrl());
-            var credential = new AzureKeyCredential(EnvironmentLoader.LoadLlamaApiKey());
-
-            var client = new ChatCompletionsClient(
-                endpoint,
-                credential,
-                new AzureAIInferenceClientOptions()
-            );
-
-            var requestOptions = new ChatCompletionsOptions
-            {
-                Messages =
-                {
-                    new ChatRequestSystemMessage(Constants.SystemMessage),
-                    new ChatRequestUserMessage(formattedMessage),
-                },
-                Temperature = 1.0f,
-                NucleusSamplingFactor = 1.0f,
-                MaxTokens = 1000,
-                Model = "Meta-Llama-3.1-405B-Instruct",
-            };
-
-            var response = client.Complete(requestOptions);
-            text = response.Value.Content;
+            text = GenerateUsingAzureAi(formattedMessage);
         }
         else if (model.Equals("gpt-4o-mini", StringComparison.OrdinalIgnoreCase))
         {
-            try
-            {
-                var apiUrl = EnvironmentLoader.LoadOpenAiApiUrl();
-                var apiKey = EnvironmentLoader.LoadOpenAiApiKey();
-
-                var client = new ChatClient(
-                    "gpt-4o-mini",
-                    new ApiKeyCredential(apiKey),
-                    new OpenAIClientOptions { Endpoint = new Uri(apiUrl) }
-                );
-
-                var chatCompletion = client.CompleteChat(
-                    new SystemChatMessage(Constants.SystemMessage),
-                    new UserChatMessage(formattedMessage)
-                );
-
-                text = chatCompletion.Value.Content[0].Text;
-            }
-            catch (Exception ex) when (ex is HttpRequestException || ex is TaskCanceledException)
-            {
-                throw new InvalidOperationException(
-                    "⚠️ OpenAI API is currently unavailable. Please try again later."
-                );
-            }
+            text = GenerateUsingOpenAi(formattedMessage);
         }
         else
         {
@@ -165,6 +119,67 @@ public class GenerateCommitMessageService
         }
 
         SaveDebugInfo(text);
+
+        return text;
+    }
+
+    private static string GenerateUsingAzureAi(string formattedMessage)
+    {
+        string text;
+        var endpoint = new Uri(EnvironmentLoader.LoadLlamaApiUrl());
+        var credential = new AzureKeyCredential(EnvironmentLoader.LoadLlamaApiKey());
+
+        var client = new ChatCompletionsClient(
+            endpoint,
+            credential,
+            new AzureAIInferenceClientOptions()
+        );
+
+        var requestOptions = new ChatCompletionsOptions
+        {
+            Messages =
+            {
+                new ChatRequestSystemMessage(Constants.SystemMessage),
+                new ChatRequestUserMessage(formattedMessage),
+            },
+            Temperature = 1.0f,
+            NucleusSamplingFactor = 1.0f,
+            MaxTokens = 1000,
+            Model = "Meta-Llama-3.1-405B-Instruct",
+        };
+
+        var response = client.Complete(requestOptions);
+        text = response.Value.Content;
+        return text;
+    }
+
+    private static string GenerateUsingOpenAi(string formattedMessage)
+    {
+        string text;
+        try
+        {
+            var apiUrl = EnvironmentLoader.LoadOpenAiApiUrl();
+            var apiKey = EnvironmentLoader.LoadOpenAiApiKey();
+
+            var client = new ChatClient(
+                "gpt-4o-mini",
+                new ApiKeyCredential(apiKey),
+                new OpenAIClientOptions { Endpoint = new Uri(apiUrl) }
+            );
+
+            var chatCompletion = client.CompleteChat(
+                new SystemChatMessage(Constants.SystemMessage),
+                new UserChatMessage(formattedMessage)
+            );
+
+            text = chatCompletion.Value.Content[0].Text;
+        }
+        catch (Exception ex) when (ex is HttpRequestException || ex is TaskCanceledException)
+        {
+            throw new InvalidOperationException(
+                "⚠️ OpenAI API is currently unavailable. Please try again later."
+            );
+        }
 
         return text;
     }
