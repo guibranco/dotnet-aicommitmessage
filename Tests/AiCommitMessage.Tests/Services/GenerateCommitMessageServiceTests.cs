@@ -60,6 +60,28 @@ public class GenerateCommitMessageServiceTests
         result.Should().Be("Merge branch 'feature/test' into main");
     }
 
+    [Fact]
+    public void GenerateCommitMessage_Should_ThrowException_When_DiffExceedsLimit()
+    {
+        // Arrange
+        var options = new GenerateCommitMessageOptions
+        {
+            Branch = "feature/test",
+            Diff = new string('a', 10241), // 10 KB + 1 byte
+            Message = "Test message",
+        };
+
+        // Act
+        Action act = () => _service.GenerateCommitMessage(options);
+
+        // Assert
+        act.Should()
+            .Throw<InvalidOperationException>()
+            .WithMessage(
+                "🚫 The staged changes are too large to process. Please reduce the number of files or size of changes and try again."
+            );
+    }
+
     //[Fact]
     //public void GenerateCommitMessage_Should_IncludeBranchAndDiff_When_Provided()
     //{
