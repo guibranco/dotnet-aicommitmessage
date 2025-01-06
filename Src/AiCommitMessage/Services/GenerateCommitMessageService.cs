@@ -88,6 +88,16 @@ public class GenerateCommitMessageService
         return GenerateWithModel(model, formattedMessage, branch, message, options.Debug);
     }
 
+    /// <summary>
+    /// Generates a commit message using the specified model.
+    /// </summary>
+    /// <param name="model">The name of the model to use for generating the commit message.</param>
+    /// <param name="formattedMessage">The formatted message to be used as input for the model.</param>
+    /// <param name="branch">The branch name associated with the commit.</param>
+    /// <param name="message">The original commit message.</param>
+    /// <param name="debug">A flag indicating whether to save debug information.</param>
+    /// <returns>The generated commit message.</returns>
+    /// <exception cref="NotSupportedException">Thrown when the specified model is not supported.</exception>
     private static string GenerateWithModel(
         string model,
         string formattedMessage,
@@ -123,6 +133,11 @@ public class GenerateCommitMessageService
         return text;
     }
 
+    /// <summary>
+    /// Generates a commit message using the Azure AI API.
+    /// </summary>
+    /// <param name="formattedMessage">The formatted message to be sent to the Azure AI API.</param>
+    /// <returns>The generated commit message.</returns>
     private static string GenerateUsingAzureAi(string formattedMessage)
     {
         string text;
@@ -153,6 +168,12 @@ public class GenerateCommitMessageService
         return text;
     }
 
+    /// <summary>
+    /// Generates a commit message using the OpenAI API.
+    /// </summary>
+    /// <param name="formattedMessage">The formatted message to be sent to the OpenAI API.</param>
+    /// <returns>The generated commit message.</returns>
+    /// <exception cref="InvalidOperationException">Thrown when the OpenAI API is unavailable.</exception>
     private static string GenerateUsingOpenAi(string formattedMessage)
     {
         string text;
@@ -184,6 +205,14 @@ public class GenerateCommitMessageService
         return text;
     }
 
+    /// <summary>
+    /// Service for generating commit messages using AI models.
+    /// </summary>
+    /// <remarks>
+    /// This service provides functionality to generate commit messages based on provided options and the OpenAI API.
+    /// It includes methods to detect merge conflict resolution messages, generate commit messages using different AI models,
+    /// and process the generated messages to include additional information such as issue numbers or version bump commands.
+    /// </remarks>
     private static string ProcessGeneratedMessage(string text, string branch, string message)
     {
         if (text.Length >= 7 && text[..7] == "type - ")
@@ -218,6 +247,10 @@ public class GenerateCommitMessageService
         return text;
     }
 
+    /// <summary>
+    /// Saves the provided debug information to a JSON file named "debug.json".
+    /// </summary>
+    /// <param name="text">The debug information to be saved.</param>
     private static void SaveDebugInfo(string text)
     {
         var json = JsonSerializer.Serialize(new { DebugInfo = text });
