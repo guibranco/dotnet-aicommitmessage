@@ -23,7 +23,7 @@ internal static class Program
     /// If the parsing fails, it invokes the <c>HandleErrors</c> method to manage any errors that occurred during parsing.
     /// This structure allows for a clean and organized way to handle different command-line options and their corresponding actions.
     /// </remarks>
-    private static void Main(string[] args) =>
+    public static void Main(string[] args) =>
         Parser
             .Default.ParseArguments<
                 InstallHookOptions,
@@ -55,7 +55,7 @@ internal static class Program
     /// This method is designed to facilitate command-line operations by routing the execution flow to the
     /// appropriate service based on user input.
     /// </remarks>
-    private static void Run(object options)
+    public static void Run(object options)
     {
         switch (options)
         {

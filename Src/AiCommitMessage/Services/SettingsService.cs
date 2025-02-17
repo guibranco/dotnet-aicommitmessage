@@ -6,6 +6,43 @@ namespace AiCommitMessage.Services;
 
 public static class SettingsService
 {
+    
+    // write method to set the settings depending on OS
+    public static void SetVariableForUsersDependingOnOs(string key, string value)
+    {
+        var os = Environment.OSVersion.Platform;
+        if (os == PlatformID.Win32S || os == PlatformID.Win32Windows || os == PlatformID.Win32NT || os == PlatformID.WinCE)
+        {
+            Environment.SetEnvironmentVariable(
+                key,
+                value,
+                EnvironmentVariableTarget.User
+            );
+            return;
+        }
+        Environment.SetEnvironmentVariable(
+            key,
+            value
+        );
+    }
+    
+    public static string GetVariableForUsersDependingOnOs(string key)
+    {
+        var os = Environment.OSVersion.Platform;
+        if (os == PlatformID.Win32S || os == PlatformID.Win32Windows || os == PlatformID.Win32NT || os == PlatformID.WinCE)
+        {
+            var value = Environment.GetEnvironmentVariable(
+                key,
+                EnvironmentVariableTarget.User
+            );
+            return value;
+        }
+       return  Environment.GetEnvironmentVariable(
+            key
+        );
+    }
+    
+    
     /// <summary>
     /// Sets the environment variables for the OpenAI API key and URL based on the provided settings.
     /// </summary>
@@ -19,12 +56,33 @@ public static class SettingsService
     /// </remarks>
     public static void SetSettings(SetSettingsOptions setSettingsOptions)
     {
+        if(!string.IsNullOrEmpty(setSettingsOptions.Provider))
+        {
+            // AI_PROVIDER
+            SetVariableForUsersDependingOnOs(
+                "AI_PROVIDER",
+                setSettingsOptions.Provider.ToString()
+            );
+            
+            // AI_PROVIDER_URL
+            SetVariableForUsersDependingOnOs(
+                "AI_PROVIDER_URL",
+                setSettingsOptions.Url
+            );
+            
+            // AI_MODEL
+            SetVariableForUsersDependingOnOs(
+                "AI_MODEL",
+                setSettingsOptions.Model
+            );
+            
+            return;
+        }
         if (!string.IsNullOrWhiteSpace(setSettingsOptions.Model))
         {
             Environment.SetEnvironmentVariable(
                 "AI_MODEL",
-                setSettingsOptions.Model,
-                EnvironmentVariableTarget.User
+                setSettingsOptions.Model
             );
         }
 
