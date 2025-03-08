@@ -88,6 +88,32 @@ public class GenerateCommitMessageService
         var model = EnvironmentLoader.LoadModelName();
         return GenerateWithModel(model, formattedMessage, branch, message, options.Debug);
     }
+    private static string FilterPackageLockDiff(string diff)
+    {
+        if (string.IsNullOrEmpty(diff))
+            return diff;
+
+        var ignoredPatterns = new[] {
+            "package-lock.json",
+            "yarn.lock",
+            "pnpm-lock.yaml",
+            ".csproj.lock",
+            "composer.lock",
+            "Gemfile.lock"
+        };
+
+        var result = new StringBuilder();
+        bool skipBlock = false;
+        var lines = diff.Split('\n');
+        foreach (var line in lines)
+        {
+            if (line.StartsWith("diff --git"))
+            {
+                skipBlock = false;
+                var parts = line.Split(' ');
+                if (parts.Length >= 4)
+                {
+                    var pathB = parts[3].StartsWith("b/") ? parts[3].Substring(2) : parts[3];
 
     /// <summary>
     /// Generates a commit message using the specified model.
