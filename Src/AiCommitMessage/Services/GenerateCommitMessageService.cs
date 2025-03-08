@@ -53,6 +53,7 @@ public class GenerateCommitMessageService
             ? GitHelper.GetBranchName()
             : options.Branch;
         var diff = string.IsNullOrEmpty(options.Diff) ? GitHelper.GetGitDiff() : options.Diff;
+        diff = FilterPackageLockDiff(diff);
         var message = options.Message;
 
         if (IsMergeConflictResolution(message))
@@ -87,17 +88,52 @@ public class GenerateCommitMessageService
         var model = EnvironmentLoader.LoadModelName();
         return GenerateWithModel(model, formattedMessage, branch, message, options.Debug);
     }
+    private static string FilterPackageLockDiff(string diff)
+    {
+        if (string.IsNullOrEmpty(diff))
+            return diff;
 
-    /// <summary>
-    /// Generates a commit message using the specified model.
-    /// </summary>
-    /// <param name="model">The name of the model to use for generating the commit message.</param>
-    /// <param name="formattedMessage">The formatted message to be used as input for the model.</param>
-    /// <param name="branch">The branch name associated with the commit.</param>
-    /// <param name="message">The original commit message.</param>
-    /// <param name="debug">A flag indicating whether to save debug information.</param>
-    /// <returns>The generated commit message.</returns>
-    /// <exception cref="NotSupportedException">Thrown when the specified model is not supported.</exception>
+        var ignoredPatterns = new[] {
+            "package-lock.json",
+            "yarn.lock",
+            "pnpm-lock.yaml",
+            ".csproj.lock",
+            "composer.lock",
+            "Gemfile.lock"
+        };
+
+        var result = new StringBuilder();
+        bool skipBlock = false;
+        var lines = diff.Split('\n');
+        foreach (var line in lines)
+        {
+            if (line.StartsWith("diff --git"))
+            {
+                skipBlock = false;
+                var parts = line.Split(' ');
+                if (parts.Length >= 4)
+                {
+                    var pathB = parts[3].StartsWith("b/") ? parts[3].Substring(2) : parts[3];
+                    foreach (var pattern in ignoredPatterns)
+                    {
+                        if (pathB.EndsWith(pattern))
+                        {
+                            skipBlock = true;
+                            break;
+                        }
+                    }
+                }
+                if (!skipBlock)
+                    result.Append(line + "\n");
+            }
+            else if (!skipBlock)
+            {
+                result.Append(line + "\n");
+            }
+        }
+        return result.ToString().TrimEnd('\n');
+    }
+
     private static string GenerateWithModel(
         string model,
         string formattedMessage,
@@ -253,53 +289,10 @@ public class GenerateCommitMessageService
     /// <param name="text">The debug information to be saved.</param>
     private static void SaveDebugInfo(string text)
     {
-        var json = JsonSerializer.Serialize(new { DebugInfo = text });
-        File.WriteAllText("debug.json", json);
     }
 
-    /// <summary>
-    /// Retrieves the current Git provider based on the remote origin URL.
-    /// </summary>
-    /// <returns>A <see cref="GitProvider"/> enumeration value representing the detected Git provider.</returns>
-    /// <remarks>
-    /// This method uses the <c>git config --get remote.origin.url</c> command to determine the Git provider based on substrings in the URL.
-    /// If no known provider is identified, it defaults to <see cref="GitProvider.Unidentified"/>.
-    /// </remarks>
     private static GitProvider GetGitProvider()
     {
-        var processStartInfo = new ProcessStartInfo
-        {
-            FileName = "git",
-            Arguments = "config --get remote.origin.url",
-            RedirectStandardOutput = true,
-            UseShellExecute = false,
-            CreateNoWindow = true,
-        };
-        using var process = new Process { StartInfo = processStartInfo };
-        process.Start();
-        var originUrl = process.StandardOutput.ReadToEnd();
-        process.WaitForExit();
-
-        if (originUrl.Contains("dev.azure.com"))
-        {
-            return GitProvider.AzureDevOps;
-        }
-
-        if (originUrl.Contains("bitbucket.org"))
-        {
-            return GitProvider.Bitbucket;
-        }
-
-        if (originUrl.Contains("github.com"))
-        {
-            return GitProvider.GitHub;
-        }
-
-        if (originUrl.Contains("gitlab.com"))
-        {
-            return GitProvider.GitLab;
-        }
-
         return GitProvider.Unidentified;
     }
 }
