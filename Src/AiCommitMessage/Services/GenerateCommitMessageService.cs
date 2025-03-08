@@ -336,6 +336,10 @@ public class GenerateCommitMessageService
     /// If no known provider is identified, it defaults to <see cref="GitProvider.Unidentified"/>.
     /// </remarks>
     private static GitProvider GetGitProvider()
+         }
+     }
+     return result.ToString().TrimEnd('\n');
+ }
             }
         }
     {
