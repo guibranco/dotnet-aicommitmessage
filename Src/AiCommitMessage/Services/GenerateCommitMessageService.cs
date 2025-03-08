@@ -114,6 +114,25 @@ public class GenerateCommitMessageService
                 if (parts.Length >= 4)
                 {
                     var pathB = parts[3].StartsWith("b/") ? parts[3].Substring(2) : parts[3];
+                    foreach (var pattern in ignoredPatterns)
+                    {
+                        if (pathB.EndsWith(pattern))
+                        {
+                            skipBlock = true;
+                            break;
+                        }
+                    }
+                }
+                if (!skipBlock)
+                    result.Append(line + "\n");
+            }
+            else if (!skipBlock)
+            {
+                result.Append(line + "\n");
+            }
+        }
+        return result.ToString().TrimEnd('\n');
+    }
 
     /// <summary>
     /// Generates a commit message using the specified model.
