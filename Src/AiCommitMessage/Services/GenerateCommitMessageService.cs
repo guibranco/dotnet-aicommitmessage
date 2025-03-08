@@ -332,9 +332,10 @@ public class GenerateCommitMessageService
                         skipBlock = true;
                     }
                 }
-        var json = JsonSerializer.Serialize(new { DebugInfo = text });
-        File.WriteAllText("debug.json", json);
-    }
+            }
+            if (!skipBlock)
+            {
+                result.AppendLine(line);
 
     /// <summary>
     /// Retrieves the current Git provider based on the remote origin URL.
