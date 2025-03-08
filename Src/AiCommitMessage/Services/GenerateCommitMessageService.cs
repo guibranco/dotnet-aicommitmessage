@@ -88,7 +88,6 @@ public class GenerateCommitMessageService
         var model = EnvironmentLoader.LoadModelName();
         return GenerateWithModel(model, formattedMessage, branch, message, options.Debug);
     }
-    
     private static string FilterPackageLockDiff(string diff)
     {
         if (string.IsNullOrEmpty(diff))
