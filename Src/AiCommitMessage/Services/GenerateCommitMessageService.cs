@@ -291,10 +291,5 @@ public class GenerateCommitMessageService
     {
     }
 
-         }
-     }
-     return result.ToString().TrimEnd('\n');
- }
-}
     private static GitProvider GetGitProvider()
     {
