@@ -327,15 +327,6 @@ public class GenerateCommitMessageService
             {
                 result.AppendLine(line);
 
-    /// <summary>
-    /// Retrieves the current Git provider based on the remote origin URL.
-    /// </summary>
-    /// <returns>A <see cref="GitProvider"/> enumeration value representing the detected Git provider.</returns>
-    /// <remarks>
-    /// This method uses the <c>git config --get remote.origin.url</c> command to determine the Git provider based on substrings in the URL.
-    /// If no known provider is identified, it defaults to <see cref="GitProvider.Unidentified"/>.
-    /// </remarks>
-    private static GitProvider GetGitProvider()
          }
      }
      return result.ToString().TrimEnd('\n');
