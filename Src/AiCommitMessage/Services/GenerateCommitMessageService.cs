@@ -134,16 +134,6 @@ public class GenerateCommitMessageService
         return result.ToString().TrimEnd('\n');
     }
 
-    /// <summary>
-    /// Generates a commit message using the specified model.
-    /// </summary>
-    /// <param name="model">The name of the model to use for generating the commit message.</param>
-    /// <param name="formattedMessage">The formatted message to be used as input for the model.</param>
-    /// <param name="branch">The branch name associated with the commit.</param>
-    /// <param name="message">The original commit message.</param>
-    /// <param name="debug">A flag indicating whether to save debug information.</param>
-    /// <returns>The generated commit message.</returns>
-    /// <exception cref="NotSupportedException">Thrown when the specified model is not supported.</exception>
     private static string GenerateWithModel(
         string model,
         string formattedMessage,
