@@ -331,9 +331,6 @@ public class GenerateCommitMessageService
      }
      return result.ToString().TrimEnd('\n');
  }
-            }
-        }
-    {
         var processStartInfo = new ProcessStartInfo
         {
             FileName = "git",
