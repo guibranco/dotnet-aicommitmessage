@@ -295,39 +295,4 @@ public class GenerateCommitMessageService
      }
      return result.ToString().TrimEnd('\n');
  }
-        var processStartInfo = new ProcessStartInfo
-        {
-            FileName = "git",
-            Arguments = "config --get remote.origin.url",
-            RedirectStandardOutput = true,
-            UseShellExecute = false,
-            CreateNoWindow = true,
-        };
-        using var process = new Process { StartInfo = processStartInfo };
-        process.Start();
-        var originUrl = process.StandardOutput.ReadToEnd();
-        process.WaitForExit();
-
-        if (originUrl.Contains("dev.azure.com"))
-        {
-            return GitProvider.AzureDevOps;
-        }
-
-        if (originUrl.Contains("bitbucket.org"))
-        {
-            return GitProvider.Bitbucket;
-        }
-
-        if (originUrl.Contains("github.com"))
-        {
-            return GitProvider.GitHub;
-        }
-
-        if (originUrl.Contains("gitlab.com"))
-        {
-            return GitProvider.GitLab;
-        }
-
-        return GitProvider.Unidentified;
-    }
 }
