@@ -299,6 +299,7 @@ public class GenerateCommitMessageService
     /// <param name="text">The debug information to be saved.</param>
     private static void SaveDebugInfo(string text)
     {
+    }
     private static string FilterPackageLockDiff(string diff)
     {
         if (string.IsNullOrEmpty(diff))
