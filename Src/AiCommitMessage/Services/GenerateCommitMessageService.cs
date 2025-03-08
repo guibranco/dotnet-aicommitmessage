@@ -293,3 +293,5 @@ public class GenerateCommitMessageService
 
     private static GitProvider GetGitProvider()
     {
+        return GitProvider.Unidentified;
+    }
