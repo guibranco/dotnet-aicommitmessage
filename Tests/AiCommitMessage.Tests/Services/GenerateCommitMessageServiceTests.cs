@@ -215,5 +215,3 @@ public class GenerateCommitMessageServiceTests
         filtered.Should().Be(expected);
     //     }
 }
-        filtered.Should().Be(expected);
-    }
