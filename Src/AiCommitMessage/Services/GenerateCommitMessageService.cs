@@ -53,6 +53,7 @@ public class GenerateCommitMessageService
             ? GitHelper.GetBranchName()
             : options.Branch;
         var diff = string.IsNullOrEmpty(options.Diff) ? GitHelper.GetGitDiff() : options.Diff;
+        diff = FilterPackageLockDiff(diff);
         var message = options.Message;
 
         if (IsMergeConflictResolution(message))
