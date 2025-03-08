@@ -295,3 +295,4 @@ public class GenerateCommitMessageService
     {
         return GitProvider.Unidentified;
     }
+}
