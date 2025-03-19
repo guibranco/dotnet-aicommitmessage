@@ -22,7 +22,8 @@ public class GenerateCommitMessageService
     /// </summary>
     private static readonly Regex MergeConflictPattern = new(
         @"^Merge branch '.*' into .*$",
-        RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(100)
+        RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase,
+        TimeSpan.FromMilliseconds(100)
     );
 
     /// <summary>
