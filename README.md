@@ -265,12 +265,21 @@ Here is a sample `debug.json` content:
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/pixeebot[bot]">
+                    <img src="https://avatars.githubusercontent.com/in/193111?v=4" width="100;" alt="pixeebot[bot]"/>
+                    <br />
+                    <sub><b>pixeebot[bot]</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/snyk-bot">
                     <img src="https://avatars.githubusercontent.com/u/19733683?v=4" width="100;" alt="snyk-bot"/>
                     <br />
                     <sub><b>Snyk bot</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/codefactor-io">
                     <img src="https://avatars.githubusercontent.com/u/11671095?v=4" width="100;" alt="codefactor-io"/>
