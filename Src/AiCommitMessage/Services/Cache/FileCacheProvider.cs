@@ -6,7 +6,12 @@ namespace AiCommitMessage.Services.Cache
 {
     public class FileCacheProvider : ICacheProvider
     {
-        private record CachedResponse(string Model, string Response, string Checksum, DateTime Timestamp);
+        private record CachedResponse(
+            string Model,
+            string Response,
+            string Checksum,
+            DateTime Timestamp
+        );
 
         private readonly string _cacheDir;
 
@@ -19,12 +24,18 @@ namespace AiCommitMessage.Services.Cache
             }
             else
             {
-                string baseDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string baseDir = Environment.GetFolderPath(
+                    Environment.SpecialFolder.ApplicationData
+                );
                 if (string.IsNullOrWhiteSpace(baseDir))
                 {
-                    string? home = Environment.GetEnvironmentVariable("HOME") ?? Environment.GetEnvironmentVariable("USERPROFILE");
+                    string? home =
+                        Environment.GetEnvironmentVariable("HOME")
+                        ?? Environment.GetEnvironmentVariable("USERPROFILE");
                     if (string.IsNullOrEmpty(home))
-                        throw new InvalidOperationException("Unable to determine a valid user data directory");
+                        throw new InvalidOperationException(
+                            "Unable to determine a valid user data directory"
+                        );
                     baseDir = Path.Combine(home, ".config");
                 }
                 _cacheDir = Path.Combine(baseDir, appName, "commit-cache");

@@ -17,7 +17,8 @@ namespace AiCommitMessage.Services.Cache
             string branch,
             string authorMessage,
             string diff,
-            Func<Task<string>> generateFunc)
+            Func<Task<string>> generateFunc
+        )
         {
             string hash = _cacheProvider.GenerateHash(model, branch, authorMessage, diff);
             string? cached = await _cacheProvider.LoadAsync(model, hash);
