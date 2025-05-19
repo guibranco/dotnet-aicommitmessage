@@ -28,7 +28,7 @@
     <None Remove="CommandLineParser" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.AI.Inference" Version="1.0.0-beta.4" />
+    <PackageReference Include="Azure.AI.Inference" Version="1.0.0-beta.5" />
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="OpenAI" Version="2.1.0" />
     <PackageReference Include="Spectre.Console" Version="0.50.0" />
