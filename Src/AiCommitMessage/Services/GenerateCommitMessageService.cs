@@ -30,7 +30,7 @@ public class GenerateCommitMessageService
     /// Regular expression to detect the presence of the "-skipai" flag in commit messages.
     /// </summary>
     private static readonly Regex SkipAIFlagPattern = new(
-        @" -skipai$",
+        @$" {SkipAIFlag}$",
         RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase,
         TimeSpan.FromMilliseconds(100)
     );
@@ -40,7 +40,7 @@ public class GenerateCommitMessageService
     /// </summary>
     /// <remarks>This constant defines the number of bits or characters used to represent the skip AI flag. It
     /// is intended for internal use and should not be modified.</remarks>
-    private const int SkipAIFlagLength = 8;
+    private const string SkipAIFlag = "-skipai";
 
     /// <summary>
     /// Checks whether the given commit message is a merge conflict resolution message.
@@ -79,7 +79,7 @@ public class GenerateCommitMessageService
 
         if (HasSkipAIFlag(message))
         {
-            return message[..^SkipAIFlagLength];
+            return message[..^SkipAIFlag.Length];
         }
 
         if (Encoding.UTF8.GetByteCount(diff) > 10240)
@@ -113,7 +113,7 @@ public class GenerateCommitMessageService
     /// <summary>
     /// Determines whether the specified message contains the "Skip AI" flag.
     /// </summary>
-    /// <remarks>The "Skip AI" flag is identified using a predefined pattern. This method is case-sensitive
+    /// <remarks>The "Skip AI" flag is identified using a predefined pattern. This method is case-insensitive
     /// and matches the pattern exactly as defined.</remarks>
     /// <param name="message">The message to check for the presence of the "Skip AI" flag. Cannot be null.</param>
     /// <returns><see langword="true"/> if the message contains the "Skip AI" flag; otherwise, <see langword="false"/>.</returns>
