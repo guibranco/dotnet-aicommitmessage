@@ -61,9 +61,9 @@ public class GenerateCommitMessageService
     /// <remarks>
     /// This method retrieves API details (URL and key) from environment variables, constructs a message including the branch name,
     /// original commit message, and git diff, and sends it to the respective API for processing. It also handles debugging, saving
-    /// API responses to a JSON file if debugging is enabled. If the commit message is a merge conflict resolution, it is returned as-is.
+    /// API responses to a JSON file if debugging is enabled. If the commit message is a merge conflict resolution or contains a skip AI flag, it returns as-is.
     /// </remarks>
-    /// <exception cref="InvalidOperationException">Thrown if both the branch and diff are empty, as meaningful commit generation is not possible.</exception>
+    /// <exception cref="InvalidOperationException">Thrown if both the branch and diff are empty, or if the staged changes exceed 10KB in size.</exception>
     public string GenerateCommitMessage(GenerateCommitMessageOptions options)
     {
         var branch = string.IsNullOrEmpty(options.Branch)
