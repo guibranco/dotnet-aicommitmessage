@@ -99,7 +99,12 @@ public static class EnvironmentLoader
     /// </remarks>
     private static string GetEnvironmentVariable(string name, string defaultValue)
     {
-        var value = Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.User);
+        var value = Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.Process);
+
+        if (!string.IsNullOrWhiteSpace(value))
+            return value;
+        
+        value = Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.User);
 
         if (!string.IsNullOrWhiteSpace(value))
             return value;
