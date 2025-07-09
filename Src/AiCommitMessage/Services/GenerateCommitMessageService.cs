@@ -27,6 +27,22 @@ public class GenerateCommitMessageService
     );
 
     /// <summary>
+    /// Regular expression to detect the presence of the "-skipai" flag in commit messages.
+    /// </summary>
+    private static readonly Regex SkipAIFlagPattern = new(
+        @$" {SkipAIFlag}$",
+        RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase,
+        TimeSpan.FromMilliseconds(100)
+    );
+
+    /// <summary>
+    /// Represents the length of the flag used to skip AI processing.
+    /// </summary>
+    /// <remarks>This constant defines the number of bits or characters used to represent the skip AI flag. It
+    /// is intended for internal use and should not be modified.</remarks>
+    private const string SkipAIFlag = "-skipai";
+
+    /// <summary>
     /// Checks whether the given commit message is a merge conflict resolution message.
     /// </summary>
     /// <param name="message">The commit message to evaluate.</param>
@@ -54,11 +70,16 @@ public class GenerateCommitMessageService
             ? GitHelper.GetBranchName()
             : options.Branch;
         var diff = string.IsNullOrEmpty(options.Diff) ? GitHelper.GetGitDiff() : options.Diff;
-        var message = options.Message;
+        var message = options.Message.Trim();
 
         if (IsMergeConflictResolution(message))
         {
             return message;
+        }
+
+        if (HasSkipAIFlag(message))
+        {
+            return message[..^SkipAIFlag.Length];
         }
 
         if (Encoding.UTF8.GetByteCount(diff) > 10240)
@@ -88,6 +109,15 @@ public class GenerateCommitMessageService
         var model = EnvironmentLoader.LoadModelName();
         return GenerateWithModel(model, formattedMessage, branch, message, options.Debug);
     }
+
+    /// <summary>
+    /// Determines whether the specified message contains the "Skip AI" flag.
+    /// </summary>
+    /// <remarks>The "Skip AI" flag is identified using a predefined pattern. This method is case-insensitive
+    /// and matches the pattern exactly as defined.</remarks>
+    /// <param name="message">The message to check for the presence of the "Skip AI" flag. Cannot be null.</param>
+    /// <returns><see langword="true"/> if the message contains the "Skip AI" flag; otherwise, <see langword="false"/>.</returns>
+    private static bool HasSkipAIFlag(string message) => SkipAIFlagPattern.IsMatch(message);
 
     /// <summary>
     /// Generates a commit message using the specified model.
