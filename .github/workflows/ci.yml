@@ -42,6 +42,8 @@ jobs:
     
     - name: Run tests
       run: dotnet test -c Release --no-restore --no-build --verbosity normal
+      env:
+        OPENAI_API_KEY : ${{ secrets.OPENAI_API_KEY }}
     
     - name: Pack
       run: dotnet pack -c Release --no-restore --no-build -o ./nupkg -p:PackageVersion=${{ env.fullSemVer }} -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg

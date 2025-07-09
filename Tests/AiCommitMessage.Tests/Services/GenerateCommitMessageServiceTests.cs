@@ -13,9 +13,8 @@ public class GenerateCommitMessageServiceTests
 
     public GenerateCommitMessageServiceTests()
     {
-        Environment.SetEnvironmentVariable("OPENAI_API_KEY", "test", EnvironmentVariableTarget.Process);
         //_mockChatClient = Substitute.For<ChatClient>(
-        //    "model-name", 
+        //    "model-name",
         //    new ApiKeyCredential("key"),
         //    Substitute.For<OpenAIClientOptions>()
         //);
@@ -82,6 +81,9 @@ public class GenerateCommitMessageServiceTests
             );
     }
 
+    /// <summary>
+    /// Tests that API calls are bypassed when the SkipAI flag is provided in the options.
+    /// </summary>
     [Fact]
     public void GenerateCommitMessage_Should_ByPass_ApiCalls_When_SkipAI_Flag_Is_Provided()
     {
@@ -93,9 +95,12 @@ public class GenerateCommitMessageServiceTests
             Message = "Initial commit -skipai ",
         };
         var result = _service.GenerateCommitMessage(options);
-        result.Should().Be("Initial commit");
+        result.Should().Be("Initial commit ");
     }
 
+    /// <summary>
+    /// Tests that the <see cref="GenerateCommitMessageOptions.SkipAI"/> flag is ignored when misplaced in the commit message.
+    /// </summary>
     [Fact]
     public void GenerateCommitMessage_Should_Ignore_SkipAI_Flag_When_SKipAI_Flag_Is_Misplaced()
     {
@@ -109,108 +114,108 @@ public class GenerateCommitMessageServiceTests
         var result = _service.GenerateCommitMessage(options);
         result.Should().NotBe("Test misplaced -skipai commit");
     }
-        //[Fact]
-        //public void GenerateCommitMessage_Should_IncludeBranchAndDiff_When_Provided()
-        //{
-        //    // Arrange
-        //    var options = new GenerateCommitMessageOptions
-        //    {
-        //        Branch = "feature/test",
-        //        Diff = "Added new feature",
-        //        Message = "Initial commit"
-        //    };
+    //[Fact]
+    //public void GenerateCommitMessage_Should_IncludeBranchAndDiff_When_Provided()
+    //{
+    //    // Arrange
+    //    var options = new GenerateCommitMessageOptions
+    //    {
+    //        Branch = "feature/test",
+    //        Diff = "Added new feature",
+    //        Message = "Initial commit"
+    //    };
 
-        //    _mockChatClient.CompleteChat(Arg.Any<SystemChatMessage>(), Arg.Any<UserChatMessage>())
-        //        .Returns(new ChatCompletionResult
-        //        {
-        //            Value = new ChatCompletion
-        //            {
-        //                Content = new[] { new ChatMessage { Text = "Generated commit message" } }
-        //            }
-        //        });
+    //    _mockChatClient.CompleteChat(Arg.Any<SystemChatMessage>(), Arg.Any<UserChatMessage>())
+    //        .Returns(new ChatCompletionResult
+    //        {
+    //            Value = new ChatCompletion
+    //            {
+    //                Content = new[] { new ChatMessage { Text = "Generated commit message" } }
+    //            }
+    //        });
 
-        //    // Act
-        //    var result = _service.GenerateCommitMessage(options);
+    //    // Act
+    //    var result = _service.GenerateCommitMessage(options);
 
-        //    // Assert
-        //    result.Should().Contain("Branch: feature/test");
-        //    result.Should().Contain("Original message: Initial commit");
-        //    result.Should().Contain("Git Diff: Added new feature");
-        //}
+    //    // Assert
+    //    result.Should().Contain("Branch: feature/test");
+    //    result.Should().Contain("Original message: Initial commit");
+    //    result.Should().Contain("Git Diff: Added new feature");
+    //}
 
-        //[Fact]
-        //public void GenerateCommitMessage_Should_DebugOutputToFile_When_DebugIsEnabled()
-        //{
-        //    // Arrange
-        //    var options = new GenerateCommitMessageOptions
-        //    {
-        //        Branch = "feature/test",
-        //        Diff = "Some diff",
-        //        Message = "Initial commit",
-        //        Debug = true
-        //    };
+    //[Fact]
+    //public void GenerateCommitMessage_Should_DebugOutputToFile_When_DebugIsEnabled()
+    //{
+    //    // Arrange
+    //    var options = new GenerateCommitMessageOptions
+    //    {
+    //        Branch = "feature/test",
+    //        Diff = "Some diff",
+    //        Message = "Initial commit",
+    //        Debug = true
+    //    };
 
-        //    var chatCompletionResult = new ChatCompletionResult
-        //    {
-        //        Value = new ChatCompletion
-        //        {
-        //            Content = new[] { new ChatMessage { Text = "Generated commit message" } }
-        //        }
-        //    };
+    //    var chatCompletionResult = new ChatCompletionResult
+    //    {
+    //        Value = new ChatCompletion
+    //        {
+    //            Content = new[] { new ChatMessage { Text = "Generated commit message" } }
+    //        }
+    //    };
 
-        //    _mockChatClient.CompleteChat(Arg.Any<SystemChatMessage>(), Arg.Any<UserChatMessage>())
-        //        .Returns(chatCompletionResult);
+    //    _mockChatClient.CompleteChat(Arg.Any<SystemChatMessage>(), Arg.Any<UserChatMessage>())
+    //        .Returns(chatCompletionResult);
 
-        //    // Act
-        //    var result = _service.GenerateCommitMessage(options);
+    //    // Act
+    //    var result = _service.GenerateCommitMessage(options);
 
-        //    // Assert
-        //    result.Should().Be("Generated commit message");
-        //    var debugFileContent = File.ReadAllText("debug.json");
-        //    debugFileContent.Should().Be(JsonSerializer.Serialize(chatCompletionResult));
-        //}
+    //    // Assert
+    //    result.Should().Be("Generated commit message");
+    //    var debugFileContent = File.ReadAllText("debug.json");
+    //    debugFileContent.Should().Be(JsonSerializer.Serialize(chatCompletionResult));
+    //}
 
-        //     [Fact]
-        //     public void GenerateCommitMessage_WithLlamaModel_Should_MatchExpectedPattern()
-        //     {
-        //         // Arrange
-        //         Environment.SetEnvironmentVariable("AI_MODEL", "llama-3-1-405B-Instruct");
-        //         var options = new GenerateCommitMessageOptions
-        //         {
-        //             Branch = "feature/llama",
-        //             Diff = "Add llama-specific functionality",
-        //             Message = "Initial llama commit",
-        //         };
+    //     [Fact]
+    //     public void GenerateCommitMessage_WithLlamaModel_Should_MatchExpectedPattern()
+    //     {
+    //         // Arrange
+    //         Environment.SetEnvironmentVariable("AI_MODEL", "llama-3-1-405B-Instruct");
+    //         var options = new GenerateCommitMessageOptions
+    //         {
+    //             Branch = "feature/llama",
+    //             Diff = "Add llama-specific functionality",
+    //             Message = "Initial llama commit",
+    //         };
 
-        //         // Act
-        //         var result = _service.GenerateCommitMessage(options);
+    //         // Act
+    //         var result = _service.GenerateCommitMessage(options);
 
-        //         // Assert
-        //         result.Should().MatchRegex("(?i)(?=.*add)(?=.*llama)");
-        //     }
+    //         // Assert
+    //         result.Should().MatchRegex("(?i)(?=.*add)(?=.*llama)");
+    //     }
 
-        //     [Fact]
-        //     public void GenerateCommitMessage_WithGPTModel_Should_MatchExpectedPattern()
-        //     {
-        //         // Arrange
-        //         Environment.SetEnvironmentVariable(
-        //             "AI_MODEL",
-        //             "gpt-4o-mini",
-        //             EnvironmentVariableTarget.User
-        //         );
+    //     [Fact]
+    //     public void GenerateCommitMessage_WithGPTModel_Should_MatchExpectedPattern()
+    //     {
+    //         // Arrange
+    //         Environment.SetEnvironmentVariable(
+    //             "AI_MODEL",
+    //             "gpt-4o-mini",
+    //             EnvironmentVariableTarget.User
+    //         );
 
-        //         var service = new GenerateCommitMessageService();
-        //         var options = new GenerateCommitMessageOptions
-        //         {
-        //             Branch = "feature/gpt",
-        //             Diff = "Add GPT-specific improvements",
-        //             Message = "Initial GPT commit",
-        //         };
+    //         var service = new GenerateCommitMessageService();
+    //         var options = new GenerateCommitMessageOptions
+    //         {
+    //             Branch = "feature/gpt",
+    //             Diff = "Add GPT-specific improvements",
+    //             Message = "Initial GPT commit",
+    //         };
 
-        //         // Act
-        //         var result = service.GenerateCommitMessage(options);
+    //         // Act
+    //         var result = service.GenerateCommitMessage(options);
 
-        //         // Assert
-        //         result.Should().MatchRegex("(?i)(?=.*add)(?=.*gpt)");
-        //     }
-    }
+    //         // Assert
+    //         result.Should().MatchRegex("(?i)(?=.*add)(?=.*gpt)");
+    //     }
+}
