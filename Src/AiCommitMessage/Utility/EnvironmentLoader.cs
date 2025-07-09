@@ -103,7 +103,7 @@ public static class EnvironmentLoader
 
         if (!string.IsNullOrWhiteSpace(value))
             return value;
-        
+
         value = Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.User);
 
         if (!string.IsNullOrWhiteSpace(value))
