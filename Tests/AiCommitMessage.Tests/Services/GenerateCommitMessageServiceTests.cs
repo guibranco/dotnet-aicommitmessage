@@ -13,11 +13,6 @@ public class GenerateCommitMessageServiceTests
 
     public GenerateCommitMessageServiceTests()
     {
-        Environment.SetEnvironmentVariable(
-            "OPENAI_API_KEY",
-            "test",
-            EnvironmentVariableTarget.Process
-        );
         //_mockChatClient = Substitute.For<ChatClient>(
         //    "model-name",
         //    new ApiKeyCredential("key"),
