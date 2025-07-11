@@ -13,7 +13,6 @@ public class GenerateCommitMessageServiceTests
 
     public GenerateCommitMessageServiceTests()
     {
-        Environment.SetEnvironmentVariable("OPENAI_API_KEY", "test");
         //_mockChatClient = Substitute.For<ChatClient>(
         //    "model-name",
         //    new ApiKeyCredential("key"),
@@ -82,6 +81,39 @@ public class GenerateCommitMessageServiceTests
             );
     }
 
+    /// <summary>
+    /// Tests that API calls are bypassed when the SkipAI flag is provided in the options.
+    /// </summary>
+    [Fact]
+    public void GenerateCommitMessage_Should_ByPass_ApiCalls_When_SkipAI_Flag_Is_Provided()
+    {
+        // Arrange
+        var options = new GenerateCommitMessageOptions
+        {
+            Branch = "feature/test",
+            Diff = "Some diff",
+            Message = "Initial commit -skipai ",
+        };
+        var result = _service.GenerateCommitMessage(options);
+        result.Should().Be("Initial commit ");
+    }
+
+    /// <summary>
+    /// Tests that the <see cref="GenerateCommitMessageOptions.SkipAI"/> flag is ignored when misplaced in the commit message.
+    /// </summary>
+    [Fact]
+    public void GenerateCommitMessage_Should_Ignore_SkipAI_Flag_When_SKipAI_Flag_Is_Misplaced()
+    {
+        // Arrange
+        var options = new GenerateCommitMessageOptions
+        {
+            Branch = "feature/test",
+            Diff = "Some diff",
+            Message = "Test misplaced -skipai commit",
+        };
+        var result = _service.GenerateCommitMessage(options);
+        result.Should().NotBe("Test misplaced -skipai commit");
+    }
     //[Fact]
     //public void GenerateCommitMessage_Should_IncludeBranchAndDiff_When_Provided()
     //{
