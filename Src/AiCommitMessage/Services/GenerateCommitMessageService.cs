@@ -79,10 +79,11 @@ public class GenerateCommitMessageService
 
         if (HasSkipAIFlag(message))
         {
-            return message[..^SkipAIFlag.Length];
+            message = message[..^SkipAIFlag.Length];
+            return PostProcess(message, branch, message);
         }
 
-        if (Encoding.UTF8.GetByteCount(diff) > 10240)
+        if (Encoding.UTF8.GetByteCount(diff) > 102400)
         {
             throw new InvalidOperationException(
                 "🚫 The staged changes are too large to process. Please reduce the number of files or size of changes and try again."
@@ -251,6 +252,11 @@ public class GenerateCommitMessageService
             text = text[7..];
         }
 
+        return PostProcess(text, branch, message);
+    }
+
+    private static string PostProcess(string text, string branch, string message)
+    {
         var provider = GetGitProvider();
         if (provider == GitProvider.GitHub)
         {
