@@ -255,7 +255,7 @@ public class GenerateCommitMessageService
         return PostProcess(text, branch, message);
     }
 
-    private static string PostProcess(string text, string branch, string message) 
+    private static string PostProcess(string text, string branch, string message)
     {
         var provider = GetGitProvider();
         if (provider == GitProvider.GitHub)
