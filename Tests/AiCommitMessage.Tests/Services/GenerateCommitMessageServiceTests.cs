@@ -66,7 +66,7 @@ public class GenerateCommitMessageServiceTests
         var options = new GenerateCommitMessageOptions
         {
             Branch = "feature/test",
-            Diff = new string('a', 10241), // 10 KB + 1 byte
+            Diff = new string('a', 102401), // 100 KB + 1 byte
             Message = "Test message",
         };
 
