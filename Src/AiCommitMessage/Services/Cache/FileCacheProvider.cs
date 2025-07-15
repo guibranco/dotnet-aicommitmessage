@@ -24,9 +24,7 @@ namespace AiCommitMessage.Services.Cache
             }
             else
             {
-                var baseDir = Environment.GetFolderPath(
-                    Environment.SpecialFolder.ApplicationData
-                );
+                var baseDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 if (string.IsNullOrWhiteSpace(baseDir))
                 {
                     var home =
@@ -38,13 +36,13 @@ namespace AiCommitMessage.Services.Cache
                             "Unable to determine a valid user data directory"
                         );
                     }
-                    
+
                     baseDir = Path.Combine(home, ".config");
                 }
-                
+
                 _cacheDir = Path.Combine(baseDir, appName, "commit-cache");
             }
-            
+
             Directory.CreateDirectory(_cacheDir);
         }
 
@@ -68,7 +66,7 @@ namespace AiCommitMessage.Services.Cache
             {
                 return null;
             }
-            
+
             var expired = DateTime.UtcNow - cached.Timestamp > TimeSpan.FromDays(maxAgeDays);
             var validChecksum = cached.Checksum == ComputeChecksum(model, cached.Response);
 
@@ -77,7 +75,7 @@ namespace AiCommitMessage.Services.Cache
                 File.Delete(path);
                 return null;
             }
-            
+
             return cached.Response;
         }
 
