@@ -115,7 +115,9 @@ public class GenerateCommitMessageService
     private static string FilterPackageLockDiff(string diff)
     {
         if (string.IsNullOrEmpty(diff))
+        {
             return diff;
+        }
 
         var ignoredPatterns = new[]
         {
