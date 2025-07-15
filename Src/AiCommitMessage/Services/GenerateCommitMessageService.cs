@@ -154,7 +154,9 @@ public class GenerateCommitMessageService
                     }
                 }
                 if (!skipBlock)
+                {
                     result.Append(line + "\n");
+                }
             }
             else if (!skipBlock)
             {
