@@ -217,6 +217,10 @@ public class GenerateCommitMessageServiceTests
 
     //         // Act
     //         var result = service.GenerateCommitMessage(options);
+    //
+    //         // Assert
+    //         result.Should().MatchRegex("(?i)(?=.*add)(?=.*gpt)");
+    //    }
 
    //  [Fact]
    //  public void FilterPackageLockDiff_Should_RemoveIgnoredFiles()
@@ -230,27 +234,9 @@ public class GenerateCommitMessageServiceTests
    //                     "diff --git a/other.txt b/other.txt\n@@ -1,1 +1,1 @@\n- old\n+ new";
    //      // Act
    //      var method = typeof(AiCommitMessage.Services.GenerateCommitMessageService)
-    
-   //      // Assert
-   //      result.Should().MatchRegex("(?i)(?=.*add)(?=.*gpt)");
-   //  }
-    
-   //  [Fact]
-   //  public void FilterPackageLockDiff_Should_RemoveIgnoredFiles()
-   //  {
-   //      // Arrange
-   //      var diff = "diff --git a/file1.txt b/file1.txt\n@@ -1,1 +1,1 @@\n- old content\n+ new content\n" +
-   //                 "diff --git a/package-lock.json b/package-lock.json\n@@ -2,1 +2,1 @@\n- removed\n+ added\n" +
-   //                 "diff --git a/yarn.lock b/yarn.lock\n@@ -1,1 +1,1 @@\n- foo\n+ bar\n" +
-   //                 "diff --git a/other.txt b/other.txt\n@@ -1,1 +1,1 @@\n- old\n+ new\n";
-   //      var expected = "diff --git a/file1.txt b/file1.txt\n@@ -1,1 +1,1 @@\n- old content\n+ new content\n" +
-   //                     "diff --git a/other.txt b/other.txt\n@@ -1,1 +1,1 @@\n- old\n+ new";
-   //      // Act
-   //      var method = typeof(AiCommitMessage.Services.GenerateCommitMessageService)
-   //                     .GetMethod("FilterPackageLockDiff", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
    //      var filtered = (string)method.Invoke(null, new object[] { diff });
-        
+   //     
    //      // Assert
-   //      filtered.Should().Be(expected);
-   // }
+   //      filtered.Should().Be(expected);      
+   //  }
 }
