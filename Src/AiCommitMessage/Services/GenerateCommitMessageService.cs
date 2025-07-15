@@ -111,13 +111,14 @@ public class GenerateCommitMessageService
         var model = EnvironmentLoader.LoadModelName();
         return GenerateWithModel(model, formattedMessage, branch, message, options.Debug);
     }
-    
+
     private static string FilterPackageLockDiff(string diff)
     {
         if (string.IsNullOrEmpty(diff))
             return diff;
 
-        var ignoredPatterns = new[] {
+        var ignoredPatterns = new[]
+        {
             "package-lock.json",
             "yarn.lock",
             "pnpm-lock.yaml",
@@ -126,7 +127,7 @@ public class GenerateCommitMessageService
             "Gemfile.lock",
             "Pipfile.lock",
             "Cargo.lock",
-            "poetry.lock"
+            "poetry.lock",
         };
 
         var result = new StringBuilder();
