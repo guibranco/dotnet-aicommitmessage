@@ -255,6 +255,13 @@ public class GenerateCommitMessageService
         return PostProcess(text, branch, message);
     }
 
+    /// <summary>
+    /// Processes the input text by appending issue numbers and version bump commands based on the branch and message.
+    /// </summary>
+    /// <param name="text">The original text to be processed.</param>
+    /// <param name="branch">The branch name used to extract issue or ticket numbers.</param>
+    /// <param name="message">The commit message used to extract git version bump command.</param>
+    /// <returns>The processed text with appended issue numbers and version bump commands if applicable.</returns>
     private static string PostProcess(string text, string branch, string message)
     {
         var provider = GetGitProvider();
