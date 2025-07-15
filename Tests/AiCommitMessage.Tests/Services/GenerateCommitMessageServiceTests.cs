@@ -59,6 +59,9 @@ public class GenerateCommitMessageServiceTests
         result.Should().Be("Merge branch 'feature/test' into main");
     }
 
+    /// <summary>
+    /// Tests that an exception is thrown when the diff exceeds the specified limit.
+    /// </summary>
     [Fact]
     public void GenerateCommitMessage_Should_ThrowException_When_DiffExceedsLimit()
     {
@@ -66,7 +69,7 @@ public class GenerateCommitMessageServiceTests
         var options = new GenerateCommitMessageOptions
         {
             Branch = "feature/test",
-            Diff = new string('a', 10241), // 10 KB + 1 byte
+            Diff = new string('a', 102401), // 100 KB + 1 byte
             Message = "Test message",
         };
 
