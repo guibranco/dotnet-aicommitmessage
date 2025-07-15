@@ -100,7 +100,10 @@ public class GenerateCommitMessageService
             "pnpm-lock.yaml",
             ".csproj.lock",
             "composer.lock",
-            "Gemfile.lock"
+            "Gemfile.lock",
+            "Pipfile.lock",
+            "Cargo.lock",
+            "poetry.lock"
         };
 
         var result = new StringBuilder();
