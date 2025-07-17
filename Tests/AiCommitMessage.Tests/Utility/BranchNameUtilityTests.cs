@@ -31,6 +31,8 @@ public class BranchNameUtilityTests
 
     [Theory]
     [InlineData("chore/no-issue-number")]
+    [InlineData("feature/this-is-a-branch-without-isssue-123")]
+    [InlineData("feature/another-thing-number-13456")]
     public void ExtractIssueNumber_ShouldReturnEmptyString(string branchName)
     {
         // Act
