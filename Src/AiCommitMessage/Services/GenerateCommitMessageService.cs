@@ -311,7 +311,7 @@ public class GenerateCommitMessageService
     }
 
     /// <summary>
-    /// Processes the input text by appending issue numbers and version bump commands based on the branch and message.
+    /// Processes the input text by appending issue numbers and version bump commands based on the branch name and commit message.
     /// </summary>
     /// <param name="text">The original text to be processed.</param>
     /// <param name="branch">The branch name used to extract issue or ticket numbers.</param>
