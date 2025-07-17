@@ -95,7 +95,7 @@ public class GenerateCommitMessageServiceTests
             Message = "#123 Initial commit -skipai",
         };
         var result = _service.GenerateCommitMessage(options);
-        result.Should().Be("#123 - Initial commit");
+        result.Should().Be("#123 Initial commit");
     }
 
     /// <summary>
