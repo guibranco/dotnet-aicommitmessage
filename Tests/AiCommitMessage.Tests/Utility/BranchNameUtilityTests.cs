@@ -13,6 +13,8 @@ public class BranchNameUtilityTests
     [InlineData("feature/ISSUE987-some-feature", "987")]
     [InlineData("enhancement/ISSUE-654-enhance-performance", "654")]
     [InlineData("release/321", "321")]
+    [InlineData("123-something", "123")]
+    [InlineData("311343-something", "311343")]
     [InlineData("task/ISSUE-1111-complete-task", "1111")]
     public void ExtractIssueNumber_ShouldReturnCorrectIssueNumber(
         string branchName,
@@ -29,6 +31,8 @@ public class BranchNameUtilityTests
 
     [Theory]
     [InlineData("chore/no-issue-number")]
+    [InlineData("feature/this-is-a-branch-without-isssue-123")]
+    [InlineData("feature/another-thing-number-13456")]
     public void ExtractIssueNumber_ShouldReturnEmptyString(string branchName)
     {
         // Act
