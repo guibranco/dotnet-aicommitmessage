@@ -61,7 +61,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           OPENAI_API_KEY : ${{ secrets.OPENAI_API_KEY }}
         run: |
-          ~/.sonar/cache/dotnet-sonarscanner begin /k:"${{ env.KEY }}" /o:"${{ env.ORG }}" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.scanner.scanAll=false /d:sonar.cs.opencover.reportsPaths="Tests/**/coverage.net8.0.opencover.xml"
+          ~/.sonar/cache/dotnet-sonarscanner begin /k:"${{ env.KEY }}" /o:"${{ env.ORG }}" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.scanner.scanAll=false /d:sonar.cs.opencover.reportsPaths="Tests/**/coverage.opencover.xml"
           dotnet build -c Release --verbosity minimal
           dotnet test -c Release --verbosity minimal --no-build --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat="opencover"
           ~/.sonar/cache/dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
