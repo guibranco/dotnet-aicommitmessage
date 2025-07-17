@@ -84,6 +84,78 @@ public class GenerateCommitMessageServiceTests
             );
     }
 
+    [Fact]
+    public void GenerateCommitMessage_Should_Add_GitHub_issue_number_and_Skip_AI()
+    {
+        // Arrange
+        var options = new GenerateCommitMessageOptions
+        {
+            Branch = "feature/123-my-branch-name",
+            Diff = "Some diff",
+            Message = "Initial commit -skipai",
+        };
+
+        //Act
+        var result = _service.GenerateCommitMessage(options);
+
+        // Assert
+        result.Should().Be("#123 Initial commit");
+    }
+
+    [Fact]
+    public void GenerateCommitMessage_Should_Not_Duplicate_GitHub_issue_number_and_Skip_AI()
+    {
+        // Arrange
+        var options = new GenerateCommitMessageOptions
+        {
+            Branch = "feature/123-my-branch-name",
+            Diff = "Some diff",
+            Message = "#123 Initial commit -skipai",
+        };
+
+        //Act
+        var result = _service.GenerateCommitMessage(options);
+
+        // Assert
+        result.Should().Be("#123 Initial commit");
+    }
+
+    [Fact]
+    public void GenerateCommitMessage_Should_Add_JIRA_prefix_and_Skip_AI()
+    {
+        // Arrange
+        var options = new GenerateCommitMessageOptions
+        {
+            Branch = "feature/TEST-123-my-branch-name",
+            Diff = "Some diff",
+            Message = "Initial commit -skipai",
+        };
+
+        //Act
+        var result = _service.GenerateCommitMessage(options);
+
+        // Assert
+        result.Should().Be("[TEST-123] Initial commit");
+    }
+
+    [Fact]
+    public void GenerateCommitMessage_Should_Not_Duplicate_JIRA_prefix_and_Skip_AI()
+    {
+        // Arrange
+        var options = new GenerateCommitMessageOptions
+        {
+            Branch = "feature/TEST-123-my-branch-name",
+            Diff = "Some diff",
+            Message = "[TEST-123] Initial commit -skipai",
+        };
+
+        //Act
+        var result = _service.GenerateCommitMessage(options);
+
+        // Assert
+        result.Should().Be("[TEST-123] Initial commit");
+    }
+
     /// <summary>
     /// Tests that API calls are bypassed when the SkipAI flag is provided in the options.
     /// </summary>
@@ -98,7 +170,7 @@ public class GenerateCommitMessageServiceTests
             Message = "Initial commit -skipai ",
         };
         var result = _service.GenerateCommitMessage(options);
-        result.Should().Be("Initial commit ");
+        result.Should().Be("Initial commit");
     }
 
     /// <summary>

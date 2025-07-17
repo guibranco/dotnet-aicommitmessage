@@ -80,7 +80,7 @@ public class GenerateCommitMessageService
 
         if (HasSkipAIFlag(message))
         {
-            message = message[..^SkipAIFlag.Length];
+            message = message[..^SkipAIFlag.Length].Trim();
             return PostProcess(message, branch, message);
         }
 
@@ -315,25 +315,45 @@ public class GenerateCommitMessageService
     /// </summary>
     /// <param name="text">The original text to be processed.</param>
     /// <param name="branch">The branch name used to extract issue or ticket numbers.</param>
-    /// <param name="message">The commit message used to extract git version bump command.</param>
+    /// <param name="message">The commit message used to extract the git version bump command.</param>
     /// <returns>The processed text with appended issue numbers and version bump commands if applicable.</returns>
     private static string PostProcess(string text, string branch, string message)
     {
         var provider = GetGitProvider();
+        var issueNumber = string.Empty;
         if (provider == GitProvider.GitHub)
         {
-            var issueNumber = BranchNameUtility.ExtractIssueNumber(branch);
-            if (!string.IsNullOrWhiteSpace(issueNumber))
+            issueNumber = BranchNameUtility.ExtractIssueNumber(branch);
+            if (
+                !string.IsNullOrWhiteSpace(issueNumber)
+                && !Regex.IsMatch(
+                    text,
+                    $@"^#?{Regex.Escape(issueNumber)}\b",
+                    RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase,
+                    TimeSpan.FromSeconds(5)
+                )
+            )
             {
                 text = $"#{issueNumber} {text}";
             }
         }
-        else
+
+        if (provider != GitProvider.GitHub || string.IsNullOrWhiteSpace(issueNumber))
         {
             var jiraTicketNumber = BranchNameUtility.ExtractJiraTicket(branch);
             if (!string.IsNullOrWhiteSpace(jiraTicketNumber))
             {
-                text = $"[{jiraTicketNumber}] {text}";
+                var normalizedPrefix = Regex.Escape(jiraTicketNumber).Replace("-", "[-_\\s]*");
+                var jiraRegex = new Regex(
+                    $"^\\[?{normalizedPrefix}\\]?",
+                    RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase,
+                    TimeSpan.FromSeconds(5)
+                );
+
+                if (!jiraRegex.IsMatch(text))
+                {
+                    text = $"[{jiraTicketNumber}] {text}";
+                }
             }
         }
 
