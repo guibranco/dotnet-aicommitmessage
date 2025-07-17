@@ -323,12 +323,15 @@ public class GenerateCommitMessageService
         if (provider == GitProvider.GitHub)
         {
             var issueNumber = BranchNameUtility.ExtractIssueNumber(branch);
-            if (!string.IsNullOrWhiteSpace(issueNumber) && !Regex.IsMatch(
-                        text,
-                        $@"^#?{Regex.Escape(issueNumber)}\b",
-                        RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase,
-                        TimeSpan.FromSeconds(5)
-                    ))
+            if (
+                !string.IsNullOrWhiteSpace(issueNumber)
+                && !Regex.IsMatch(
+                    text,
+                    $@"^#?{Regex.Escape(issueNumber)}\b",
+                    RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase,
+                    TimeSpan.FromSeconds(5)
+                )
+            )
             {
                 text = $"#{issueNumber} {text}";
             }
