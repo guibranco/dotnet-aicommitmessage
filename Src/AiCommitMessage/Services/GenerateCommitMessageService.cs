@@ -315,7 +315,7 @@ public class GenerateCommitMessageService
     /// </summary>
     /// <param name="text">The original text to be processed.</param>
     /// <param name="branch">The branch name used to extract issue or ticket numbers.</param>
-    /// <param name="message">The commit message used to extract git version bump command.</param>
+    /// <param name="message">The commit message used to extract the git version bump command.</param>
     /// <returns>The processed text with appended issue numbers and version bump commands if applicable.</returns>
     private static string PostProcess(string text, string branch, string message)
     {
@@ -325,7 +325,10 @@ public class GenerateCommitMessageService
             var issueNumber = BranchNameUtility.ExtractIssueNumber(branch);
             if (!string.IsNullOrWhiteSpace(issueNumber))
             {
-                text = $"#{issueNumber} {text}";
+                if (!Regex.IsMatch(text, $@"^#?{Regex.Escape(issueNumber)}\b", RegexOptions.IgnoreCase))
+                {
+                    text = $"#{issueNumber} {text}";
+                }
             }
         }
         else
@@ -333,7 +336,16 @@ public class GenerateCommitMessageService
             var jiraTicketNumber = BranchNameUtility.ExtractJiraTicket(branch);
             if (!string.IsNullOrWhiteSpace(jiraTicketNumber))
             {
-                text = $"[{jiraTicketNumber}] {text}";
+                var normalizedPrefix = Regex.Escape(jiraTicketNumber).Replace("-", "[-_\\s]*");
+                var jiraRegex = new Regex(
+                    $"^\\[?{normalizedPrefix}\\]?",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant
+                );
+    
+                if (!jiraRegex.IsMatch(text))
+                {
+                    text = $"[{jiraTicketNumber}] {text}";
+                }
             }
         }
 
