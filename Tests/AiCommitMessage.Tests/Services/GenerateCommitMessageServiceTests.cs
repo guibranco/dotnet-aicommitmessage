@@ -90,12 +90,12 @@ public class GenerateCommitMessageServiceTests
         // Arrange
         var options = new GenerateCommitMessageOptions
         {
-            Branch = "feature/TEST-123-my-branch-name",
+            Branch = "feature/123-my-branch-name",
             Diff = "Some diff",
-            Message = "[TEST-123] Initial commit",
+            Message = "#123 Initial commit",
         };
         var result = _service.GenerateCommitMessage(options);
-        result.Should().Be("[TEST-123] Initial commit");
+        result.Should().Be("#123 - Initial commit");
     }
 
     /// <summary>
