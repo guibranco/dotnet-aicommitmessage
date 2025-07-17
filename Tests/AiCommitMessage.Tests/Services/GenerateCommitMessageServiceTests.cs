@@ -84,6 +84,9 @@ public class GenerateCommitMessageServiceTests
             );
     }
 
+    /// <summary>
+    /// Tests that generating a commit message adds a GitHub issue number and skips AI processing.
+    /// </summary>
     [Fact]
     public void GenerateCommitMessage_Should_Add_GitHub_issue_number_and_Skip_AI()
     {
@@ -102,6 +105,9 @@ public class GenerateCommitMessageServiceTests
         result.Should().Be("#123 Initial commit");
     }
 
+    /// <summary>
+    /// Tests that generating a commit message does not duplicate GitHub issue numbers and skips AI processing.
+    /// </summary>
     [Fact]
     public void GenerateCommitMessage_Should_Not_Duplicate_GitHub_issue_number_and_Skip_AI()
     {
@@ -120,6 +126,9 @@ public class GenerateCommitMessageServiceTests
         result.Should().Be("#123 Initial commit");
     }
 
+    /// <summary>
+    /// Tests that the generated commit message adds a JIRA prefix and skips AI processing.
+    /// </summary>
     [Fact]
     public void GenerateCommitMessage_Should_Add_JIRA_prefix_and_Skip_AI()
     {
@@ -138,6 +147,9 @@ public class GenerateCommitMessageServiceTests
         result.Should().Be("[TEST-123] Initial commit");
     }
 
+    /// <summary>
+    /// Tests that generating a commit message does not duplicate the JIRA prefix and skips AI.
+    /// </summary>
     [Fact]
     public void GenerateCommitMessage_Should_Not_Duplicate_JIRA_prefix_and_Skip_AI()
     {
