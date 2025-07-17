@@ -85,7 +85,25 @@ public class GenerateCommitMessageServiceTests
     }
 
     [Fact]
-    public void GenerateCommitMessage_Should_Not_Duplicate_JIRA_prefix_and_Skip_AI()
+    public void GenerateCommitMessage_Should_Add_GitHub_issue_number_and_Skip_AI()
+    {
+        // Arrange
+        var options = new GenerateCommitMessageOptions
+        {
+            Branch = "feature/123-my-branch-name",
+            Diff = "Some diff",
+            Message = "Initial commit -skipai",
+        };
+        
+        //Act
+        var result = _service.GenerateCommitMessage(options);
+
+        // Assert
+        result.Should().Be("#123 Initial commit");
+    }
+
+    [Fact]
+    public void GenerateCommitMessage_Should_Not_Duplicate_GitHub_issue_number_and_Skip_AI()
     {
         // Arrange
         var options = new GenerateCommitMessageOptions
@@ -94,7 +112,11 @@ public class GenerateCommitMessageServiceTests
             Diff = "Some diff",
             Message = "#123 Initial commit -skipai",
         };
+
+        //Act
         var result = _service.GenerateCommitMessage(options);
+
+        // Assert
         result.Should().Be("#123 Initial commit");
     }
 
