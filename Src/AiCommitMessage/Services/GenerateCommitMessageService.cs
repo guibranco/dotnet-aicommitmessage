@@ -80,7 +80,7 @@ public class GenerateCommitMessageService
 
         if (HasSkipAIFlag(message))
         {
-            message = message[..^SkipAIFlag.Length];
+            message = message[..^SkipAIFlag.Length].Trim();
             return PostProcess(message, branch, message);
         }
 
