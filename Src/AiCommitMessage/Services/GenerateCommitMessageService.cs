@@ -320,9 +320,10 @@ public class GenerateCommitMessageService
     private static string PostProcess(string text, string branch, string message)
     {
         var provider = GetGitProvider();
+        var issueNumber = string.Empty;
         if (provider == GitProvider.GitHub)
         {
-            var issueNumber = BranchNameUtility.ExtractIssueNumber(branch);
+            issueNumber = BranchNameUtility.ExtractIssueNumber(branch);
             if (
                 !string.IsNullOrWhiteSpace(issueNumber)
                 && !Regex.IsMatch(
@@ -336,7 +337,9 @@ public class GenerateCommitMessageService
                 text = $"#{issueNumber} {text}";
             }
         }
-        else
+
+
+        if(provider != GitProvider.GitHub || string.IsNullOrWhiteSpace(issueNumber))
         {
             var jiraTicketNumber = BranchNameUtility.ExtractJiraTicket(branch);
             if (!string.IsNullOrWhiteSpace(jiraTicketNumber))
