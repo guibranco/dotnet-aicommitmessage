@@ -325,7 +325,13 @@ public class GenerateCommitMessageService
             var issueNumber = BranchNameUtility.ExtractIssueNumber(branch);
             if (!string.IsNullOrWhiteSpace(issueNumber))
             {
-                if (!Regex.IsMatch(text, $@"^#?{Regex.Escape(issueNumber)}\b", RegexOptions.IgnoreCase))
+                if (
+                    !Regex.IsMatch(
+                        text,
+                        $@"^#?{Regex.Escape(issueNumber)}\b",
+                        RegexOptions.IgnoreCase
+                    )
+                )
                 {
                     text = $"#{issueNumber} {text}";
                 }
@@ -341,7 +347,7 @@ public class GenerateCommitMessageService
                     $"^\\[?{normalizedPrefix}\\]?",
                     RegexOptions.IgnoreCase | RegexOptions.CultureInvariant
                 );
-    
+
                 if (!jiraRegex.IsMatch(text))
                 {
                     text = $"[{jiraTicketNumber}] {text}";
