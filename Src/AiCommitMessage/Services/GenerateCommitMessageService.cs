@@ -338,8 +338,7 @@ public class GenerateCommitMessageService
             }
         }
 
-
-        if(provider != GitProvider.GitHub || string.IsNullOrWhiteSpace(issueNumber))
+        if (provider != GitProvider.GitHub || string.IsNullOrWhiteSpace(issueNumber))
         {
             var jiraTicketNumber = BranchNameUtility.ExtractJiraTicket(branch);
             if (!string.IsNullOrWhiteSpace(jiraTicketNumber))

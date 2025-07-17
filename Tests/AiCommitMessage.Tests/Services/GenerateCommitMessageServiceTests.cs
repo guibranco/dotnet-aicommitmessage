@@ -94,7 +94,7 @@ public class GenerateCommitMessageServiceTests
             Diff = "Some diff",
             Message = "Initial commit -skipai",
         };
-        
+
         //Act
         var result = _service.GenerateCommitMessage(options);
 
@@ -130,7 +130,7 @@ public class GenerateCommitMessageServiceTests
             Diff = "Some diff",
             Message = "Initial commit -skipai",
         };
-        
+
         //Act
         var result = _service.GenerateCommitMessage(options);
 
