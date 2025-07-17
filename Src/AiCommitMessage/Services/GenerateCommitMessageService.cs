@@ -323,18 +323,14 @@ public class GenerateCommitMessageService
         if (provider == GitProvider.GitHub)
         {
             var issueNumber = BranchNameUtility.ExtractIssueNumber(branch);
-            if (!string.IsNullOrWhiteSpace(issueNumber))
-            {
-                if (
-                    !Regex.IsMatch(
+            if (!string.IsNullOrWhiteSpace(issueNumber) && !Regex.IsMatch(
                         text,
                         $@"^#?{Regex.Escape(issueNumber)}\b",
-                        RegexOptions.IgnoreCase
-                    )
-                )
-                {
-                    text = $"#{issueNumber} {text}";
-                }
+                        RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase,
+                        TimeSpan.FromSeconds(5)
+                    ))
+            {
+                text = $"#{issueNumber} {text}";
             }
         }
         else
@@ -345,7 +341,8 @@ public class GenerateCommitMessageService
                 var normalizedPrefix = Regex.Escape(jiraTicketNumber).Replace("-", "[-_\\s]*");
                 var jiraRegex = new Regex(
                     $"^\\[?{normalizedPrefix}\\]?",
-                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant
+                    RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase,
+                    TimeSpan.FromSeconds(5)
                 );
 
                 if (!jiraRegex.IsMatch(text))
