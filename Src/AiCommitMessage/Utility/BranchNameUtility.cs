@@ -8,9 +8,9 @@ namespace AiCommitMessage.Utility;
 public static class BranchNameUtility
 {
     /// <summary>
-    /// The GitHub issue pattern.
+    /// The GitHub issue pattern - matches issue number at start or after type prefix.
     /// </summary>
-    private const string GitHubIssuePattern = @"(?:issue)?[-/]?(\d+)";
+    private const string GitHubIssuePattern = @"^(?:[a-zA-Z]+/)?(\d+)(?:-|$)";
 
     /// <summary>
     /// The Jira ticket pattern.
