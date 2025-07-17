@@ -85,14 +85,14 @@ public class GenerateCommitMessageServiceTests
     }
 
     [Fact]
-    public void GenerateCommitMessage_Should_Not_Duplicate_JIRA_prefix()
+    public void GenerateCommitMessage_Should_Not_Duplicate_JIRA_prefix_and_Skip_AI()
     {
         // Arrange
         var options = new GenerateCommitMessageOptions
         {
             Branch = "feature/123-my-branch-name",
             Diff = "Some diff",
-            Message = "#123 Initial commit",
+            Message = "#123 Initial commit -skipai",
         };
         var result = _service.GenerateCommitMessage(options);
         result.Should().Be("#123 - Initial commit");
