@@ -97,8 +97,7 @@ public class GenerateCommitMessageService
                 "Unable to generate commit message: Both branch and diff are empty."
             );
         }
-
-        // Check if API calls are disabled
+        
         if (EnvironmentLoader.IsApiDisabled())
         {
             Output.WarningLine("⚠️ API calls are disabled. Using fallback commit message generation.");
