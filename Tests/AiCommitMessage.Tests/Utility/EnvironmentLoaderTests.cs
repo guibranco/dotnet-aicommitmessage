@@ -91,6 +91,4 @@ public class EnvironmentLoaderTests
             Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", null, EnvironmentVariableTarget.Process);
         }
     }
-        }
-    }
 }
