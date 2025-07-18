@@ -110,7 +110,8 @@ graph TD
     D -->|No| E[Send Data to OpenAI API]
     D -->|Yes| F[Use Fallback Message Generation]
     E --> G[Generate Commit Message]
-    E --> F[Check and append pre-defined commands to Commit Message]
+    F --> G
+    G --> H[Check and append pre-defined commands to Commit Message]
     F --> G[Return Generated Commit Message]
     G --> H[Insert Commit Message into Git Commit]
     H --> I[Finalize Commit]
