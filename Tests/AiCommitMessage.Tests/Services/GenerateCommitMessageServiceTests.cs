@@ -409,3 +409,4 @@ public class GenerateCommitMessageServiceTests
         // Assert
         result.Should().Be("Initial commit");
     }
+}
