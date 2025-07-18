@@ -151,11 +151,6 @@ public static class EnvironmentLoader
                 newValue,
                 EnvironmentVariableTarget.User
             );
-            Environment.SetEnvironmentVariable(
-                variableName,
-                newValue,
-                EnvironmentVariableTarget.Process
-            );
         }
         else if (!string.IsNullOrWhiteSpace(existingValue))
         {
@@ -163,11 +158,6 @@ public static class EnvironmentLoader
                 variableName,
                 existingValue,
                 EnvironmentVariableTarget.User
-            );
-            Environment.SetEnvironmentVariable(
-                variableName,
-                existingValue,
-                EnvironmentVariableTarget.Process
             );
         }
     }
