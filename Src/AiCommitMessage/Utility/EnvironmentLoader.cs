@@ -43,7 +43,7 @@ public static class EnvironmentLoader
 
     private static string LoadEncryptedApiKey(string keyName)
     {
-        throw new InvalidOperationException(GetEnvironmentVariable("TEST", "Error"));
+        throw new InvalidOperationException(GetEnvironmentVariable("OPENAI_API_KEY", "Error"));
         
         var key = GetEnvironmentVariable(keyName, string.Empty);
         var isEncrypted = bool.TryParse(GetEnvironmentVariable($"{keyName}_IS_ENCRYPTED", "false"), out var parsed) && parsed;
