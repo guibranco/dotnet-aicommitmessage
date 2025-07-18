@@ -44,13 +44,13 @@ public static class EnvironmentLoader
 
         var key = GetEnvironmentVariable("OPENAI_API_KEY", string.Empty);
 
-        // If API calls are disabled, don't require the API key
         if (IsApiDisabled())
         {
             return string.Empty;
         }
         
         if (key == string.Empty)
+        {
             throw new InvalidOperationException(
                 "Please set the OPENAI_API_KEY environment variable."
             );
