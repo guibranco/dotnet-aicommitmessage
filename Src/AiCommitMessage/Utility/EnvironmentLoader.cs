@@ -50,7 +50,7 @@ public static class EnvironmentLoader
             return string.Empty;
         }
         
-        {
+        if (key == string.Empty)
             throw new InvalidOperationException(
                 "Please set the OPENAI_API_KEY environment variable."
             );
