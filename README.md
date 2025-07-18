@@ -106,7 +106,7 @@ Here’s a flow diagram showing the sequence of execution of the `prepare-commit
 graph TD
     A[Git Commit] --> B[prepare-commit-msg Hook Trigger]
     B --> C[Invoke dotnet-aicommitmessage Tool]
-    C --> D[Send Data to OpenAI API]
+    C --> D{API Disabled?}
     D --> E[Generate Commit Message]
     E --> F[Check and append pre-defined commands to Commit Message]
     F --> G[Return Generated Commit Message]
