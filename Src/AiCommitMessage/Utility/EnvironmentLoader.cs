@@ -29,49 +29,11 @@ public static class EnvironmentLoader
     /// This allows for flexibility in configuring the API endpoint without hardcoding it into the application,
     /// making it easier to manage different environments (e.g., development, testing, production).
     /// </remarks>
-    public static string LoadOpenAiApiUrl() =>
-        GetEnvironmentVariable("OPENAI_API_URL", "https://api.openai.com/v1");
+    public static string LoadOpenAiApiUrl() => GetEnvironmentVariable("OPENAI_API_URL", "https://api.openai.com/v1");
 
-    /// <summary>
-    /// Loads the OpenAI API key from the environment variables.
-    /// </summary>
-    /// <returns>A string representing the OpenAI API key.</returns>
-    /// <exception cref="InvalidOperationException">Thrown if the API key is not set in the environment variables.</exception>
-    public static string LoadOpenAiApiKey()
-    {
-        var key = GetEnvironmentVariable("OPENAI_API_KEY", string.Empty);
-        var encryptedStr = GetEnvironmentVariable("OPENAI_API_KEY_IS_ENCRYPTED", "false");
-        var encrypted = bool.Parse(encryptedStr);
+    public static string LoadOpenAiApiKey() => LoadEncryptedApiKey("OPENAI_API_KEY");
 
-        if (string.IsNullOrWhiteSpace(key))
-        {
-            throw new InvalidOperationException(
-                "Please set the OPENAI_API_KEY environment variable."
-            );
-        }
-
-        return encrypted ? Decrypt(key) : key;
-    }
-
-    /// <summary>
-    /// Loads the Llama API key from the environment variables.
-    /// </summary>
-    /// <returns>A string representing the Llama API key.</returns>
-    public static string LoadLlamaApiKey() 
-    {
-        var key = GetEnvironmentVariable("LLAMA_API_KEY", string.Empty);
-        var encryptedStr = GetEnvironmentVariable("LLAMA_API_KEY_IS_ENCRYPTED", "false");
-        var encrypted = bool.Parse(encryptedStr);
-
-        if (string.IsNullOrWhiteSpace(key))
-        {
-            throw new InvalidOperationException(
-                "Please set the LLAMA_API_KEY environment variable."
-            );
-        }
-
-        return encrypted ? Decrypt(key) : key;    
-    }
+    public static string LoadLlamaApiKey() => LoadEncryptedApiKey("LLAMA_API_KEY");
 
     /// <summary>
     /// Loads the Llama API URL from the environment variables.
@@ -79,19 +41,30 @@ public static class EnvironmentLoader
     /// <returns>A string representing the Llama API URL.</returns>
     public static string LoadLlamaApiUrl() => GetEnvironmentVariable("LLAMA_API_URL", string.Empty);
 
+    private static string LoadEncryptedApiKey(string keyName)
+    {
+        var key = GetEnvironmentVariable(keyName, string.Empty);
+        var isEncrypted = bool.TryParse(GetEnvironmentVariable($"{keyName}_IS_ENCRYPTED", "false"), out var parsed) && parsed;
+    
+        if (string.IsNullOrWhiteSpace(key))
+        {
+            throw new InvalidOperationException($"Please set the {keyName} environment variable.");
+        }
+
+        return isEncrypted ? Decrypt(key) : key;
+    }
+    
     /// <summary>
     /// Loads the optional emoji setting from the environment variables.
     /// </summary>
     /// <returns><c>true</c> if should include emoji in the commit message, <c>false</c> otherwise.</returns>
-    public static bool LoadOptionalEmoji() =>
-        bool.Parse(GetEnvironmentVariable("OPENAI_EMOJI", "true"));
+    public static bool LoadOptionalEmoji() => bool.Parse(GetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_USE_EMOJI", "true"));
 
     /// <summary>
     /// Checks if API calls are disabled via environment variable.
     /// </summary>
     /// <returns><c>true</c> if API calls should be disabled, <c>false</c> otherwise.</returns>
-    public static bool IsApiDisabled() =>
-        bool.Parse(GetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", "false"));
+    public static bool IsApiDisabled() => bool.Parse(GetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", "false"));
 
     /// <summary>
     /// Decrypts the specified encrypted text.
