@@ -18,12 +18,7 @@ public class DisableApiIntegrationTests
             "true",
             EnvironmentVariableTarget.Process
         );
-        Environment.SetEnvironmentVariable(
-            "OPENAI_API_KEY",
-            null,
-            EnvironmentVariableTarget.Process
-        );
-
+        
         var service = new GenerateCommitMessageService();
         var options = new GenerateCommitMessageOptions
         {
