@@ -201,7 +201,7 @@ public class GenerateCommitMessageServiceTests
         var result = _service.GenerateCommitMessage(options);
         result.Should().NotBe("Test misplaced -skipai commit");
     }
-    
+
     //[Fact]
     //public void GenerateCommitMessage_Should_IncludeBranchAndDiff_When_Provided()
     //{
@@ -332,8 +332,12 @@ public class GenerateCommitMessageServiceTests
     public void GenerateCommitMessage_Should_DisableApiCalls_When_EnvironmentVariableIsTrue()
     {
         // Arrange
-        Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", "true", EnvironmentVariableTarget.Process);
-        
+        Environment.SetEnvironmentVariable(
+            "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+            "true",
+            EnvironmentVariableTarget.Process
+        );
+
         var options = new GenerateCommitMessageOptions
         {
             Branch = "feature/test",
@@ -352,7 +356,11 @@ public class GenerateCommitMessageServiceTests
         finally
         {
             // Cleanup
-            Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", null, EnvironmentVariableTarget.Process);
+            Environment.SetEnvironmentVariable(
+                "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+                null,
+                EnvironmentVariableTarget.Process
+            );
         }
     }
 
@@ -363,8 +371,12 @@ public class GenerateCommitMessageServiceTests
     public void GenerateCommitMessage_Should_ReturnFallbackMessage_When_ApiDisabledAndMessageEmpty()
     {
         // Arrange
-        Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", "true", EnvironmentVariableTarget.Process);
-        
+        Environment.SetEnvironmentVariable(
+            "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+            "true",
+            EnvironmentVariableTarget.Process
+        );
+
         var options = new GenerateCommitMessageOptions
         {
             Branch = "feature/123-test",
@@ -383,7 +395,11 @@ public class GenerateCommitMessageServiceTests
         finally
         {
             // Cleanup
-            Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", null, EnvironmentVariableTarget.Process);
+            Environment.SetEnvironmentVariable(
+                "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+                null,
+                EnvironmentVariableTarget.Process
+            );
         }
     }
 
@@ -394,8 +410,12 @@ public class GenerateCommitMessageServiceTests
     public void GenerateCommitMessage_Should_EnableApiCalls_When_EnvironmentVariableNotSet()
     {
         // Arrange
-        Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", null, EnvironmentVariableTarget.Process);
-        
+        Environment.SetEnvironmentVariable(
+            "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+            null,
+            EnvironmentVariableTarget.Process
+        );
+
         var options = new GenerateCommitMessageOptions
         {
             Branch = "feature/test",

@@ -13,9 +13,17 @@ public class DisableApiIntegrationTests
     public void CompleteWorkflow_Should_WorkCorrectly_When_ApiDisabled()
     {
         // Arrange
-        Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", "true", EnvironmentVariableTarget.Process);
-        Environment.SetEnvironmentVariable("OPENAI_API_KEY", null, EnvironmentVariableTarget.Process);
-        
+        Environment.SetEnvironmentVariable(
+            "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+            "true",
+            EnvironmentVariableTarget.Process
+        );
+        Environment.SetEnvironmentVariable(
+            "OPENAI_API_KEY",
+            null,
+            EnvironmentVariableTarget.Process
+        );
+
         var service = new GenerateCommitMessageService();
         var options = new GenerateCommitMessageOptions
         {
@@ -35,7 +43,11 @@ public class DisableApiIntegrationTests
         finally
         {
             // Cleanup
-            Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", null, EnvironmentVariableTarget.Process);
+            Environment.SetEnvironmentVariable(
+                "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+                null,
+                EnvironmentVariableTarget.Process
+            );
         }
     }
 
@@ -46,12 +58,13 @@ public class DisableApiIntegrationTests
     public void SettingsService_Should_WorkCorrectly_When_ApiDisabled()
     {
         // Arrange
-        Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", "true", EnvironmentVariableTarget.Process);
-        
-        var options = new SetSettingsOptions
-        {
-            Model = "gpt-4o-mini"
-        };
+        Environment.SetEnvironmentVariable(
+            "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+            "true",
+            EnvironmentVariableTarget.Process
+        );
+
+        var options = new SetSettingsOptions { Model = "gpt-4o-mini" };
 
         try
         {
@@ -62,7 +75,11 @@ public class DisableApiIntegrationTests
         finally
         {
             // Cleanup
-            Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", null, EnvironmentVariableTarget.Process);
+            Environment.SetEnvironmentVariable(
+                "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+                null,
+                EnvironmentVariableTarget.Process
+            );
         }
     }
 }

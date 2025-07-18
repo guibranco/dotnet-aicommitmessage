@@ -12,7 +12,11 @@ public class EnvironmentLoaderTests
     public void IsApiDisabled_Should_ReturnFalse_When_EnvironmentVariableNotSet()
     {
         // Arrange
-        Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", null, EnvironmentVariableTarget.Process);
+        Environment.SetEnvironmentVariable(
+            "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+            null,
+            EnvironmentVariableTarget.Process
+        );
 
         // Act
         var result = EnvironmentLoader.IsApiDisabled();
@@ -28,7 +32,11 @@ public class EnvironmentLoaderTests
     public void IsApiDisabled_Should_ReturnTrue_When_EnvironmentVariableIsTrue()
     {
         // Arrange
-        Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", "true", EnvironmentVariableTarget.Process);
+        Environment.SetEnvironmentVariable(
+            "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+            "true",
+            EnvironmentVariableTarget.Process
+        );
 
         try
         {
@@ -41,7 +49,11 @@ public class EnvironmentLoaderTests
         finally
         {
             // Cleanup
-            Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", null, EnvironmentVariableTarget.Process);
+            Environment.SetEnvironmentVariable(
+                "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+                null,
+                EnvironmentVariableTarget.Process
+            );
         }
     }
 
@@ -52,7 +64,11 @@ public class EnvironmentLoaderTests
     public void IsApiDisabled_Should_ReturnFalse_When_EnvironmentVariableIsFalse()
     {
         // Arrange
-        Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", "false", EnvironmentVariableTarget.Process);
+        Environment.SetEnvironmentVariable(
+            "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+            "false",
+            EnvironmentVariableTarget.Process
+        );
 
         try
         {
@@ -65,7 +81,11 @@ public class EnvironmentLoaderTests
         finally
         {
             // Cleanup
-            Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", null, EnvironmentVariableTarget.Process);
+            Environment.SetEnvironmentVariable(
+                "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+                null,
+                EnvironmentVariableTarget.Process
+            );
         }
     }
 
@@ -76,8 +96,16 @@ public class EnvironmentLoaderTests
     public void LoadOpenAiApiKey_Should_ReturnEmptyString_When_ApiDisabledAndNoKeySet()
     {
         // Arrange
-        Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", "true", EnvironmentVariableTarget.Process);
-        Environment.SetEnvironmentVariable("OPENAI_API_KEY", null, EnvironmentVariableTarget.Process);
+        Environment.SetEnvironmentVariable(
+            "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+            "true",
+            EnvironmentVariableTarget.Process
+        );
+        Environment.SetEnvironmentVariable(
+            "OPENAI_API_KEY",
+            null,
+            EnvironmentVariableTarget.Process
+        );
 
         try
         {
@@ -90,7 +118,11 @@ public class EnvironmentLoaderTests
         finally
         {
             // Cleanup
-            Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", null, EnvironmentVariableTarget.Process);
+            Environment.SetEnvironmentVariable(
+                "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+                null,
+                EnvironmentVariableTarget.Process
+            );
         }
     }
 }

@@ -48,7 +48,7 @@ public static class EnvironmentLoader
         {
             return string.Empty;
         }
-        
+
         if (key == string.Empty)
         {
             throw new InvalidOperationException(

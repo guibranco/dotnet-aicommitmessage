@@ -97,11 +97,17 @@ public class GenerateCommitMessageService
                 "Unable to generate commit message: Both branch and diff are empty."
             );
         }
-        
+
         if (EnvironmentLoader.IsApiDisabled())
         {
-            Output.WarningLine("⚠️ API calls are disabled. Using fallback commit message generation.");
-            return PostProcess(string.IsNullOrWhiteSpace(message) ? "Manual commit message required" : message, branch, message);
+            Output.WarningLine(
+                "⚠️ API calls are disabled. Using fallback commit message generation."
+            );
+            return PostProcess(
+                string.IsNullOrWhiteSpace(message) ? "Manual commit message required" : message,
+                branch,
+                message
+            );
         }
 
         var formattedMessage =
