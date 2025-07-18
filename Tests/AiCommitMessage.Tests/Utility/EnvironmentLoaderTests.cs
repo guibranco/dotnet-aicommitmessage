@@ -66,6 +66,8 @@ public class EnvironmentLoaderTests
         {
             // Cleanup
             Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", null, EnvironmentVariableTarget.Process);
+        }
+    }
 
     /// <summary>
     /// Tests that LoadOpenAiApiKey returns empty string when API is disabled, even without API key set.
