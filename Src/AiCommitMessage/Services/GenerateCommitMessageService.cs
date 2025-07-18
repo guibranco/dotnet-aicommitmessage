@@ -8,7 +8,6 @@ using AiCommitMessage.Utility;
 using Azure;
 using Azure.AI.Inference;
 using OpenAI;
-using AiCommitMessage.Utility;
 using OpenAI.Chat;
 
 namespace AiCommitMessage.Services;
