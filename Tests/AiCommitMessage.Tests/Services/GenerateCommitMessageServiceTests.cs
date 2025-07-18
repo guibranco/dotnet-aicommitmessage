@@ -323,4 +323,71 @@ public class GenerateCommitMessageServiceTests
     //      // Assert
     //      filtered.Should().Be(expected);
     //  }
+
+    /// <summary>
+    /// Tests that API calls are disabled when the environment variable is set to true.
+    /// </summary>
+    [Fact]
+    public void GenerateCommitMessage_Should_DisableApiCalls_When_EnvironmentVariableIsTrue()
+    {
+        // Arrange
+        Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", "true", EnvironmentVariableTarget.Process);
+        
+        var options = new GenerateCommitMessageOptions
+        {
+            Branch = "feature/test",
+            Diff = "Some diff",
+            Message = "Initial commit",
+        };
+
+        try
+        {
+            // Act
+            var result = _service.GenerateCommitMessage(options);
+
+            // Assert
+            result.Should().Be("Initial commit");
+        }
+        finally
+        {
+            // Cleanup
+            Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", null, EnvironmentVariableTarget.Process);
+        }
+    }
+
+    /// <summary>
+    /// Tests that API calls are disabled when the environment variable is set to true and message is empty.
+    /// </summary>
+    [Fact]
+    public void GenerateCommitMessage_Should_ReturnFallbackMessage_When_ApiDisabledAndMessageEmpty()
+    {
+        // Arrange
+        Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", "true", EnvironmentVariableTarget.Process);
+        
+        var options = new GenerateCommitMessageOptions
+        {
+            Branch = "feature/123-test",
+            Diff = "Some diff",
+            Message = "",
+        };
+
+        try
+        {
+            // Act
+            var result = _service.GenerateCommitMessage(options);
+
+            // Assert
+            result.Should().Be("#123 Manual commit message required");
+        }
+        finally
+        {
+            // Cleanup
+            Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", null, EnvironmentVariableTarget.Process);
+        }
+    }
+
+    /// <summary>
+    /// Tests that API calls are enabled by default when the environment variable is not set.
+    /// </summary>
+    [Fact]
 }
