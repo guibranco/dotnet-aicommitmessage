@@ -44,6 +44,11 @@ public static class EnvironmentLoader
 
         var key = GetEnvironmentVariable("OPENAI_API_KEY", string.Empty);
 
+        if (IsApiDisabled())
+        {
+            return string.Empty;
+        }
+
         if (key == string.Empty)
         {
             throw new InvalidOperationException(
@@ -72,6 +77,13 @@ public static class EnvironmentLoader
     /// <returns><c>true</c> if should include emoji in the commit message, <c>false</c> otherwise.</returns>
     public static bool LoadOptionalEmoji() =>
         bool.Parse(GetEnvironmentVariable("OPENAI_EMOJI", "true"));
+
+    /// <summary>
+    /// Checks if API calls are disabled via environment variable.
+    /// </summary>
+    /// <returns><c>true</c> if API calls should be disabled, <c>false</c> otherwise.</returns>
+    public static bool IsApiDisabled() =>
+        bool.Parse(GetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", "false"));
 
     /// <summary>
     /// Decrypts the specified encrypted text.

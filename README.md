@@ -106,12 +106,15 @@ Here’s a flow diagram showing the sequence of execution of the `prepare-commit
 graph TD
     A[Git Commit] --> B[prepare-commit-msg Hook Trigger]
     B --> C[Invoke dotnet-aicommitmessage Tool]
-    C --> D[Send Data to OpenAI API]
-    D --> E[Generate Commit Message]
-    E --> F[Check and append pre-defined commands to Commit Message]
-    F --> G[Return Generated Commit Message]
-    G --> H[Insert Commit Message into Git Commit]
-    H --> I[Finalize Commit]
+    C --> D{API Disabled?}
+    D -->|No| E[Send Data to OpenAI API]
+    D -->|Yes| F[Use Fallback Message Generation]
+    E --> G[Generate Commit Message]
+    F --> G
+    G --> H[Check and append pre-defined commands to Commit Message]
+    H --> I[Return Generated Commit Message]
+    I --> J[Insert Commit Message into Git Commit]
+    J --> K[Finalize Commit]
 ```
 
 ---
@@ -197,6 +200,31 @@ Here is a sample `debug.json` content:
 ```
 
 ---
+
+## Configuration Options
+
+The tool supports several configuration options through environment variables:
+
+### Disable API Calls
+
+In some network environments, the OpenAI API may be blocked due to firewall or proxy restrictions. You can disable API calls entirely by setting the following environment variable:
+
+```bash
+export DOTNET_AICOMMITMESSAGE_DISABLE_API=true
+```
+
+Or on Windows:
+
+```cmd
+set DOTNET_AICOMMITMESSAGE_DISABLE_API=true
+```
+
+When this option is enabled, the tool will:
+- Skip any calls to the OpenAI API
+- Display a warning message indicating that API calls are disabled
+- Use fallback commit message generation (either the provided message or a placeholder)
+- Continue to work with branch name processing and issue number extraction
+
 
 ### Contributors
 
