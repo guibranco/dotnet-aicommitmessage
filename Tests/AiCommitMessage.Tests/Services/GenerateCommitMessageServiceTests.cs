@@ -201,6 +201,7 @@ public class GenerateCommitMessageServiceTests
         var result = _service.GenerateCommitMessage(options);
         result.Should().NotBe("Test misplaced -skipai commit");
     }
+    
     //[Fact]
     //public void GenerateCommitMessage_Should_IncludeBranchAndDiff_When_Provided()
     //{
