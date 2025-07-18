@@ -39,17 +39,11 @@ public static class EnvironmentLoader
     /// <exception cref="InvalidOperationException">Thrown if the API key is not set in the environment variables.</exception>
     public static string LoadOpenAiApiKey()
     {
-        var encryptStr = GetEnvironmentVariable("OPENAI_KEY_ENCRYPTED", "false");
-        var encrypt = bool.Parse(encryptStr);
-
         var key = GetEnvironmentVariable("OPENAI_API_KEY", string.Empty);
+        var encryptedStr = GetEnvironmentVariable("OPENAI_API_KEY_IS_ENCRYPTED", "false");
+        var encrypted = bool.Parse(encryptedStr);
 
-        if (IsApiDisabled())
-        {
-            return string.Empty;
-        }
-
-        if (key == string.Empty)
+        if (string.IsNullOrWhiteSpace(key))
         {
             throw new InvalidOperationException(
                 "Please set the OPENAI_API_KEY environment variable."
@@ -63,7 +57,21 @@ public static class EnvironmentLoader
     /// Loads the Llama API key from the environment variables.
     /// </summary>
     /// <returns>A string representing the Llama API key.</returns>
-    public static string LoadLlamaApiKey() => GetEnvironmentVariable("LLAMA_API_KEY", string.Empty);
+    public static string LoadLlamaApiKey() 
+    {
+        var key = GetEnvironmentVariable("LLAMA_API_KEY", string.Empty);
+        var encryptedStr = GetEnvironmentVariable("LLAMA_API_KEY_IS_ENCRYPTED", "false");
+        var encrypted = bool.Parse(encryptedStr);
+
+        if (string.IsNullOrWhiteSpace(key))
+        {
+            throw new InvalidOperationException(
+                "Please set the LLAMA_API_KEY environment variable."
+            );
+        }
+
+        return encrypt ? Decrypt(key) : key;    
+    }
 
     /// <summary>
     /// Loads the Llama API URL from the environment variables.
@@ -114,12 +122,16 @@ public static class EnvironmentLoader
         var value = Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.Process);
 
         if (!string.IsNullOrWhiteSpace(value))
+        {
             return value;
+        }
 
         value = Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.User);
 
         if (!string.IsNullOrWhiteSpace(value))
+        {
             return value;
+        }
 
         value = Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.Machine);
 
