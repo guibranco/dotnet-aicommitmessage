@@ -7,7 +7,7 @@ namespace AiCommitMessage.Tests.Integration;
 public class DisableApiIntegrationTests
 {
     /// <summary>
-    /// Integration test to verify the complete workflow when API is disabled.
+    /// Tests the complete workflow when API is disabled.
     /// </summary>
     [Fact]
     public void CompleteWorkflow_Should_WorkCorrectly_When_ApiDisabled()
