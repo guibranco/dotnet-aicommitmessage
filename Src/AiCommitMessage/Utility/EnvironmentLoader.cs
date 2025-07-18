@@ -32,38 +32,9 @@ public static class EnvironmentLoader
     public static string LoadOpenAiApiUrl() =>
         GetEnvironmentVariable("OPENAI_API_URL", "https://api.openai.com/v1");
 
-    /// <summary>
-    /// Loads the OpenAI API key from the environment variables.
-    /// </summary>
-    /// <returns>A string representing the OpenAI API key.</returns>
-    /// <exception cref="InvalidOperationException">Thrown if the API key is not set in the environment variables.</exception>
-    public static string LoadOpenAiApiKey()
-    {
-        var encryptStr = GetEnvironmentVariable("OPENAI_KEY_ENCRYPTED", "false");
-        var encrypt = bool.Parse(encryptStr);
+    public static string LoadOpenAiApiKey() => LoadEncryptedApiKey("OPENAI_API_KEY");
 
-        var key = GetEnvironmentVariable("OPENAI_API_KEY", string.Empty);
-
-        if (IsApiDisabled())
-        {
-            return string.Empty;
-        }
-
-        if (key == string.Empty)
-        {
-            throw new InvalidOperationException(
-                "Please set the OPENAI_API_KEY environment variable."
-            );
-        }
-
-        return encrypt ? Decrypt(key) : key;
-    }
-
-    /// <summary>
-    /// Loads the Llama API key from the environment variables.
-    /// </summary>
-    /// <returns>A string representing the Llama API key.</returns>
-    public static string LoadLlamaApiKey() => GetEnvironmentVariable("LLAMA_API_KEY", string.Empty);
+    public static string LoadLlamaApiKey() => LoadEncryptedApiKey("LLAMA_API_KEY");
 
     /// <summary>
     /// Loads the Llama API URL from the environment variables.
@@ -71,12 +42,29 @@ public static class EnvironmentLoader
     /// <returns>A string representing the Llama API URL.</returns>
     public static string LoadLlamaApiUrl() => GetEnvironmentVariable("LLAMA_API_URL", string.Empty);
 
+    private static string LoadEncryptedApiKey(string keyName)
+    {
+        var key = GetEnvironmentVariable(keyName, string.Empty);
+        var isEncrypted =
+            bool.TryParse(
+                GetEnvironmentVariable($"{keyName}_IS_ENCRYPTED", "false"),
+                out var parsed
+            ) && parsed;
+
+        if (string.IsNullOrWhiteSpace(key))
+        {
+            throw new InvalidOperationException($"Please set the {keyName} environment variable.");
+        }
+
+        return isEncrypted ? Decrypt(key) : key;
+    }
+
     /// <summary>
     /// Loads the optional emoji setting from the environment variables.
     /// </summary>
     /// <returns><c>true</c> if should include emoji in the commit message, <c>false</c> otherwise.</returns>
     public static bool LoadOptionalEmoji() =>
-        bool.Parse(GetEnvironmentVariable("OPENAI_EMOJI", "true"));
+        bool.Parse(GetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_USE_EMOJI", "true"));
 
     /// <summary>
     /// Checks if API calls are disabled via environment variable.
@@ -114,12 +102,16 @@ public static class EnvironmentLoader
         var value = Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.Process);
 
         if (!string.IsNullOrWhiteSpace(value))
+        {
             return value;
+        }
 
         value = Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.User);
 
         if (!string.IsNullOrWhiteSpace(value))
+        {
             return value;
+        }
 
         value = Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.Machine);
 
@@ -139,11 +131,6 @@ public static class EnvironmentLoader
                 newValue,
                 EnvironmentVariableTarget.User
             );
-            Environment.SetEnvironmentVariable(
-                variableName,
-                newValue,
-                EnvironmentVariableTarget.Process
-            );
         }
         else if (!string.IsNullOrWhiteSpace(existingValue))
         {
@@ -151,11 +138,6 @@ public static class EnvironmentLoader
                 variableName,
                 existingValue,
                 EnvironmentVariableTarget.User
-            );
-            Environment.SetEnvironmentVariable(
-                variableName,
-                existingValue,
-                EnvironmentVariableTarget.Process
             );
         }
     }
