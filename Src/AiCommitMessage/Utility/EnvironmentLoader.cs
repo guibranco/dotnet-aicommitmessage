@@ -43,7 +43,7 @@ public static class EnvironmentLoader
 
     private static string LoadEncryptedApiKey(string keyName)
     {
-        Console.WriteLine(GetEnvironmentVariable("TEST"));
+        Console.WriteLine(GetEnvironmentVariable("TEST", "Error"));
         
         var key = GetEnvironmentVariable(keyName, string.Empty);
         var isEncrypted = bool.TryParse(GetEnvironmentVariable($"{keyName}_IS_ENCRYPTED", "false"), out var parsed) && parsed;
