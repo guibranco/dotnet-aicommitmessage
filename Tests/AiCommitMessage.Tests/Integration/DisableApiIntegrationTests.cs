@@ -18,7 +18,7 @@ public class DisableApiIntegrationTests
             "true",
             EnvironmentVariableTarget.Process
         );
-        
+
         var service = new GenerateCommitMessageService();
         var options = new GenerateCommitMessageOptions
         {

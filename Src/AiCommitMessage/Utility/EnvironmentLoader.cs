@@ -29,7 +29,8 @@ public static class EnvironmentLoader
     /// This allows for flexibility in configuring the API endpoint without hardcoding it into the application,
     /// making it easier to manage different environments (e.g., development, testing, production).
     /// </remarks>
-    public static string LoadOpenAiApiUrl() => GetEnvironmentVariable("OPENAI_API_URL", "https://api.openai.com/v1");
+    public static string LoadOpenAiApiUrl() =>
+        GetEnvironmentVariable("OPENAI_API_URL", "https://api.openai.com/v1");
 
     public static string LoadOpenAiApiKey() => LoadEncryptedApiKey("OPENAI_API_KEY");
 
@@ -44,8 +45,12 @@ public static class EnvironmentLoader
     private static string LoadEncryptedApiKey(string keyName)
     {
         var key = GetEnvironmentVariable(keyName, string.Empty);
-        var isEncrypted = bool.TryParse(GetEnvironmentVariable($"{keyName}_IS_ENCRYPTED", "false"), out var parsed) && parsed;
-    
+        var isEncrypted =
+            bool.TryParse(
+                GetEnvironmentVariable($"{keyName}_IS_ENCRYPTED", "false"),
+                out var parsed
+            ) && parsed;
+
         if (string.IsNullOrWhiteSpace(key))
         {
             throw new InvalidOperationException($"Please set the {keyName} environment variable.");
@@ -53,18 +58,20 @@ public static class EnvironmentLoader
 
         return isEncrypted ? Decrypt(key) : key;
     }
-    
+
     /// <summary>
     /// Loads the optional emoji setting from the environment variables.
     /// </summary>
     /// <returns><c>true</c> if should include emoji in the commit message, <c>false</c> otherwise.</returns>
-    public static bool LoadOptionalEmoji() => bool.Parse(GetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_USE_EMOJI", "true"));
+    public static bool LoadOptionalEmoji() =>
+        bool.Parse(GetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_USE_EMOJI", "true"));
 
     /// <summary>
     /// Checks if API calls are disabled via environment variable.
     /// </summary>
     /// <returns><c>true</c> if API calls should be disabled, <c>false</c> otherwise.</returns>
-    public static bool IsApiDisabled() => bool.Parse(GetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", "false"));
+    public static bool IsApiDisabled() =>
+        bool.Parse(GetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", "false"));
 
     /// <summary>
     /// Decrypts the specified encrypted text.
