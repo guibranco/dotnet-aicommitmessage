@@ -50,7 +50,7 @@ public static class EnvironmentLoader
             );
         }
 
-        return encrypt ? Decrypt(key) : key;
+        return encrypted ? Decrypt(key) : key;
     }
 
     /// <summary>
@@ -70,7 +70,7 @@ public static class EnvironmentLoader
             );
         }
 
-        return encrypt ? Decrypt(key) : key;    
+        return encrypted ? Decrypt(key) : key;    
     }
 
     /// <summary>
