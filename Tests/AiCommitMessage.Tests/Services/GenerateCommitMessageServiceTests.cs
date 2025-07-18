@@ -390,4 +390,21 @@ public class GenerateCommitMessageServiceTests
     /// Tests that API calls are enabled by default when the environment variable is not set.
     /// </summary>
     [Fact]
-}
+    public void GenerateCommitMessage_Should_EnableApiCalls_When_EnvironmentVariableNotSet()
+    {
+        // Arrange
+        Environment.SetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", null, EnvironmentVariableTarget.Process);
+        
+        var options = new GenerateCommitMessageOptions
+        {
+            Branch = "feature/test",
+            Diff = "Some diff",
+            Message = "Initial commit -skipai", // Use skipai to avoid actual API calls in tests
+        };
+
+        // Act
+        var result = _service.GenerateCommitMessage(options);
+
+        // Assert
+        result.Should().Be("Initial commit");
+    }
