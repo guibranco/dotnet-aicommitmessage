@@ -107,7 +107,9 @@ graph TD
     A[Git Commit] --> B[prepare-commit-msg Hook Trigger]
     B --> C[Invoke dotnet-aicommitmessage Tool]
     C --> D{API Disabled?}
-    D --> E[Generate Commit Message]
+    D -->|No| E[Send Data to OpenAI API]
+    D -->|Yes| F[Use Fallback Message Generation]
+    E --> G[Generate Commit Message]
     E --> F[Check and append pre-defined commands to Commit Message]
     F --> G[Return Generated Commit Message]
     G --> H[Insert Commit Message into Git Commit]
