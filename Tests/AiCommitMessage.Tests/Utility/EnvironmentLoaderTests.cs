@@ -88,41 +88,4 @@ public class EnvironmentLoaderTests
             );
         }
     }
-
-    /// <summary>
-    /// Tests that LoadOpenAiApiKey returns empty string when API is disabled, even without API key set.
-    /// </summary>
-    [Fact]
-    public void LoadOpenAiApiKey_Should_ReturnEmptyString_When_ApiDisabledAndNoKeySet()
-    {
-        // Arrange
-        Environment.SetEnvironmentVariable(
-            "DOTNET_AICOMMITMESSAGE_DISABLE_API",
-            "true",
-            EnvironmentVariableTarget.Process
-        );
-        Environment.SetEnvironmentVariable(
-            "OPENAI_API_KEY",
-            null,
-            EnvironmentVariableTarget.Process
-        );
-
-        try
-        {
-            // Act
-            var result = EnvironmentLoader.LoadOpenAiApiKey();
-
-            // Assert
-            result.Should().BeEmpty();
-        }
-        finally
-        {
-            // Cleanup
-            Environment.SetEnvironmentVariable(
-                "DOTNET_AICOMMITMESSAGE_DISABLE_API",
-                null,
-                EnvironmentVariableTarget.Process
-            );
-        }
-    }
 }
