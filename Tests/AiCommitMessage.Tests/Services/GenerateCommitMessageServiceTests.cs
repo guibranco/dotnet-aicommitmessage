@@ -429,4 +429,137 @@ public class GenerateCommitMessageServiceTests
         // Assert
         result.Should().Be("Initial commit");
     }
+
+    /// <summary>
+    /// Tests that API errors are ignored when IGNORE_API_ERRORS environment variable is set to true.
+    /// </summary>
+    [Fact]
+    public void GenerateCommitMessage_Should_IgnoreApiErrors_When_IgnoreApiErrorsIsTrue()
+    {
+        // Arrange
+        Environment.SetEnvironmentVariable(
+            "IGNORE_API_ERRORS",
+            "true",
+            EnvironmentVariableTarget.Process
+        );
+        Environment.SetEnvironmentVariable(
+            "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+            "false",
+            EnvironmentVariableTarget.Process
+        );
+        Environment.SetEnvironmentVariable(
+            "OPENAI_API_KEY",
+            "invalid-key-to-trigger-error",
+            EnvironmentVariableTarget.Process
+        );
+
+        var options = new GenerateCommitMessageOptions
+        {
+            Branch = "feature/123-test",
+            Diff = "Some diff",
+            Message = "Initial commit",
+        };
+
+        try
+        {
+            // Act
+            var result = _service.GenerateCommitMessage(options);
+
+            // Assert
+            // Should return the processed original message with issue number
+            result.Should().Be("#123 Initial commit");
+        }
+        finally
+        {
+            // Cleanup
+            Environment.SetEnvironmentVariable(
+                "IGNORE_API_ERRORS",
+                null,
+                EnvironmentVariableTarget.Process
+            );
+            Environment.SetEnvironmentVariable(
+                "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+                null,
+                EnvironmentVariableTarget.Process
+            );
+            Environment.SetEnvironmentVariable(
+                "OPENAI_API_KEY",
+                null,
+                EnvironmentVariableTarget.Process
+            );
+        }
+    }
+
+    /// <summary>
+    /// Tests that API errors are ignored and fallback message is used when IGNORE_API_ERRORS is true and original message is empty.
+    /// </summary>
+    [Fact]
+    public void GenerateCommitMessage_Should_UseFallbackMessage_When_IgnoreApiErrorsIsTrueAndMessageEmpty()
+    {
+        // Arrange
+        Environment.SetEnvironmentVariable(
+            "IGNORE_API_ERRORS",
+            "true",
+            EnvironmentVariableTarget.Process
+        );
+        Environment.SetEnvironmentVariable(
+            "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+            "false",
+            EnvironmentVariableTarget.Process
+        );
+        Environment.SetEnvironmentVariable(
+            "OPENAI_API_KEY",
+            "invalid-key-to-trigger-error",
+            EnvironmentVariableTarget.Process
+        );
+
+        var options = new GenerateCommitMessageOptions
+        {
+            Branch = "feature/456-test",
+            Diff = "Some diff",
+            Message = "",
+        };
+
+        try
+        {
+            // Act
+            var result = _service.GenerateCommitMessage(options);
+
+            // Assert
+            // Should return the fallback message with issue number
+            result.Should().Be("#456 Manual commit message required");
+        }
+        finally
+        {
+            // Cleanup
+            Environment.SetEnvironmentVariable(
+                "IGNORE_API_ERRORS",
+                null,
+                EnvironmentVariableTarget.Process
+            );
+            Environment.SetEnvironmentVariable(
+                "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+                null,
+                EnvironmentVariableTarget.Process
+            );
+            Environment.SetEnvironmentVariable(
+                "OPENAI_API_KEY",
+                null,
+                EnvironmentVariableTarget.Process
+            );
+        }
+    }
+
+    /// <summary>
+    /// Tests that API errors are not ignored when IGNORE_API_ERRORS environment variable is not set.
+    /// </summary>
+    [Fact]
+    public void GenerateCommitMessage_Should_NotIgnoreApiErrors_When_IgnoreApiErrorsNotSet()
+    {
+        // Arrange
+        Environment.SetEnvironmentVariable(
+            "IGNORE_API_ERRORS",
+            null,
+            EnvironmentVariableTarget.Process
+        );
 }
