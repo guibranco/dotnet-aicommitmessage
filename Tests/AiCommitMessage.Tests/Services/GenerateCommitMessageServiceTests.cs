@@ -561,5 +561,42 @@ public class GenerateCommitMessageServiceTests
             "IGNORE_API_ERRORS",
             null,
             EnvironmentVariableTarget.Process
+
+    /// <summary>
+    /// Tests that IGNORE_API_ERRORS works with skipai flag to ensure compatibility.
+    /// </summary>
+    [Fact]
+    public void GenerateCommitMessage_Should_WorkWithSkipAi_When_IgnoreApiErrorsIsTrue()
+    {
+        // Arrange
+        Environment.SetEnvironmentVariable(
+            "IGNORE_API_ERRORS",
+            "true",
+            EnvironmentVariableTarget.Process
+        );
+
+        var options = new GenerateCommitMessageOptions
+        {
+            Branch = "feature/123-test",
+            Diff = "Some diff",
+            Message = "Initial commit -skipai",
+        };
+
+        try
+        {
+            // Act
+            var result = _service.GenerateCommitMessage(options);
+
+            // Assert
+            // Should work normally with skipai flag regardless of IGNORE_API_ERRORS setting
+            result.Should().Be("#123 Initial commit");
+        }
+        finally
+        {
+            // Cleanup
+            Environment.SetEnvironmentVariable(
+                "IGNORE_API_ERRORS",
+                null,
+                EnvironmentVariableTarget.Process
         );
 }
