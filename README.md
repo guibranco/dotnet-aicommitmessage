@@ -224,6 +224,27 @@ When this option is enabled, the tool will:
 - Use fallback commit message generation (either the provided message or a placeholder)
 - Continue to work with branch name processing and issue number extraction
 
+### Ignore API Errors
+
+In environments where API calls may occasionally fail due to network issues, corporate firewalls, or temporary service outages, you can configure the tool to gracefully handle these failures by setting:
+
+```bash
+export IGNORE_API_ERRORS=true
+```
+
+Or on Windows:
+
+```cmd
+set IGNORE_API_ERRORS=true
+```
+
+When this option is enabled, the tool will:
+- Catch and suppress API-related exceptions (network errors, timeouts, authentication failures)
+- Log a warning message indicating the API error was ignored
+- Fall back to using the original commit message or a placeholder message
+- Continue processing with branch name handling and issue number extraction
+- Prevent commit workflows from being interrupted by temporary API issues
+
 
 ### Contributors
 
