@@ -129,9 +129,7 @@ public class GenerateCommitMessageService
             EnvironmentLoader.ShouldIgnoreApiErrors() && 
             (ex is HttpRequestException || 
              ex is TaskCanceledException || 
-             ex is InvalidOperationException ||
-             ex is ClientResultException ||
-             ex is RequestFailedException)
+             ex is InvalidOperationException)
         )
         {
             Output.WarningLine(
