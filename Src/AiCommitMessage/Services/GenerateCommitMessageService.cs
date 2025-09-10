@@ -121,7 +121,31 @@ public class GenerateCommitMessageService
             + (string.IsNullOrEmpty(diff) ? "<no changes>" : diff);
 
         var model = EnvironmentLoader.LoadModelName();
-        return GenerateWithModel(model, formattedMessage, branch, message, options.Debug);
+        try
+        {
+            return GenerateWithModel(model, formattedMessage, branch, message, options.Debug);
+        }
+        catch (Exception ex) when (
+            EnvironmentLoader.ShouldIgnoreApiErrors() && 
+            (ex is HttpRequestException || 
+             ex is TaskCanceledException || 
+             ex is InvalidOperationException ||
+             ex is ClientResultException ||
+             ex is RequestFailedException)
+        )
+        {
+            Output.WarningLine(
+                "⚠️ AI API call failed but IGNORE_API_ERRORS is enabled. Falling back to original message. Error: {0}",
+                ex.Message
+            );
+            
+            // Return the processed original message as fallback
+            var fallbackMessage = string.IsNullOrWhiteSpace(message) 
+                ? "Manual commit message required" 
+                : message;
+            
+            return PostProcess(fallbackMessage, branch, message);
+        }
     }
 
     private static string FilterPackageLockDiff(string diff)
