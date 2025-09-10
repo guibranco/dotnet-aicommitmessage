@@ -551,10 +551,10 @@ public class GenerateCommitMessageServiceTests
     }
 
     /// <summary>
-    /// Tests that API errors are not ignored when IGNORE_API_ERRORS environment variable is not set.
+    /// Tests that exceptions are thrown when IGNORE_API_ERRORS environment variable is not set.
     /// </summary>
     [Fact]
-    public void GenerateCommitMessage_Should_NotIgnoreApiErrors_When_IgnoreApiErrorsNotSet()
+    public void GenerateCommitMessage_Should_ThrowException_When_IgnoreApiErrorsNotSet()
     {
         // Arrange
         Environment.SetEnvironmentVariable(
