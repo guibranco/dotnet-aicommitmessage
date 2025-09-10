@@ -431,10 +431,10 @@ public class GenerateCommitMessageServiceTests
     }
 
     /// <summary>
-    /// Tests that API errors are ignored when IGNORE_API_ERRORS environment variable is set to true.
+    /// Tests that the service handles missing API key gracefully when IGNORE_API_ERRORS is enabled.
     /// </summary>
     [Fact]
-    public void GenerateCommitMessage_Should_IgnoreApiErrors_When_IgnoreApiErrorsIsTrue()
+    public void GenerateCommitMessage_Should_HandleMissingApiKey_When_IgnoreApiErrorsIsTrue()
     {
         // Arrange
         Environment.SetEnvironmentVariable(
