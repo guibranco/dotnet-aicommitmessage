@@ -491,7 +491,7 @@ public class GenerateCommitMessageServiceTests
     }
 
     /// <summary>
-    /// Tests that API errors are ignored and fallback message is used when IGNORE_API_ERRORS is true and original message is empty.
+    /// Tests that fallback message is used when IGNORE_API_ERRORS is true and original message is empty.
     /// </summary>
     [Fact]
     public void GenerateCommitMessage_Should_UseFallbackMessage_When_IgnoreApiErrorsIsTrueAndMessageEmpty()
