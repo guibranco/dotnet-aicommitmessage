@@ -431,14 +431,14 @@ public class GenerateCommitMessageServiceTests
     }
 
     /// <summary>
-    /// Tests that the service handles missing API key gracefully when IGNORE_API_ERRORS is enabled.
+    /// Tests that the service handles missing API key gracefully when DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS is enabled.
     /// </summary>
     [Fact]
     public void GenerateCommitMessage_Should_HandleMissingApiKey_When_IgnoreApiErrorsIsTrue()
     {
         // Arrange
         Environment.SetEnvironmentVariable(
-            "IGNORE_API_ERRORS",
+            "DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS",
             "true",
             EnvironmentVariableTarget.Process
         );
@@ -473,7 +473,7 @@ public class GenerateCommitMessageServiceTests
         {
             // Cleanup
             Environment.SetEnvironmentVariable(
-                "IGNORE_API_ERRORS",
+                "DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS",
                 null,
                 EnvironmentVariableTarget.Process
             );
@@ -498,7 +498,7 @@ public class GenerateCommitMessageServiceTests
     {
         // Arrange
         Environment.SetEnvironmentVariable(
-            "IGNORE_API_ERRORS",
+            "DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS",
             "true",
             EnvironmentVariableTarget.Process
         );
@@ -533,7 +533,7 @@ public class GenerateCommitMessageServiceTests
         {
             // Cleanup
             Environment.SetEnvironmentVariable(
-                "IGNORE_API_ERRORS",
+                "DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS",
                 null,
                 EnvironmentVariableTarget.Process
             );
@@ -558,7 +558,7 @@ public class GenerateCommitMessageServiceTests
     {
         // Arrange
         Environment.SetEnvironmentVariable(
-            "IGNORE_API_ERRORS",
+            "DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS",
             null,
             EnvironmentVariableTarget.Process
 
@@ -570,7 +570,7 @@ public class GenerateCommitMessageServiceTests
     {
         // Arrange
         Environment.SetEnvironmentVariable(
-            "IGNORE_API_ERRORS",
+            "DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS",
             "true",
             EnvironmentVariableTarget.Process
         );
@@ -595,7 +595,7 @@ public class GenerateCommitMessageServiceTests
         {
             // Cleanup
             Environment.SetEnvironmentVariable(
-                "IGNORE_API_ERRORS",
+                "DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS",
                 null,
                 EnvironmentVariableTarget.Process
         );
