@@ -97,7 +97,7 @@ public class EnvironmentLoaderTests
     {
         // Arrange
         Environment.SetEnvironmentVariable(
-            "IGNORE_API_ERRORS",
+            "DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS",
             null,
             EnvironmentVariableTarget.Process
         );
@@ -117,7 +117,7 @@ public class EnvironmentLoaderTests
     {
         // Arrange
         Environment.SetEnvironmentVariable(
-            "IGNORE_API_ERRORS",
+            "DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS",
             "true",
             EnvironmentVariableTarget.Process
         );
@@ -134,7 +134,7 @@ public class EnvironmentLoaderTests
         {
             // Cleanup
             Environment.SetEnvironmentVariable(
-                "IGNORE_API_ERRORS",
+                "DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS",
                 null,
                 EnvironmentVariableTarget.Process
             );
@@ -149,7 +149,7 @@ public class EnvironmentLoaderTests
     {
         // Arrange
         Environment.SetEnvironmentVariable(
-            "IGNORE_API_ERRORS",
+            "DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS",
             "false",
             EnvironmentVariableTarget.Process
         );
