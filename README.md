@@ -229,13 +229,13 @@ When this option is enabled, the tool will:
 In environments where API calls may occasionally fail due to network issues, corporate firewalls, or temporary service outages, you can configure the tool to gracefully handle these failures by setting:
 
 ```bash
-export IGNORE_API_ERRORS=true
+export DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS=true
 ```
 
 Or on Windows:
 
 ```cmd
-set IGNORE_API_ERRORS=true
+set DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS=true
 ```
 
 When this option is enabled, the tool will:
