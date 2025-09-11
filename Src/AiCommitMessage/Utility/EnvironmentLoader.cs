@@ -76,13 +76,13 @@ public static class EnvironmentLoader
     /// <returns><c>true</c> if API calls should be disabled, <c>false</c> otherwise.</returns>
     public static bool IsApiDisabled() =>
         bool.Parse(GetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_DISABLE_API", "false"));
+    
     /// <summary>
     /// Checks if API errors should be ignored via environment variable.
     /// </summary>
     /// <returns><c>true</c> if API errors should be ignored, <c>false</c> otherwise.</returns>
     public static bool ShouldIgnoreApiErrors() =>
-        bool.Parse(GetEnvironmentVariable("IGNORE_API_ERRORS", "false"));
-
+        bool.Parse(GetEnvironmentVariable("DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS", "false"));
 
     /// <summary>
     /// Decrypts the specified encrypted text.
