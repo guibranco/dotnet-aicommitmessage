@@ -225,6 +225,28 @@ When this option is enabled, the tool will:
 - Use fallback commit message generation (either the provided message or a placeholder)
 - Continue to work with branch name processing and issue number extraction
 
+### Ignore API Errors
+
+In environments where API calls may occasionally fail due to network restrictions, timeouts, or temporary service issues, you can configure the tool to gracefully handle these errors instead of failing completely. Set the following environment variable:
+
+```bash
+export DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS=true
+```
+
+Or on Windows:
+
+```cmd
+set DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS=true
+```
+
+When this option is enabled, the tool will:
+- Catch and suppress API-related exceptions (network errors, timeouts, authentication failures, etc.)
+- Display a warning message when an API error occurs but is ignored
+- Fall back to using the original commit message with branch name processing and issue number extraction
+- Continue the commit process without interruption
+
+This is particularly useful in CI/CD pipelines or developer environments where occasional API issues shouldn't block the commit process.
+
 
 ### Contributors
 
