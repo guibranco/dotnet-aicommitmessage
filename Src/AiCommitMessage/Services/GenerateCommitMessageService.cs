@@ -444,4 +444,20 @@ public class GenerateCommitMessageService
 
         return GitProvider.Unidentified;
     }
+
+    /// <summary>
+    /// Determines whether the specified exception is an API-related exception.
+    /// </summary>
+    /// <param name="exception">The exception to check.</param>
+    /// <returns><c>true</c> if the exception is API-related; otherwise, <c>false</c>.</returns>
+    private static bool IsApiException(Exception exception)
+    {
+        return exception is HttpRequestException
+            || exception is TaskCanceledException
+            || exception is InvalidOperationException
+            || exception is ClientResultException
+            || exception is RequestFailedException
+            || exception.InnerException is HttpRequestException
+            || exception.InnerException is TaskCanceledException;
+    }
 }
