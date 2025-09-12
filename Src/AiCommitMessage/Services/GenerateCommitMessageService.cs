@@ -121,7 +121,18 @@ public class GenerateCommitMessageService
             + (string.IsNullOrEmpty(diff) ? "<no changes>" : diff);
 
         var model = EnvironmentLoader.LoadModelName();
-        return GenerateWithModel(model, formattedMessage, branch, message, options.Debug);
+        
+        try
+        {
+            return GenerateWithModel(model, formattedMessage, branch, message, options.Debug);
+        }
+        catch (Exception ex) when (EnvironmentLoader.ShouldIgnoreApiErrors() && IsApiException(ex))
+        {
+            Output.WarningLine(
+                "⚠️ AI API error occurred but was ignored due to DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS setting. Falling back to original message."
+            );
+            return PostProcess(message, branch, message);
+        }
     }
 
     private static string FilterPackageLockDiff(string diff)
