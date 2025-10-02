@@ -44,7 +44,7 @@ public static class SettingsService
                 EnvironmentLoader.LoadOpenAiApiUrl()
             );
         }
-        else if (model.Equals("llama-3-1-405B-Instruct", StringComparison.OrdinalIgnoreCase))
+        else if (model.Equals("llama-3-1-405B-Instruct", StringComparison.OrdinalIgnoreCase) || model.Equals("ollama gemma:2b", StringComparison.OrdinalIgnoreCase))
         {
             EnvironmentLoader.SetEnvironmentVariableIfProvided(
                 "LLAMA_API_KEY",
