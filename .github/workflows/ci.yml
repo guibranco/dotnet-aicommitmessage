@@ -28,10 +28,10 @@ jobs:
       id: gitversion
       uses: gittools/actions/gitversion/execute@v4.1.0
     
-    - name: Setup .NET
+    - name: Set up .NET
       uses: actions/setup-dotnet@v5
       with:
-        dotnet-version: '9.0.x'
+        dotnet-version: '10.x'
     
     - name: Restore dependencies
       run: dotnet restore
