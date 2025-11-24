@@ -10,7 +10,7 @@ jobs:
   infer:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Run Infer#
         uses: microsoft/infersharpaction@v1.5
         id: runinfersharp
