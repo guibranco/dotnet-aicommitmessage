@@ -30,8 +30,8 @@
   <ItemGroup>
     <PackageReference Include="Azure.AI.Inference" Version="1.0.0-beta.5" />
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
-    <PackageReference Include="OpenAI" Version="2.1.0" />
-    <PackageReference Include="Spectre.Console" Version="0.50.0" />
+    <PackageReference Include="OpenAI" Version="2.7.0" />
+    <PackageReference Include="Spectre.Console" Version="0.54.0" />
     <PackageReference Include="Spectre.Console.Analyzer" Version="1.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
