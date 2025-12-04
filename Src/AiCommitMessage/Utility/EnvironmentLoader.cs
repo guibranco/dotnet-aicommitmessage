@@ -18,13 +18,13 @@ public static class EnvironmentLoader
     /// <remarks>
     /// This method retrieves the value of the environment variable "AI_MODEL".
     /// If the variable is not found, it returns a default value of "gpt-5.1".
-    /// 
+    ///
     /// Supported models:
     /// <list type="bullet">
     /// <item><description>OpenAI: gpt-5.1, gpt-5-mini, gpt-5-nano, gpt-4o-mini</description></item>
     /// <item><description>Azure AI: llama-3-1-405B-Instruct</description></item>
     /// </list>
-    /// 
+    ///
     /// This allows for flexibility in specifying which model to use without hardcoding it into the application.
     /// It is particularly useful in scenarios where different models may be used in different environments, such as development, testing, or production.
     /// </remarks>

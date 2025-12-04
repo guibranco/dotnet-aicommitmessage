@@ -30,10 +30,12 @@ public static class SettingsService
 
         var model = EnvironmentLoader.LoadModelName();
 
-        if (model.Equals("gpt-4o-mini", StringComparison.OrdinalIgnoreCase) ||
-                 model.Equals("gpt-5.1", StringComparison.OrdinalIgnoreCase) ||
-                 model.Equals("gpt-5-mini", StringComparison.OrdinalIgnoreCase) ||
-                 model.Equals("gpt-5-nano", StringComparison.OrdinalIgnoreCase))
+        if (
+            model.Equals("gpt-4o-mini", StringComparison.OrdinalIgnoreCase)
+            || model.Equals("gpt-5.1", StringComparison.OrdinalIgnoreCase)
+            || model.Equals("gpt-5-mini", StringComparison.OrdinalIgnoreCase)
+            || model.Equals("gpt-5-nano", StringComparison.OrdinalIgnoreCase)
+        )
         {
             EnvironmentLoader.SetEnvironmentVariableIfProvided(
                 "OPENAI_API_KEY",
