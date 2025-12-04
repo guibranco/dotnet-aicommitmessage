@@ -206,29 +206,32 @@ public class GenerateCommitMessageService
     )
     {
         string text;
-
+    
         if (model.Equals("llama-3-1-405B-Instruct", StringComparison.OrdinalIgnoreCase))
         {
             text = GenerateUsingAzureAi(formattedMessage);
         }
-        else if (model.Equals("gpt-4o-mini", StringComparison.OrdinalIgnoreCase))
+        else if (model.Equals("gpt-4o-mini", StringComparison.OrdinalIgnoreCase) ||
+                 model.Equals("gpt-5.1", StringComparison.OrdinalIgnoreCase) ||
+                 model.Equals("gpt-5-mini", StringComparison.OrdinalIgnoreCase) ||
+                 model.Equals("gpt-5-nano", StringComparison.OrdinalIgnoreCase))
         {
-            text = GenerateUsingOpenAi(formattedMessage);
+            text = GenerateUsingOpenAi(model, formattedMessage);
         }
         else
         {
             throw new NotSupportedException($"Model '{model}' is not supported.");
         }
-
+    
         text = ProcessGeneratedMessage(text, branch, message);
-
+    
         if (!debug)
         {
             return text;
         }
-
+    
         SaveDebugInfo(text);
-
+    
         return text;
     }
 
@@ -273,25 +276,25 @@ public class GenerateCommitMessageService
     /// <param name="formattedMessage">The formatted message to be sent to the OpenAI API.</param>
     /// <returns>The generated commit message.</returns>
     /// <exception cref="InvalidOperationException">Thrown when the OpenAI API is unavailable.</exception>
-    private static string GenerateUsingOpenAi(string formattedMessage)
+    private static string GenerateUsingOpenAi(string model, string formattedMessage)
     {
         string text;
         try
         {
             var apiUrl = EnvironmentLoader.LoadOpenAiApiUrl();
             var apiKey = EnvironmentLoader.LoadOpenAiApiKey();
-
+    
             var client = new ChatClient(
-                "gpt-4o-mini",
+                model,
                 new ApiKeyCredential(apiKey),
                 new OpenAIClientOptions { Endpoint = new Uri(apiUrl) }
             );
-
+    
             var chatCompletion = client.CompleteChat(
                 new SystemChatMessage(Constants.SystemMessage),
                 new UserChatMessage(formattedMessage)
             );
-
+    
             text = chatCompletion.Value.Content[0].Text;
         }
         catch (Exception ex) when (ex is HttpRequestException || ex is TaskCanceledException)
@@ -300,7 +303,7 @@ public class GenerateCommitMessageService
                 "⚠️ OpenAI API is currently unavailable. Please try again later."
             );
         }
-
+    
         return text;
     }
 
