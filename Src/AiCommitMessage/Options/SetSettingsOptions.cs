@@ -30,7 +30,7 @@ public class SetSettingsOptions
         'm',
         "model",
         Required = false,
-        HelpText = "The model name (e.g., GPT-4o, Llama-3-1-405B-Instruct)."
+        HelpText = "The model name (e.g., GPT-4o, GPT-5.1, Llama-3-1-405B-Instruct)."
     )]
     public string Model { get; set; }
 
