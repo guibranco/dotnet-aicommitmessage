@@ -60,8 +60,20 @@ To configure and use models with `dotnet-aicommitmessage`, users need to set the
 
 Run the following commands to configure the model and related settings:
 
-```
+```bash
+# OpenAI GPT-5.1 (flagship model - best quality)
+dotnet-aicommitmessage set-settings -m gpt-5.1 -k {api-key} -u {api-url}
+
+# OpenAI GPT-5 Mini (balanced performance and cost)
+dotnet-aicommitmessage set-settings -m gpt-5-mini -k {api-key} -u {api-url}
+
+# OpenAI GPT-5 Nano (fastest and most cost-effective)
+dotnet-aicommitmessage set-settings -m gpt-5-nano -k {api-key} -u {api-url}
+
+# OpenAI GPT-4o Mini
 dotnet-aicommitmessage set-settings -m gpt-4o-mini -k {api-key} -u {api-url}
+
+# Azure AI Llama
 dotnet-aicommitmessage set-settings -m llama-3-1-405b-instruct -k {api-key} -u {api-url}
 ```
 
@@ -71,7 +83,10 @@ Replace `{api-key}` with your API key and `{api-url}` with the URL of your API p
 
 After the initial setup, you can easily switch between models without needing to provide the API key or URL again:
 
-```
+```bash
+dotnet-aicommitmessage set-settings -m gpt-5.1
+dotnet-aicommitmessage set-settings -m gpt-5-mini
+dotnet-aicommitmessage set-settings -m gpt-5-nano
 dotnet-aicommitmessage set-settings -m gpt-4o-mini
 dotnet-aicommitmessage set-settings -m llama-3-1-405b-instruct
 ```
@@ -82,7 +97,17 @@ This allows for quick model changes while retaining your previously configured A
 
 #### Supported Models
 
-Currently supported models are `gpt-4o-mini` and `llama-3-1-405b-instruct`.
+The tool supports the following AI models:
+
+| Model | Provider | Description |
+|-------|----------|-------------|
+| `gpt-5.1` | OpenAI | Flagship GPT-5 model with best quality and capabilities |
+| `gpt-5-mini` | OpenAI | Balanced model offering good performance at lower cost |
+| `gpt-5-nano` | OpenAI | Most cost-effective option with fastest response times |
+| `gpt-4o-mini` | OpenAI | Previous generation model, still highly capable |
+| `llama-3-1-405b-instruct` | Azure AI | Meta's Llama model via Azure AI services |
+
+**Default Model**: `gpt-5.1` (automatically used if no model is specified)
 
 ---
 
@@ -100,7 +125,7 @@ The training model for the AI used is designed using as reference these guidelin
 
 ## Sequence of Execution
 
-Here’s a flow diagram showing the sequence of execution of the `prepare-commit-msg` hook and its integration with `dotnet-aicommitmessage` to generate commit messages using the OpenAI API:
+Here's a flow diagram showing the sequence of execution of the `prepare-commit-msg` hook and its integration with `dotnet-aicommitmessage` to generate commit messages using the OpenAI API:
 
 ```mermaid
 graph TD
