@@ -10,14 +10,14 @@ public static class EnvironmentLoader
     /// <summary>
     /// Loads the OpenAI model configuration from the environment variables.
     /// </summary>
-    /// <returns>The name of the OpenAI model as a string. If the environment variable is not set, it defaults to "gpt-4o-mini".</returns>
+    /// <returns>The name of the OpenAI model as a string. If the environment variable is not set, it defaults to "gpt-5.1".</returns>
     /// <remarks>
     /// This method retrieves the value of the environment variable "OPENAI_MODEL".
-    /// If the variable is not found, it returns a default value of "gpt-4o-mini".
+    /// If the variable is not found, it returns a default value of "gpt-5.1".
     /// This allows for flexibility in specifying which model to use without hardcoding it into the application.
     /// It is particularly useful in scenarios where different models may be used in different environments, such as development, testing, or production.
     /// </remarks>
-    public static string LoadModelName() => GetEnvironmentVariable("AI_MODEL", "gpt-4o-mini");
+    public static string LoadModelName() => GetEnvironmentVariable("AI_MODEL", "gpt-5.1");
 
     /// <summary>
     /// Loads the OpenAI API URL from the environment variables.
