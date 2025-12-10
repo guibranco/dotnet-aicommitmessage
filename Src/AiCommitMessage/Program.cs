@@ -18,7 +18,7 @@ internal static class Program
     /// <param name="args">An array of strings representing the command-line arguments passed to the application.</param>
     /// <remarks>
     /// This method utilizes the Parser class to parse command-line arguments into specific options types:
-    /// <see cref="InstallHookOptions"/>, <see cref="GenerateCommitMessageOptions"/>, <see cref="SetSettingsOptions"/>, and 
+    /// <see cref="InstallHookOptions"/>, <see cref="GenerateCommitMessageOptions"/>, <see cref="SetSettingsOptions"/>, and
     /// <see cref="SetEnvironmentVariableOptions"/>.
     /// It calls the <c>Run</c> method if the parsing is successful, allowing the application to execute the intended functionality.
     /// If the parsing fails, it invokes the <c>HandleErrors</c> method to manage any errors that occurred during parsing.
@@ -52,7 +52,7 @@ internal static class Program
     ///
     /// 3. If the options are of type <see cref="SetSettingsOptions"/>, it updates settings by invoking the
     ///    <see cref="SettingsService.SetSettings"/> method with the provided options.
-    ///    
+    ///
     /// 4. If the options are of type <see cref="SetEnvironmentVariableOptions"/>, it sets an environment variable
     ///    by invoking the <see cref="EnvironmentVariableService.SetEnvironmentVariable"/> method with the provided options.
     ///

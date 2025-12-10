@@ -4,7 +4,7 @@ using AiCommitMessage.Utility;
 namespace AiCommitMessage.Services;
 
 /// <summary>
-/// Service for managing environment variables. 
+/// Service for managing environment variables.
 /// </summary>
 public static class EnvironmentVariableService
 {
@@ -17,6 +17,7 @@ public static class EnvironmentVariableService
         Output.ErrorLine(message);
         Environment.ExitCode = 1;
     }
+
     /// <summary>
     /// Sets an environment variable based on the provided options.
     /// </summary>
@@ -28,7 +29,9 @@ public static class EnvironmentVariableService
     /// </remarks>
     /// <exception cref="System.Security.SecurityException">Thrown when attempting to set a Machine-level variable without sufficient permissions.</exception>
     /// <exception cref="ArgumentException">Thrown when the variable name contains invalid characters.</exception>
-    public static void SetEnvironmentVariable(SetEnvironmentVariableOptions setEnvironmentVariableOptions)
+    public static void SetEnvironmentVariable(
+        SetEnvironmentVariableOptions setEnvironmentVariableOptions
+    )
     {
         if (string.IsNullOrWhiteSpace(setEnvironmentVariableOptions.Variable))
         {
@@ -52,17 +55,31 @@ public static class EnvironmentVariableService
         }
 
         EnvironmentVariableTarget envTarget;
-        if (string.Equals(setEnvironmentVariableOptions.Target, "Machine", StringComparison.OrdinalIgnoreCase))
+        if (
+            string.Equals(
+                setEnvironmentVariableOptions.Target,
+                "Machine",
+                StringComparison.OrdinalIgnoreCase
+            )
+        )
         {
             envTarget = EnvironmentVariableTarget.Machine;
         }
-        else if (string.Equals(setEnvironmentVariableOptions.Target, "User", StringComparison.OrdinalIgnoreCase))
+        else if (
+            string.Equals(
+                setEnvironmentVariableOptions.Target,
+                "User",
+                StringComparison.OrdinalIgnoreCase
+            )
+        )
         {
             envTarget = EnvironmentVariableTarget.User;
         }
         else
         {
-            ErrorLine($"Invalid target '{setEnvironmentVariableOptions.Target}'. Please use 'User' or 'Machine'.");
+            ErrorLine(
+                $"Invalid target '{setEnvironmentVariableOptions.Target}'. Please use 'User' or 'Machine'."
+            );
             return;
         }
 
@@ -70,11 +87,15 @@ public static class EnvironmentVariableService
         {
             Environment.SetEnvironmentVariable(variableName, variableValue, envTarget);
 
-            Output.InfoLine($"Environment variable '{variableName}' set to '{variableValue}' for {envTarget} scope.");
+            Output.InfoLine(
+                $"Environment variable '{variableName}' set to '{variableValue}' for {envTarget} scope."
+            );
         }
         catch (System.Security.SecurityException)
         {
-            ErrorLine("Permission denied. Setting Machine-level environment variables requires administrator privileges.");
+            ErrorLine(
+                "Permission denied. Setting Machine-level environment variables requires administrator privileges."
+            );
         }
         catch (ArgumentException ex)
         {

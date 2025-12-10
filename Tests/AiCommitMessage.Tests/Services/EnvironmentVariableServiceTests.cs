@@ -3,6 +3,7 @@ using AiCommitMessage.Services;
 using FluentAssertions;
 
 namespace AiCommitMessage.Tests.Services;
+
 public class EnvironmentVariableServiceTests
 {
     /// <summary>
@@ -14,19 +15,26 @@ public class EnvironmentVariableServiceTests
         var options = new SetEnvironmentVariableOptions
         {
             Variable = "TEST_USER_VAR=test_value",
-            Target = "User"
+            Target = "User",
         };
 
         try
         {
             EnvironmentVariableService.SetEnvironmentVariable(options);
 
-            var result = Environment.GetEnvironmentVariable("TEST_USER_VAR", EnvironmentVariableTarget.User);
+            var result = Environment.GetEnvironmentVariable(
+                "TEST_USER_VAR",
+                EnvironmentVariableTarget.User
+            );
             result.Should().Be("test_value");
         }
         finally
         {
-            Environment.SetEnvironmentVariable("TEST_USER_VAR", null, EnvironmentVariableTarget.User);
+            Environment.SetEnvironmentVariable(
+                "TEST_USER_VAR",
+                null,
+                EnvironmentVariableTarget.User
+            );
         }
     }
 
@@ -39,19 +47,26 @@ public class EnvironmentVariableServiceTests
         var options = new SetEnvironmentVariableOptions
         {
             Variable = "TEST_DEFAULT_VAR=default_value",
-            Target = "User"
+            Target = "User",
         };
 
         try
         {
             EnvironmentVariableService.SetEnvironmentVariable(options);
 
-            var result = Environment.GetEnvironmentVariable("TEST_DEFAULT_VAR", EnvironmentVariableTarget.User);
+            var result = Environment.GetEnvironmentVariable(
+                "TEST_DEFAULT_VAR",
+                EnvironmentVariableTarget.User
+            );
             result.Should().Be("default_value");
         }
         finally
         {
-            Environment.SetEnvironmentVariable("TEST_DEFAULT_VAR", null, EnvironmentVariableTarget.User);
+            Environment.SetEnvironmentVariable(
+                "TEST_DEFAULT_VAR",
+                null,
+                EnvironmentVariableTarget.User
+            );
         }
     }
 
@@ -64,7 +79,7 @@ public class EnvironmentVariableServiceTests
         var options = new SetEnvironmentVariableOptions
         {
             Variable = "INVALID_FORMAT",
-            Target = "User"
+            Target = "User",
         };
 
         var originalExitCode = Environment.ExitCode;
@@ -87,11 +102,7 @@ public class EnvironmentVariableServiceTests
     [Fact]
     public void SetEnvironmentVariable_Should_SetExitCode_When_VariableIsNull()
     {
-        var options = new SetEnvironmentVariableOptions
-        {
-            Variable = null,
-            Target = "User"
-        };
+        var options = new SetEnvironmentVariableOptions { Variable = null, Target = "User" };
 
         var originalExitCode = Environment.ExitCode;
 
@@ -113,12 +124,7 @@ public class EnvironmentVariableServiceTests
     [Fact]
     public void SetEnvironmentVariable_Should_SetExitCode_When_VariableNameIsEmpty()
     {
-
-        var options = new SetEnvironmentVariableOptions
-        {
-            Variable = "=value",
-            Target = "User"
-        };
+        var options = new SetEnvironmentVariableOptions { Variable = "=value", Target = "User" };
 
         var originalExitCode = Environment.ExitCode;
 
@@ -130,7 +136,6 @@ public class EnvironmentVariableServiceTests
         }
         finally
         {
-
             Environment.ExitCode = originalExitCode;
         }
     }
@@ -144,7 +149,7 @@ public class EnvironmentVariableServiceTests
         var options = new SetEnvironmentVariableOptions
         {
             Variable = "TEST_VAR=value",
-            Target = "InvalidTarget"
+            Target = "InvalidTarget",
         };
 
         var originalExitCode = Environment.ExitCode;
@@ -174,19 +179,26 @@ public class EnvironmentVariableServiceTests
         var options = new SetEnvironmentVariableOptions
         {
             Variable = "TEST_CASE_VAR=case_value",
-            Target = target
+            Target = target,
         };
 
         try
         {
             EnvironmentVariableService.SetEnvironmentVariable(options);
 
-            var result = Environment.GetEnvironmentVariable("TEST_CASE_VAR", EnvironmentVariableTarget.User);
+            var result = Environment.GetEnvironmentVariable(
+                "TEST_CASE_VAR",
+                EnvironmentVariableTarget.User
+            );
             result.Should().Be("case_value");
         }
         finally
         {
-            Environment.SetEnvironmentVariable("TEST_CASE_VAR", null, EnvironmentVariableTarget.User);
+            Environment.SetEnvironmentVariable(
+                "TEST_CASE_VAR",
+                null,
+                EnvironmentVariableTarget.User
+            );
         }
     }
 }

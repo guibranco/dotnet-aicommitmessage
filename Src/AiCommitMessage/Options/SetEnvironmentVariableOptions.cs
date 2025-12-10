@@ -2,7 +2,6 @@
 
 namespace AiCommitMessage.Options;
 
-
 /// <summary>
 /// Class SetEnvironmentVariableOptions.
 /// </summary>
@@ -20,6 +19,12 @@ public class SetEnvironmentVariableOptions
     /// Gets or sets the target.
     /// </summary>
     /// <value>The target.</value>
-    [Option('t', "target", Required = false, Default = "User", HelpText = "The environment variable target (User or Machine). Default is User.")]
+    [Option(
+        't',
+        "target",
+        Required = false,
+        Default = "User",
+        HelpText = "The environment variable target (User or Machine). Default is User."
+    )]
     public string Target { get; set; }
 }
