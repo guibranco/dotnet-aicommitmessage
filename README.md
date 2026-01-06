@@ -110,6 +110,56 @@ The tool supports the following AI models:
 
 ---
 
+### Environment Variable Management
+
+The `set-env` command allows you to set environment variables directly from the command line. This is particularly useful for configuring API keys, database URLs, and other settings in development or CI/CD environments.
+
+#### Syntax
+
+```bash
+dotnet-aicommitmessage set-env <VARIABLE_NAME=value> [--target <User|Machine>]
+```
+
+#### Parameters
+
+| Parameter | Short | Required | Description |
+|-----------|-------|----------|-------------|
+| `VARIABLE_NAME=value` | - | Yes | The environment variable in `NAME=value` format |
+| `--target` | `-t` | No | Target scope:  `User` (default) or `Machine` |
+
+#### Target Scopes
+
+| Target | Description | Permissions Required |
+|--------|-------------|---------------------|
+| `User` | Sets the environment variable for the current user only (default) | Normal user permissions |
+| `Machine` | Sets the environment variable system-wide for all users | Administrator (Windows) or sudo (Linux/Mac) |
+
+#### Examples
+
+**Set a variable for the current user (default):**
+```bash
+dotnet-aicommitmessage set-env MY_API_KEY=sk-abc123xyz
+```
+
+**Set a variable with explicit User target:**
+```bash
+dotnet-aicommitmessage set-env DATABASE_URL=postgresql://localhost:5432/mydb --target User
+```
+
+**Set a variable using short option:**
+```bash
+dotnet-aicommitmessage set-env DEBUG_MODE=true -t User
+```
+
+**Set a Machine-level variable (requires admin/sudo):**
+
+On Windows (run Command Prompt or PowerShell as Administrator):
+```bash
+dotnet-aicommitmessage set-env SYSTEM_CONFIG=production --target Machine
+```
+
+---
+
 ## Commit message pattern
 
 The training model for the AI used is designed using as reference these guidelines:
@@ -152,6 +202,7 @@ This tool accepts an argument as the command to execute. Here is a list of avail
 | `install-hook`             | Installs GIT hooks in the default `.git/hooks` directory or in the custom directory configured in GIT settings. |
 | `generate-message`         | Generates a commit message based on the current changes (`git diff` context).                                   |
 | `set-settings`             | Set the OpenAI settings.                                                                                        |
+| `set-env`                  | Set environment variables for User or Machine scope.                                                            |
 | `help`                     | Display information about this program.                                                                         |
 | `version`                  | Display version information.                                                                                    |
 
