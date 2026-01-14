@@ -229,6 +229,14 @@ Here is a sample `debug.json` content:
 
 The tool supports several configuration options through environment variables:
 
+### Set GIT hooks path
+
+By default the GIT hooks path is defined at repository level to `.git\hooks\`
+If you want to override, or use the `.githooks` directory at the root level of your project, you will need to configure that.
+
+Execute the following GIT command to set (per repository) the GIT hooks path:
+`git config core.hooksPath '.githooks'`
+
 ### Disable API Calls
 
 In some network environments, the OpenAI API may be blocked due to firewall or proxy restrictions. You can disable API calls entirely by setting the following environment variable:
