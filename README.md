@@ -231,7 +231,7 @@ The tool supports several configuration options through environment variables:
 
 ### Set GIT hooks path
 
-By default the GIT hooks path is defined at repository level to `.git\hooks\`
+By default, the GIT hooks path is defined at the repository level as `.git\hooks\`.
 If you want to override, or use the `.githooks` directory at the root level of your project, you will need to configure that.
 
 Execute the following GIT command to set (per repository) the GIT hooks path:
