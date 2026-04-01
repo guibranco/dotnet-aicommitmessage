@@ -20,13 +20,13 @@ jobs:
           fetch-depth: 0 
 
     - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v4.4.1
+      uses: gittools/actions/gitversion/setup@v4.4.2
       with:
         versionSpec: '6.x'
 
     - name: Determine Version
       id: gitversion
-      uses: gittools/actions/gitversion/execute@v4.4.1
+      uses: gittools/actions/gitversion/execute@v4.4.2
     
     - name: Set up .NET
       uses: actions/setup-dotnet@v5
@@ -61,7 +61,7 @@ jobs:
       
     steps:
       - name: Create Release
-        uses: ncipollo/release-action@v1.20.0
+        uses: ncipollo/release-action@v1.21.0
         with:
           skipIfReleaseExists: true
           allowUpdates: false
