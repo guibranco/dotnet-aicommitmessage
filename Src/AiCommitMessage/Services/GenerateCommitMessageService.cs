@@ -121,7 +121,18 @@ public class GenerateCommitMessageService
             + (string.IsNullOrEmpty(diff) ? "<no changes>" : diff);
 
         var model = EnvironmentLoader.LoadModelName();
-        return GenerateWithModel(model, formattedMessage, branch, message, options.Debug);
+        
+        try
+        {
+            return GenerateWithModel(model, formattedMessage, branch, message, options.Debug);
+        }
+        catch (Exception ex) when (EnvironmentLoader.ShouldIgnoreApiErrors() && IsApiException(ex))
+        {
+            Output.WarningLine(
+                "⚠️ AI API error occurred but was ignored due to DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS setting. Falling back to original message."
+            );
+            return PostProcess(message, branch, message);
+        }
     }
 
     private static string FilterPackageLockDiff(string diff)
@@ -437,5 +448,21 @@ public class GenerateCommitMessageService
         }
 
         return GitProvider.Unidentified;
+    }
+
+    /// <summary>
+    /// Determines whether the specified exception is an API-related exception.
+    /// </summary>
+    /// <param name="exception">The exception to check.</param>
+    /// <returns><c>true</c> if the exception is API-related; otherwise, <c>false</c>.</returns>
+    private static bool IsApiException(Exception exception)
+    {
+        return exception is HttpRequestException
+            || exception is TaskCanceledException
+            || exception is InvalidOperationException
+            || exception is ClientResultException
+            || exception is RequestFailedException
+            || exception.InnerException is HttpRequestException
+            || exception.InnerException is TaskCanceledException;
     }
 }
