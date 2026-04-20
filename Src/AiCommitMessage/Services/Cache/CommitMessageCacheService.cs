@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Spectre.Console;
 
 namespace AiCommitMessage.Services.Cache
 {
@@ -24,13 +25,13 @@ namespace AiCommitMessage.Services.Cache
             string? cached = await _cacheProvider.LoadAsync(model, hash);
             if (cached != null)
             {
-                Console.WriteLine("\u2705 Loaded from cache.");
+                AnsiConsole.WriteLine("\u2705 Loaded from cache.");
                 return cached;
             }
 
             string result = await generateFunc();
             await _cacheProvider.SaveAsync(model, hash, result);
-            Console.WriteLine("\ud83d\udcac Cached new result.");
+            AnsiConsole.WriteLine("\ud83d\udcac Cached new result.");
             return result;
         }
     }
