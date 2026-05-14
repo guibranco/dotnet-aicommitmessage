@@ -121,7 +121,7 @@ public class GenerateCommitMessageService
             + (string.IsNullOrEmpty(diff) ? "<no changes>" : diff);
 
         var model = EnvironmentLoader.LoadModelName();
-        
+
         try
         {
             return GenerateWithModel(model, formattedMessage, branch, message, options.Debug);
