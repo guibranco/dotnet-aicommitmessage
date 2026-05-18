@@ -77,4 +77,44 @@ public class DisableApiIntegrationTests
             );
         }
     }
+
+    /// <summary>
+    /// Tests the complete workflow when API errors are ignored.
+    /// </summary>
+    [Fact]
+    public void CompleteWorkflow_Should_WorkCorrectly_When_ApiErrorsIgnored()
+    {
+        // Arrange
+        Environment.SetEnvironmentVariable(
+            "DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS",
+            "true",
+            EnvironmentVariableTarget.Process
+        );
+
+        var service = new GenerateCommitMessageService();
+        var options = new GenerateCommitMessageOptions
+        {
+            Branch = "feature/285-ignore-api-errors",
+            Diff = "Added new environment variable support",
+            Message = "Add option to ignore API errors -skipai", // Use skipai to avoid actual API calls
+        };
+
+        try
+        {
+            // Act
+            var result = service.GenerateCommitMessage(options);
+
+            // Assert
+            result.Should().Be("#285 Add option to ignore API errors");
+        }
+        finally
+        {
+            // Cleanup
+            Environment.SetEnvironmentVariable(
+                "DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS",
+                null,
+                EnvironmentVariableTarget.Process
+            );
+        }
+    }
 }
