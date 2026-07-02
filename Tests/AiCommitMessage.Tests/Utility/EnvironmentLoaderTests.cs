@@ -88,4 +88,88 @@ public class EnvironmentLoaderTests
             );
         }
     }
+
+    /// <summary>
+    /// Tests that ShouldIgnoreApiErrors returns false when the environment variable is not set.
+    /// </summary>
+    [Fact]
+    public void ShouldIgnoreApiErrors_Should_ReturnFalse_When_EnvironmentVariableNotSet()
+    {
+        // Arrange
+        Environment.SetEnvironmentVariable(
+            "DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS",
+            null,
+            EnvironmentVariableTarget.Process
+        );
+
+        // Act
+        var result = EnvironmentLoader.ShouldIgnoreApiErrors();
+
+        // Assert
+        result.Should().BeFalse();
+    }
+
+    /// <summary>
+    /// Tests that ShouldIgnoreApiErrors returns true when the environment variable is set to "true".
+    /// </summary>
+    [Fact]
+    public void ShouldIgnoreApiErrors_Should_ReturnTrue_When_EnvironmentVariableIsTrue()
+    {
+        // Arrange
+        Environment.SetEnvironmentVariable(
+            "DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS",
+            "true",
+            EnvironmentVariableTarget.Process
+        );
+
+        try
+        {
+            // Act
+            var result = EnvironmentLoader.ShouldIgnoreApiErrors();
+
+            // Assert
+            result.Should().BeTrue();
+        }
+        finally
+        {
+            // Cleanup
+            Environment.SetEnvironmentVariable(
+                "DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS",
+                null,
+                EnvironmentVariableTarget.Process
+            );
+        }
+    }
+
+    /// <summary>
+    /// Tests that ShouldIgnoreApiErrors returns false when the environment variable is set to "false".
+    /// </summary>
+    [Fact]
+    public void ShouldIgnoreApiErrors_Should_ReturnFalse_When_EnvironmentVariableIsFalse()
+    {
+        // Arrange
+        Environment.SetEnvironmentVariable(
+            "DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS",
+            "false",
+            EnvironmentVariableTarget.Process
+        );
+
+        try
+        {
+            // Act
+            var result = EnvironmentLoader.ShouldIgnoreApiErrors();
+
+            // Assert
+            result.Should().BeFalse();
+        }
+        finally
+        {
+            // Cleanup
+            Environment.SetEnvironmentVariable(
+                "DOTNET_AICOMMITMESSAGE_IGNORE_API_ERRORS",
+                null,
+                EnvironmentVariableTarget.Process
+            );
+        }
+    }
 }
