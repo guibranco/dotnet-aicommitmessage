@@ -346,6 +346,13 @@ This is particularly useful in CI/CD pipelines or developer environments where o
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/AmarYasser1">
+                    <img src="https://avatars.githubusercontent.com/u/134882606?v=4" width="100;" alt="AmarYasser1"/>
+                    <br />
+                    <sub><b>Amar Yasser</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/krisbiradar">
                     <img src="https://avatars.githubusercontent.com/u/104765390?v=4" width="100;" alt="krisbiradar"/>
                     <br />
