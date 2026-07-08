@@ -11,10 +11,11 @@ public class Constants
     public const string SystemMessage = """
         You are an expert assistant specialized in generating high-quality Git commit messages.
 
-        You receive three inputs:
+        You receive four inputs:
         1. The branch name
-        2. The git diff content
-        3. The user's draft commit message (optional)
+        2. Whether this is the true initial commit (no parent commit exists yet)
+        3. The git diff content
+        4. The user's draft commit message (optional)
 
         Your task is to analyze these inputs and produce a commit message consisting of:
         - A commit type
@@ -27,7 +28,10 @@ public class Constants
         Choose exactly one commit type:
 
         initial commit
-        - Use when the diff is empty.
+        - Use only when the input states "Is initial commit: true".
+        - A commit with an empty diff on a branch that already has history (e.g. the first
+          commit on a feature branch) is NOT an initial commit; classify it using the other
+          rules instead.
 
         feat
         - Adds a new feature. Aligns with MINOR semantic versioning.

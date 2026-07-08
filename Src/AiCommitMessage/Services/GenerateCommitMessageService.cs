@@ -110,15 +110,8 @@ public class GenerateCommitMessageService
             );
         }
 
-        var formattedMessage =
-            "Branch: "
-            + (string.IsNullOrEmpty(branch) ? "<unknown>" : branch)
-            + "\n\n"
-            + "Original message: "
-            + message
-            + "\n\n"
-            + "Git Diff: "
-            + (string.IsNullOrEmpty(diff) ? "<no changes>" : diff);
+        var isInitialCommit = options.IsInitialCommit ?? GitHelper.IsInitialCommit();
+        var formattedMessage = BuildFormattedMessage(branch, diff, message, isInitialCommit);
 
         var model = EnvironmentLoader.LoadModelName();
 
@@ -133,6 +126,35 @@ public class GenerateCommitMessageService
             );
             return PostProcess(message, branch, message);
         }
+    }
+
+    /// <summary>
+    /// Builds the prompt content describing the branch, initial-commit status, draft message,
+    /// and diff that is sent to the AI model.
+    /// </summary>
+    /// <param name="branch">The branch name.</param>
+    /// <param name="diff">The staged git diff.</param>
+    /// <param name="message">The user's draft commit message.</param>
+    /// <param name="isInitialCommit">Whether the commit being prepared is the true initial commit (no parent).</param>
+    /// <returns>The formatted prompt content.</returns>
+    internal static string BuildFormattedMessage(
+        string branch,
+        string diff,
+        string message,
+        bool isInitialCommit
+    )
+    {
+        return "Branch: "
+            + (string.IsNullOrEmpty(branch) ? "<unknown>" : branch)
+            + "\n\n"
+            + "Is initial commit: "
+            + (isInitialCommit ? "true" : "false")
+            + "\n\n"
+            + "Original message: "
+            + message
+            + "\n\n"
+            + "Git Diff: "
+            + (string.IsNullOrEmpty(diff) ? "<no changes>" : diff);
     }
 
     private static string FilterPackageLockDiff(string diff)

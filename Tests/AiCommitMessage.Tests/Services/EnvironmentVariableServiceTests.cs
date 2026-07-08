@@ -9,6 +9,11 @@ public class EnvironmentVariableServiceTests
     /// <summary>
     /// Tests that setting a User-level environment variable works correctly.
     /// </summary>
+    /// <remarks>
+    /// User/Machine-scoped environment variables have no persistent store on non-Windows
+    /// platforms, so <see cref="Environment.SetEnvironmentVariable(string, string, EnvironmentVariableTarget)"/>
+    /// is a documented no-op there; on those platforms this test only verifies the call succeeds.
+    /// </remarks>
     [Fact]
     public void SetEnvironmentVariable_Should_SetUserVariable_When_TargetIsUser()
     {
@@ -17,16 +22,24 @@ public class EnvironmentVariableServiceTests
             Variable = "TEST_USER_VAR=test_value",
             Target = "User",
         };
+        var originalExitCode = Environment.ExitCode;
 
         try
         {
             EnvironmentVariableService.SetEnvironmentVariable(options);
 
-            var result = Environment.GetEnvironmentVariable(
-                "TEST_USER_VAR",
-                EnvironmentVariableTarget.User
-            );
-            result.Should().Be("test_value");
+            if (OperatingSystem.IsWindows())
+            {
+                var result = Environment.GetEnvironmentVariable(
+                    "TEST_USER_VAR",
+                    EnvironmentVariableTarget.User
+                );
+                result.Should().Be("test_value");
+            }
+            else
+            {
+                Environment.ExitCode.Should().Be(0);
+            }
         }
         finally
         {
@@ -35,12 +48,17 @@ public class EnvironmentVariableServiceTests
                 null,
                 EnvironmentVariableTarget.User
             );
+            Environment.ExitCode = originalExitCode;
         }
     }
 
     /// <summary>
     /// Tests that setting a User-level environment variable works when target is not specified (default).
     /// </summary>
+    /// <remarks>
+    /// See <see cref="SetEnvironmentVariable_Should_SetUserVariable_When_TargetIsUser"/> for why
+    /// this only checks the persisted value on Windows.
+    /// </remarks>
     [Fact]
     public void SetEnvironmentVariable_Should_SetUserVariable_When_TargetIsNotSpecified()
     {
@@ -49,16 +67,24 @@ public class EnvironmentVariableServiceTests
             Variable = "TEST_DEFAULT_VAR=default_value",
             Target = "User",
         };
+        var originalExitCode = Environment.ExitCode;
 
         try
         {
             EnvironmentVariableService.SetEnvironmentVariable(options);
 
-            var result = Environment.GetEnvironmentVariable(
-                "TEST_DEFAULT_VAR",
-                EnvironmentVariableTarget.User
-            );
-            result.Should().Be("default_value");
+            if (OperatingSystem.IsWindows())
+            {
+                var result = Environment.GetEnvironmentVariable(
+                    "TEST_DEFAULT_VAR",
+                    EnvironmentVariableTarget.User
+                );
+                result.Should().Be("default_value");
+            }
+            else
+            {
+                Environment.ExitCode.Should().Be(0);
+            }
         }
         finally
         {
@@ -67,6 +93,7 @@ public class EnvironmentVariableServiceTests
                 null,
                 EnvironmentVariableTarget.User
             );
+            Environment.ExitCode = originalExitCode;
         }
     }
 
@@ -169,6 +196,10 @@ public class EnvironmentVariableServiceTests
     /// <summary>
     /// Tests that target is case-insensitive.
     /// </summary>
+    /// <remarks>
+    /// See <see cref="SetEnvironmentVariable_Should_SetUserVariable_When_TargetIsUser"/> for why
+    /// this only checks the persisted value on Windows.
+    /// </remarks>
     [Theory]
     [InlineData("user")]
     [InlineData("USER")]
@@ -181,16 +212,24 @@ public class EnvironmentVariableServiceTests
             Variable = "TEST_CASE_VAR=case_value",
             Target = target,
         };
+        var originalExitCode = Environment.ExitCode;
 
         try
         {
             EnvironmentVariableService.SetEnvironmentVariable(options);
 
-            var result = Environment.GetEnvironmentVariable(
-                "TEST_CASE_VAR",
-                EnvironmentVariableTarget.User
-            );
-            result.Should().Be("case_value");
+            if (OperatingSystem.IsWindows())
+            {
+                var result = Environment.GetEnvironmentVariable(
+                    "TEST_CASE_VAR",
+                    EnvironmentVariableTarget.User
+                );
+                result.Should().Be("case_value");
+            }
+            else
+            {
+                Environment.ExitCode.Should().Be(0);
+            }
         }
         finally
         {
@@ -199,6 +238,7 @@ public class EnvironmentVariableServiceTests
                 null,
                 EnvironmentVariableTarget.User
             );
+            Environment.ExitCode = originalExitCode;
         }
     }
 }

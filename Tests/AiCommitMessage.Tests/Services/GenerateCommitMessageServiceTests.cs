@@ -429,4 +429,106 @@ public class GenerateCommitMessageServiceTests
         // Assert
         result.Should().Be("Initial commit");
     }
+
+    /// <summary>
+    /// Tests that the prompt sent to the AI model states the commit is the true initial commit
+    /// when the flag is set, so the model is allowed to classify it as such.
+    /// </summary>
+    [Fact]
+    public void BuildFormattedMessage_Should_StateInitialCommitTrue_When_IsInitialCommitIsTrue()
+    {
+        // Act
+        var result = GenerateCommitMessageService.BuildFormattedMessage(
+            "main",
+            string.Empty,
+            "Initial commit",
+            isInitialCommit: true
+        );
+
+        // Assert
+        result.Should().Contain("Is initial commit: true");
+    }
+
+    /// <summary>
+    /// Tests that the prompt sent to the AI model states the commit is NOT the true initial
+    /// commit when the flag is false, e.g. for the first commit on a feature branch that
+    /// already has history.
+    /// </summary>
+    [Fact]
+    public void BuildFormattedMessage_Should_StateInitialCommitFalse_When_IsInitialCommitIsFalse()
+    {
+        // Act
+        var result = GenerateCommitMessageService.BuildFormattedMessage(
+            "feature/test",
+            string.Empty,
+            "Initial commit",
+            isInitialCommit: false
+        );
+
+        // Assert
+        result.Should().Contain("Is initial commit: false");
+    }
+
+    /// <summary>
+    /// Tests that the branch, message, and diff are still included in the prompt alongside
+    /// the initial-commit flag.
+    /// </summary>
+    [Fact]
+    public void BuildFormattedMessage_Should_IncludeBranchMessageAndDiff()
+    {
+        // Act
+        var result = GenerateCommitMessageService.BuildFormattedMessage(
+            "feature/test",
+            "Added new feature",
+            "My draft message",
+            isInitialCommit: false
+        );
+
+        // Assert
+        result.Should().Contain("Branch: feature/test");
+        result.Should().Contain("Original message: My draft message");
+        result.Should().Contain("Git Diff: Added new feature");
+    }
+
+    /// <summary>
+    /// Tests that an explicit <see cref="GenerateCommitMessageOptions.IsInitialCommit"/> override
+    /// of <c>false</c> does not affect the API-disabled fallback path, which never inspects the
+    /// flag, so regular commit message generation keeps working as expected.
+    /// </summary>
+    [Fact]
+    public void GenerateCommitMessage_Should_GenerateRegularMessage_When_IsInitialCommitOverrideIsFalse()
+    {
+        // Arrange
+        Environment.SetEnvironmentVariable(
+            "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+            "true",
+            EnvironmentVariableTarget.Process
+        );
+
+        var options = new GenerateCommitMessageOptions
+        {
+            Branch = "feature/test",
+            Diff = "Some diff",
+            Message = "Add new feature",
+            IsInitialCommit = false,
+        };
+
+        try
+        {
+            // Act
+            var result = _service.GenerateCommitMessage(options);
+
+            // Assert
+            result.Should().Be("Add new feature");
+        }
+        finally
+        {
+            // Cleanup
+            Environment.SetEnvironmentVariable(
+                "DOTNET_AICOMMITMESSAGE_DISABLE_API",
+                null,
+                EnvironmentVariableTarget.Process
+            );
+        }
+    }
 }
