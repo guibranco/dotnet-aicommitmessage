@@ -49,4 +49,14 @@ public class GenerateCommitMessageOptions
     /// </remarks>
     [Option('D', "debug", Required = false, HelpText = "Debug mode.")]
     public bool Debug { get; set; }
+
+    /// <summary>
+    /// Gets or sets an override for whether the current commit is the true initial commit.
+    /// </summary>
+    /// <value><c>true</c> or <c>false</c> to override detection; <c>null</c> to detect via git.</value>
+    /// <remarks>
+    /// Not exposed as a CLI option. When <c>null</c>, the value is determined by inspecting
+    /// the repository via <see cref="AiCommitMessage.Utility.GitHelper.IsInitialCommit()"/>.
+    /// </remarks>
+    public bool? IsInitialCommit { get; set; }
 }
