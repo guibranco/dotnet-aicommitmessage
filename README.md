@@ -374,7 +374,7 @@ This is particularly useful in CI/CD pipelines or developer environments where o
                 </a>
             </td>
 		</tr>
-	<tbody>
+	</tbody>
 </table>
 <!-- readme: collaborators,contributors,snyk-bot/-,guistracini-outsurance-ie/-,codefactor-io/- -end -->
 
@@ -436,6 +436,6 @@ This is particularly useful in CI/CD pipelines or developer environments where o
                 </a>
             </td>
 		</tr>
-	<tbody>
+	</tbody>
 </table>
 <!-- readme: bots,snyk-bot,codefactor-io -end -->
