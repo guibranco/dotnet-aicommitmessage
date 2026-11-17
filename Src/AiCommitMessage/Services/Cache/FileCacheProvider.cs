@@ -27,8 +27,7 @@ namespace AiCommitMessage.Services.Cache
                 var baseDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 if (string.IsNullOrWhiteSpace(baseDir))
                 {
-                    var home =
-                        Environment.GetEnvironmentVariable("HOME")
+                    var home = Environment.GetEnvironmentVariable("HOME")
                         ?? Environment.GetEnvironmentVariable("USERPROFILE");
                     if (string.IsNullOrEmpty(home))
                     {
